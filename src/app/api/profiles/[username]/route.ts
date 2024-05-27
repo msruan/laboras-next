@@ -2,15 +2,16 @@ import { NextResponse } from "next/server";
 
 import { connectToDb } from "@/lib/utils";
 import { Profile } from "@/models/profiles";
+import { headers } from "next/headers";
 
 export const GET = async (request: any, { params }: any) => {
-  const { email } = params;
-
   try {
     await connectToDb();
+    const { username } = params;
+    console.log(username);
 
-    const post = await Profile.findOne({ email: email });
-    return NextResponse.json(post);
+    const user = await Profile.findOne({ username: username });
+    return NextResponse.json(user);
   } catch (err) {
     console.log(err);
     return NextResponse.error();

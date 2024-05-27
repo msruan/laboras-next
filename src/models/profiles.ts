@@ -4,21 +4,20 @@ export interface IProfile {
   first_name: string;
   last_name: string;
   username: string;
+  token: string;
   email: string;
   password: string;
   profile_image_link?: string;
   bio?: string;
 }
 
-export type ProfileRequest = {
+export type ISignupProfile = {
   id: string;
-  first_name?: string;
-  last_name?: string;
-  username?: string;
-  email?: string;
-  password?: string;
-  bio?: string;
-  profile_image_link?: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  password: string;
 };
 
 const ProfileSchema = new mongoose.Schema<IProfile>(
@@ -46,7 +45,14 @@ const ProfileSchema = new mongoose.Schema<IProfile>(
       type: String,
       required: true,
     },
-
+    token: {
+      type: String,
+    },
+    bio: {
+      type: String,
+      default:
+        "meiga e abusada, faço você se perder e quem foi que disse que eu estava apaixonada por você? eu só quero saber",
+    },
     profile_image_link: {
       type: String,
       default:
