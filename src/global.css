@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+  .dark {
+    --gradient: #642b73;
+
+    --background: 305 29.25% 2.48%;
+    --foreground: 305 4.5% 96.55%;
+
+    --muted: 305 22.5% 9.3%;
+    --muted-foreground: 305 4.5% 53.1%;
+
+    --popover: 305 56% 4.03%;
+    --popover-foreground: 305 4.5% 96.55%;
+
+    --card: 305 90% 8.3%;
+    --card-foreground: 305 4.5% 96.55%;
+
+    --border: 305 22.5% 9.3%;
+    --input: 305 22.5% 9.3%;
+
+    --primary: 305 45% 31%;
+    --primary-foreground: 305 4.5% 96.55%;
+
+    --secondary: 305 22.5% 9.3%;
+    --secondary-foreground: 305 4.5% 96.55%;
+
+    --accent: 305 22.5% 9.3%;
+    --accent-foreground: 305 4.5% 96.55%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 305 4.5% 96.55%;
+
+    --ring: 305 45% 31%;
+  }
+}
+
+@layer base {
+  * {
+  }
+  body {
+  }
+}
+
+@font-face {
+  font-family: "Habbo";
+  src: url("/src/assets/habbo-font/HabboFont.ttf") format("truetype");
+}
