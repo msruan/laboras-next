@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { connectToDb } from "@/lib/utils";
+import { connectToDb, OPTIONS } from "@/lib/utils";
 import { IPost, Post } from "@/models/posts";
 import { NextApiRequest } from "next";
 
@@ -45,3 +45,5 @@ export const PATCH = async (request: any, { params }: any) => {
     return NextResponse.error();
   }
 };
+
+export {OPTIONS}
