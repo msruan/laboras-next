@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import mongoose from "mongoose";
 import cors from "./cors";
+import { NextResponse } from "next/server";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -37,4 +38,24 @@ export const OPTIONS = async (request: Request) => {
       },
     })
   );
+};
+
+export const DefaultResponse = (
+  request: Request,
+  responseBody: any,
+  status: number = 200
+) => {
+  return cors(
+    request,
+    new Response(JSON.stringify(responseBody), {
+      status: status,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  );
+};
+
+export const DefaultError = (request: Request) => {
+  return cors(request, NextResponse.error());
 };
