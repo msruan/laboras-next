@@ -17,7 +17,7 @@ export const POST = async (request: Request) => {
     console.log(
       "mana o perfil q to tentando criar eh " + JSON.stringify(profile)
     );
-    const previousUser = await Post.findOne({email : profile.email});
+    const previousUser = await Post.findOne({email : pro});
     const newUser = new Profile({
       email: profile.email,
       first_name: profile.first_name,
