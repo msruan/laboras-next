@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import mongoose from "mongoose";
+import cors from "./cors";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -25,3 +26,15 @@ export async function connectToDb() {
     throw new Error("Error connecting to database!" + error);
   }
 }
+
+export const OPTIONS = async (request: Request) => {
+  return cors(
+    request,
+    new Response("Hello browser!", {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  );
+};

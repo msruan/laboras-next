@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { connectToDb } from "@/lib/utils";
-import { Post } from "@/models/posts";
+import { connectToDb, OPTIONS } from "@/lib/utils";
+import { Post, IPost } from "@/models/posts";
 
 export const GET = async () => {
   try {
@@ -15,15 +15,17 @@ export const GET = async () => {
   }
 };
 
-export const POST = async (request: any, { params }: any) => {
+export const POST = async (request: Request) => {
   try {
     await connectToDb();
-    const { id } = params;
-
-    const post = await Post.findById(id);
+    const postSchema : IPost = await request.json();
+    const post = new Post(postSchema);
+    post.save();
     return NextResponse.json(post);
   } catch (err) {
     console.log(err);
     return NextResponse.error();
   }
 };
+
+export {OPTIONS}

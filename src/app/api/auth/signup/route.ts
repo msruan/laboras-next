@@ -1,6 +1,6 @@
 import { ISignupProfile } from "@/models/profiles";
 
-import { connectToDb } from "@/lib/utils";
+import { connectToDb, OPTIONS } from "@/lib/utils";
 import { Post } from "@/models/posts";
 import { IProfile, Profile } from "@/models/profiles";
 import { NextResponse } from "next/server";
@@ -30,6 +30,5 @@ export const POST = async (request: any) => {
   }
 };
 
-export const OPTIONS = async (request: any) => {
-  return NextResponse.json("Hello browser");
-};
+export { OPTIONS };
+
