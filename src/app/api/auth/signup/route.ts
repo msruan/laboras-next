@@ -1,11 +1,15 @@
 import { ISignupProfile } from "@/models/profiles";
 
-import { connectToDb, OPTIONS } from "@/lib/utils";
-import { Post } from "@/models/posts";
+import {
+  connectToDb,
+  DefaultError,
+  DefaultResponse,
+  OPTIONS,
+} from "@/lib/utils";
 import { IProfile, Profile } from "@/models/profiles";
 import { NextResponse } from "next/server";
 
-export const POST = async (request: any) => {
+export const POST = async (request: Request) => {
   try {
     await connectToDb();
     const profile: ISignupProfile = await request.json();
@@ -23,12 +27,11 @@ export const POST = async (request: any) => {
     const user = await newUser.save();
     console.log("novo usuario criado com sucesso!" + user);
 
-    return NextResponse.json({ sucess: true });
+    return DefaultResponse(request, { sucess: true });
   } catch (err) {
     console.log(err);
-    return NextResponse.error();
+    return DefaultError(request);
   }
 };
 
 export { OPTIONS };
-
