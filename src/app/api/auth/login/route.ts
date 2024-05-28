@@ -4,12 +4,12 @@ interface CredentialsLogin {
 }
 
 import cors from "@/lib/cors";
-import { connectToDb, OPTIONS } from "@/lib/utils";
+import { connectToDb, DefaultError, OPTIONS } from "@/lib/utils";
 import { Post } from "@/models/posts";
 import { IProfile, Profile } from "@/models/profiles";
 import { NextResponse } from "next/server";
 
-export const POST = async (request: any) => {
+export const POST = async (request: Request) => {
   try {
     await connectToDb();
     const credentials: CredentialsLogin = await request.json();
@@ -20,6 +20,7 @@ export const POST = async (request: any) => {
     console.log("mano o user eh" + user);
     if (!user || user.password !== password) {
       return cors(
+        request,
         new Response(
           JSON.stringify({ error: "Email or password incorrects!" }),
           {
@@ -32,6 +33,7 @@ export const POST = async (request: any) => {
       );
     }
     return cors(
+      request,
       new Response(JSON.stringify({ token: `${user["token"]}` }), {
         status: 200,
         headers: {
@@ -39,10 +41,9 @@ export const POST = async (request: any) => {
         },
       })
     );
-    return NextResponse.json();
   } catch (err) {
     console.log(err);
-    return NextResponse.error();
+    return DefaultError(request);
   }
 };
 
