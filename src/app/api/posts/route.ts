@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { connectToDb, OPTIONS } from "@/lib/utils";
+import { connectToDb, DefaultResponse, OPTIONS } from "@/lib/utils";
 import { Post, IPost } from "@/models/posts";
 
 export const GET = async () => {
@@ -15,13 +15,15 @@ export const GET = async () => {
   }
 };
 
+
+
 export const POST = async (request: Request) => {
   try {
     await connectToDb();
     const postSchema : IPost = await request.json();
     const post = new Post(postSchema);
     post.save();
-    return NextResponse.json(post);
+    return DefaultResponse(request, post);
   } catch (err) {
     console.log(err);
     return NextResponse.error();

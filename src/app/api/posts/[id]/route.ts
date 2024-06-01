@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { connectToDb, OPTIONS } from "@/lib/utils";
+import { connectToDb, DefaultResponse, OPTIONS } from "@/lib/utils";
 import { IPost, Post } from "@/models/posts";
 import { NextApiRequest } from "next";
 
@@ -39,7 +39,7 @@ export const PATCH = async (request: any, { params }: any) => {
     console.log(postAtualizado);
 
     const post = await Post.findByIdAndUpdate(id, postAtualizado);
-    return NextResponse.json(post);
+    return DefaultResponse(request, post);
   } catch (err) {
     console.log(err);
     return NextResponse.error();

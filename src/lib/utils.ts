@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import mongoose from "mongoose";
 import cors from "./cors";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -28,17 +28,16 @@ export async function connectToDb() {
   }
 }
 
-export const OPTIONS = async (request: Request) => {
-  return cors(
-    request,
-    new Response("Hello browser!", {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-  );
+export const corsHeaders = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
+
+export async function OPTIONS(req: NextRequest) {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
 
 export const DefaultResponse = (
   request: Request,
@@ -49,9 +48,7 @@ export const DefaultResponse = (
     request,
     new Response(JSON.stringify(responseBody), {
       status: status,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: corsHeaders,
     })
   );
 };
