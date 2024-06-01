@@ -8,7 +8,6 @@ import {
 } from "@/lib/utils";
 import { IProfile, Profile } from "@/models/profiles";
 import { NextResponse } from "next/server";
-import { Post } from "@/models/posts";
 
 export const POST = async (request: Request) => {
   try {
@@ -17,7 +16,6 @@ export const POST = async (request: Request) => {
     console.log(
       "mana o perfil q to tentando criar eh " + JSON.stringify(profile)
     );
-    const previousUser = await Post.findOne({email : profile.email});
     const newUser = new Profile({
       email: profile.email,
       first_name: profile.first_name,
@@ -25,8 +23,6 @@ export const POST = async (request: Request) => {
       username: profile.username,
       password: profile.password,
     });
-
-    
 
     const user = await newUser.save();
     console.log("novo usuario criado com sucesso!" + user);
