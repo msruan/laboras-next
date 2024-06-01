@@ -4,7 +4,7 @@ interface CredentialsLogin {
 }
 
 import cors from "@/lib/cors";
-import { connectToDb, DefaultError, OPTIONS } from "@/lib/utils";
+import { connectToDb, DefaultError, DefaultResponse, OPTIONS } from "@/lib/utils";
 import { Post } from "@/models/posts";
 import { IProfile, Profile } from "@/models/profiles";
 import { NextResponse } from "next/server";
@@ -32,15 +32,7 @@ export const POST = async (request: Request) => {
         )
       );
     }
-    return cors(
-      request,
-      new Response(JSON.stringify({ token: `${user["token"]}` }), {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-    );
+    return DefaultResponse(request, {token: `${user["token"]}`});
   } catch (err) {
     console.log(err);
     return DefaultError(request);
