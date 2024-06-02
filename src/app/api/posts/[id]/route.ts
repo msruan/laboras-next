@@ -37,8 +37,9 @@ export const PATCH = async (request: any, { params }: any) => {
     const { id } = params;
     const postAtualizado: IPost = await request.json();
     console.log(postAtualizado);
+    console.log("o id foi: ", id);
 
-    const post = await Post.findByIdAndUpdate(id, postAtualizado);
+    const post = await Post.findByIdAndUpdate(id, { $set: postAtualizado });
     return DefaultResponse(request, post);
   } catch (err) {
     console.log(err);
@@ -46,4 +47,4 @@ export const PATCH = async (request: any, { params }: any) => {
   }
 };
 
-export {OPTIONS}
+export { OPTIONS };
