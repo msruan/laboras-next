@@ -9,7 +9,7 @@ export const GET = async (request: Request, { params }: any) => {
   try {
     await connectToDb();
     const { username } = params;
-    console.log("o username eh ", username);
+    console.log("o username eh", username);
 
     const user = await Profile.findOne({ username: username });
     return cors(
