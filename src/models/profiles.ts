@@ -43,7 +43,6 @@ const ProfileSchema = new mongoose.Schema<IProfile>(
     },
     password: {
       type: String,
-      required: true,
     },
     token: {
       type: String,
