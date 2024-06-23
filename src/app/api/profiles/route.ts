@@ -1,14 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import { connectToDb, OPTIONS } from "@/lib/utils";
-import { Profile } from "@/models/profiles";
-import cors from "@/lib/cors";
+import cors from '@/lib/cors';
+import { connectToDb, OPTIONS } from '@/lib/utils';
+import { Profile } from '@/models/profiles';
 
 export const GET = async (request: Request) => {
   try {
     await connectToDb();
 
-    const users = await Profile.find();
+    const users = await (await Profile()).find();
     return cors(
       request,
       new Response(JSON.stringify(users), {
