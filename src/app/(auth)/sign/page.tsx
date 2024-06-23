@@ -1,25 +1,19 @@
 // import { Login } from "@/actions/AuthAction";
 // import { GetProfileByEmail } from "@/actions/ProfileAction";
 
-import { SubmitButton } from '@/components/login/SubmitButton';
-// import { useAuth } from "@/context/AuthContext";
-import { Button } from '@/components/ui/button';
+import { SubmitButton } from '@/components/sign/SubmitButton';
 import {
     Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
 } from '@/components/ui/card';
 import { auth } from '@/lib/auth';
-import { GithubLogin, Logout } from '@/services/auth';
+import { GithubLogin } from '@/services/auth';
 
 export default async function LoginPage() {
   const session = await auth();
   console.log(session);
   return (
     <div>
-      {session?.user && (
-        <form action={Logout} className="w-full flex justify center">
-          <Button>Logout</Button>
-        </form>
-      )}
+     
       <form action={GithubLogin}>
         <Card className="w-full max-w-md text-wrap">
           <CardHeader>
