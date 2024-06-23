@@ -1,10 +1,13 @@
 "use client";
 
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useFormStatus } from "react-dom";
-import { Button } from "../ui/button";
+import { Session } from 'next-auth';
+import { useFormStatus } from 'react-dom';
 
-export function SubmitButton() {
+import { GitHubLogoIcon, ReloadIcon } from '@radix-ui/react-icons';
+
+import { Button } from '../ui/button';
+
+export function SubmitButton({ session }: { session: Session | null }) {
   const { pending } = useFormStatus();
   return (
     <>
@@ -14,8 +17,13 @@ export function SubmitButton() {
           Entrando...
         </Button>
       ) : (
-        <Button type="submit" className="mt-2">
-          Entrar
+        <Button
+          variant="outline"
+          disabled={session?.user !== undefined}
+          className="mt-2"
+        >
+          <GitHubLogoIcon className="mr-2" />
+          Entrar com o GitHub
         </Button>
       )}
     </>
