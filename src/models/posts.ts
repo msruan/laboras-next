@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface IPost {
   id: string;
@@ -33,4 +33,6 @@ const PostSchema = new mongoose.Schema<IPost>(
   { timestamps: true }
 );
 
-export const Post = mongoose.models?.Post || mongoose.model("Post", PostSchema);
+// export const Post = mongoose.models?.Post || mongoose.model("Post", PostSchema);
+export const Post = async () =>
+  (await mongoose.models?.Post) || (await mongoose.model("Post", PostSchema));
