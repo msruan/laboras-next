@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import GithubProvider from "next-auth/providers/github";
-import { signWithGithub } from "./database";
+import NextAuth from 'next-auth';
+import GithubProvider from 'next-auth/providers/github';
+
+import { signWithGithub } from './database';
 
 export const {
   handlers: { GET, POST },
@@ -21,7 +21,9 @@ export const {
       console.log(account);
       console.log(profile);
       if (account?.provider === "github") {
-        return await signWithGithub(profile!);
+        if (process.env.MEMBERS?.split(",").includes(profile?.login as string))
+          return await signWithGithub(profile!);
+        else return false;
       }
       return true;
     },
