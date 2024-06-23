@@ -4,6 +4,9 @@ export default auth((req) => {
   if (!req.auth && req.nextUrl.pathname !== "/sign") {
     const newUrl = new URL("/sign", req.nextUrl.origin);
     return Response.redirect(newUrl);
+  } else if (req.auth && req.nextUrl.pathname === "/sign") {
+    const newUrl = new URL("/", req.nextUrl.origin);
+    return Response.redirect(newUrl);
   }
 });
 

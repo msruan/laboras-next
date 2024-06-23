@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+
 export interface IProfile {
   id: string;
   first_name: string;
@@ -34,7 +35,6 @@ const ProfileSchema = new mongoose.Schema<IProfile>(
     },
     last_name: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
