@@ -60,5 +60,6 @@ const ProfileSchema = new mongoose.Schema<IProfile>(
   },
   { timestamps: true }
 );
-export const Profile =
-  mongoose.models?.Profile || mongoose.model("Profile", ProfileSchema);
+export const Profile = async () =>
+  (await mongoose.models?.Profile) ||
+  (await mongoose.model("Profile", ProfileSchema));

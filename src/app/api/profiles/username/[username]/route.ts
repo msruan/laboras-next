@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { headers } from 'next/headers';
+import { NextResponse } from 'next/server';
 
-import { connectToDb, OPTIONS } from "@/lib/utils";
-import { Profile } from "@/models/profiles";
-import { headers } from "next/headers";
-import cors from "@/lib/cors";
+import cors from '@/lib/cors';
+import { connectToDb, OPTIONS } from '@/lib/utils';
+import { Profile } from '@/models/profiles';
 
 export const GET = async (request: Request, { params }: any) => {
   try {
@@ -11,7 +11,7 @@ export const GET = async (request: Request, { params }: any) => {
     const { username } = params;
     console.log("o username eh", username);
 
-    const user = await Profile.findOne({ username: username });
+    const user = await (await Profile()).findOne({ username: username });
     return cors(
       request,
       new Response(JSON.stringify(user), {
