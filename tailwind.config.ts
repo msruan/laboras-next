@@ -1,13 +1,12 @@
-import type { Config } from "tailwindcss"
-
-const config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -18,7 +17,23 @@ const config = {
       },
     },
     extend: {
+      spacing: {
+        noavatar: "calc(100% - 1rem)",
+        custom: "80%",
+        "half-vh": "50vh",
+        icon: "1rem",
+      },
+      gridTemplateColumns: {
+        // Simple 16 column grid
+        custom: "auto 1fr",
+
+        // Complex site-specific column configuration
+        // 'footer': '200px minmax(900px, 1fr) 100px',
+      },
       colors: {
+        rebeccapurple: "rgba(123, 26, 242, 0.1)",
+        biancapurple: "rgb(110,82,162)",
+        rebeccapurple2: "rgba(123, 26, 242, 0.2)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -72,9 +87,10 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      fontFamily: {
+        sans: ["Helvetica", "Arial", "sans-serif"],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
-
-export default config
+};

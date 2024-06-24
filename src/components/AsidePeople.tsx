@@ -11,7 +11,7 @@ type AsideFollowersProps = {
 };
 
 export const AsidePeople = async () => {
-  const users: IProfile[] = (await getUsers()).data;
+  const users: IProfile[] =await (await getUsers()).json();
 
   return (
     <>

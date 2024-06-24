@@ -1,16 +1,13 @@
-import { Button } from '@/components/ui/button';
+import { MainPosts } from '@/components/MainPosts';
 import { auth } from '@/lib/auth';
-import { Logout } from '@/services/auth';
+import type { Metadata } from 'next'
 
+export const metadata: Metadata = {
+  title: 'Laboras',
+  description: 'The worst social network :)',
+}
 export default async function HomePage() {
-  const session = await auth();
   return (
-    <div>
-      {session?.user && (
-        <form action={Logout} className="w-full flex justify center">
-          <Button>Logout</Button>
-        </form>
-      )}
-    </div>
+   <MainPosts/>
   );
 }
