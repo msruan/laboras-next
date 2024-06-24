@@ -1,4 +1,5 @@
 import { NextApiRequest } from 'next';
+import { revalidateTag } from 'next/cache';
 import { NextResponse } from 'next/server';
 
 import { connectToDb, DefaultResponse, OPTIONS } from '@/lib/utils';
@@ -23,8 +24,10 @@ export const DELETE = async (request: NextApiRequest, { params }: any) => {
     const { id } = params;
 
     const post = await (await Post()).findByIdAndDelete(id);
-    if (post) return NextResponse.json({ sucess: true });
-    else return NextResponse.json({ sucess: false });
+    if (post) {
+      revalidateTag("all-posts");
+      return NextResponse.json({ sucess: true });
+    } else return NextResponse.json({ sucess: false });
   } catch (err) {
     console.log(err);
     return NextResponse.error();
@@ -39,6 +42,7 @@ export const PATCH = async (request: any, { params }: any) => {
     const post = await (
       await Post()
     ).findByIdAndUpdate(id, { $set: postAtualizado });
+    revalidateTag("all-posts");
     return DefaultResponse(request, post);
   } catch (err) {
     console.log(err);

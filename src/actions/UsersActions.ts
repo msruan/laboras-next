@@ -1,8 +1,15 @@
-import { AxiosResponse } from 'axios';
+import { apiURL } from '@/config/api';
 
-import { api } from '@/config/api';
-import { IProfile } from '@/models/profiles';
+export function getUsers() {
+  return fetch(`${apiURL}/profiles`, {
+    method: "GET",
+    next: { tags: ["all-posts"] },
+  });
+}
 
-export async function getUsers(): Promise<AxiosResponse<IProfile[]>> {
-  return await api.get(`/profiles`);
+export function getUserByEmail(email : string) {
+  return fetch(`${apiURL}/profiles/email/${email}`, {
+    method: "GET",
+    next: { tags: [`user-${email}`] },
+  });
 }
