@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export interface IPost {
-  id: string;
+  _id: string;
   user_id: string;
   content: string;
   createdAt: Date;
@@ -9,6 +9,20 @@ export interface IPost {
   deslikes: number;
   linked_to: string | null;
 }
+export type PostCreate = {
+  user_id: string;
+  content: string;
+  linked_to: string | null;
+};
+
+export type PostUpdate = {
+  _id: string;
+  data: {
+    content?: string;
+    likes?: number;
+    deslikes?: number;
+  };
+};
 
 const PostSchema = new mongoose.Schema<IPost>(
   {
