@@ -98,6 +98,7 @@ export const Post = ({
               </Avatar>
             </Link>
 
+
             <PostContent
               onClick={onClick}
               perfil={perfil!}

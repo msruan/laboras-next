@@ -12,7 +12,7 @@ export const POST = async (request: Request) => {
 
     const oldAccount = await profileDB.findOne({ username: profile?.login });
     const hasAccount = oldAccount !== undefined && oldAccount !== null;
-    if (hasAccount) return true;
+    if (hasAccount) return NextResponse.json({response :true});
 
     const profileSchema = {
       first_name: profile.name,
