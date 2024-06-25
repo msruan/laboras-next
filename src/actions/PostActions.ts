@@ -1,5 +1,6 @@
 "use server"
-import { apiURL } from '@/config/api';
+import { apiURL as server} from '@/config/api';
+const apiURL = server();
 import {IPost, PostCreate, PostUpdate} from '@/models/posts';
 
 export async function addPost(post: PostCreate){

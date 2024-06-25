@@ -1,5 +1,5 @@
-import { apiURL } from '@/config/api';
-
+import { apiURL as server } from '@/config/api';
+const apiURL = server();
 export function getUsers() {
   return fetch(`${apiURL}/profiles`, {
     method: "GET",
