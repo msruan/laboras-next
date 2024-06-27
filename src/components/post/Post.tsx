@@ -1,20 +1,21 @@
 "use client";
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
 
-import { updatePost as handleUpdate } from '@/actions/PostActions';
-import { IPost } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import { updatePost as handleUpdate } from "@/actions/PostActions";
+import { IPost } from "@/models/posts";
+import { IProfile } from "@/models/profiles";
 
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Button } from '../ui/button';
-import { Card, CardFooter } from '../ui/card';
-import { Textarea } from '../ui/textarea';
-import { Icons } from './Icons';
-import { PostContent } from './PostContent';
-import { PostMenu } from './PostMenu';
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Card, CardFooter } from "../ui/card";
+import { Textarea } from "../ui/textarea";
+import { Icons } from "./Icons";
+import { PostContent } from "./PostContent";
+import { PostMenu } from "./PostMenu";
 
 type IPostProps = {
   post: IPost;
@@ -34,17 +35,27 @@ export const Post = ({
   const local = usePathname();
   const router = useRouter();
 
-  function handleSaveEdit() {
+  async function handleSaveEdit() {
     if (
       textareaRef.current !== null &&
       textareaRef.current.value !== post.content
     ) {
-      handleUpdate({
-        _id: post._id!,
-        data: { content: textareaRef.current.value },
-      });
-    }
-    setEditMode(!editMode);
+      setEditMode(!editMode);
+      toast.promise(
+        handleUpdate({
+          _id: post._id!,
+          data: { content: textareaRef.current.value },
+        }),
+        {
+          loading: "Atualizando post...",
+          success: (data) => {
+            router.refresh();
+            return `Post atualizado!`;
+          },
+          error: "Erro ao atualizar post!",
+        }
+      );
+    } else setEditMode(!editMode);
   }
 
   const onClick = () => {
@@ -97,7 +108,6 @@ export const Post = ({
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </Link>
-
 
             <PostContent
               onClick={onClick}
