@@ -1,9 +1,9 @@
-import { NextApiRequest } from 'next';
-import { revalidateTag } from 'next/cache';
-import { NextResponse } from 'next/server';
+import { NextApiRequest } from "next";
+import { revalidateTag } from "next/cache";
+import { NextResponse } from "next/server";
 
-import { connectToDb, DefaultResponse, OPTIONS } from '@/lib/utils';
-import { IPost, Post } from '@/models/posts';
+import { connectToDb, DefaultResponse, OPTIONS } from "@/lib/utils";
+import { IPost, Post } from "@/models/posts";
 
 export const GET = async (request: NextApiRequest, { params }: any) => {
   try {
@@ -39,9 +39,8 @@ export const PATCH = async (request: any, { params }: any) => {
     await connectToDb();
     const { id } = params;
     const postAtualizado: IPost = await request.json();
-    const post = await (
-      await Post()
-    ).findByIdAndUpdate(id, { $set: postAtualizado });
+    const post = await (await Post()).findByIdAndUpdate(id, postAtualizado);
+    console.log("mana eu atualizei");
     revalidateTag("all-posts");
     return DefaultResponse(request, post);
   } catch (err) {
