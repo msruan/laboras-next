@@ -1,10 +1,10 @@
 "use client";
-import { useState } from 'react';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import { updatePost as handleUpdate } from '@/actions/PostActions';
-import { IPost } from '@/models/posts';
-import { FaceFrownIcon, StarIcon } from '@heroicons/react/16/solid';
-import { useRouter } from 'next/navigation';
+import { updatePost as handleUpdate } from "@/actions/PostActions";
+import { IPost } from "@/models/posts";
+import { FaceFrownIcon, StarIcon } from "@heroicons/react/16/solid";
 
 type IconsProps = {
   post: IPost;
@@ -32,7 +32,10 @@ export const Icons = ({ post, fullPage }: IconsProps) => {
       }
     }
     setIsLiked(!isLiked);
-    await handleUpdate({ _id: post._id!, data: { likes: post.likes } });
+    await handleUpdate({
+      _id: post._id!,
+      data: { likes: post.likes, deslikes: post.deslikes },
+    });
   }
 
   function handleDeslike() {
@@ -52,7 +55,10 @@ export const Icons = ({ post, fullPage }: IconsProps) => {
       }
     }
     setIsDesliked(!isDesliked);
-    handleUpdate({ _id: post._id!, data: { deslikes: post.deslikes } });
+    handleUpdate({
+      _id: post._id!,
+      data: { likes: post.likes, deslikes: post.deslikes },
+    });
   }
   return (
     <>
