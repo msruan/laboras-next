@@ -1,9 +1,9 @@
-import { NextApiRequest } from "next";
-import { revalidateTag } from "next/cache";
-import { NextResponse } from "next/server";
+import { NextApiRequest } from 'next';
+import { revalidateTag } from 'next/cache';
+import { NextResponse } from 'next/server';
 
-import { connectToDb, DefaultResponse, OPTIONS } from "@/lib/utils";
-import { IPost, Post } from "@/models/posts";
+import { connectToDb, DefaultResponse, OPTIONS } from '@/lib/utils';
+import { IPost, Post } from '@/models/posts';
 
 export const GET = async (request: NextApiRequest, { params }: any) => {
   try {
@@ -11,7 +11,8 @@ export const GET = async (request: NextApiRequest, { params }: any) => {
     const { id } = params;
 
     const post = await (await Post()).findById(id);
-    return NextResponse.json(post);
+    const children = await (await Post()).find({ linked_to: id });
+    return NextResponse.json({ post: post, children: children });
   } catch (err) {
     console.log(err);
     return NextResponse.error();

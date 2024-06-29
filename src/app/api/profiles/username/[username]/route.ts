@@ -3,7 +3,8 @@ import { NextResponse } from 'next/server';
 
 import cors from '@/lib/cors';
 import { connectToDb, OPTIONS } from '@/lib/utils';
-import { Profile } from '@/models/profiles';
+import { IPost, Post } from '@/models/posts';
+import { IProfile, Profile } from '@/models/profiles';
 
 export const GET = async (request: Request, { params }: any) => {
   try {
@@ -11,10 +12,14 @@ export const GET = async (request: Request, { params }: any) => {
     const { username } = params;
     console.log("o username eh", username);
 
-    const user = await (await Profile()).findOne({ username: username });
+    const user: IProfile | null = await (
+      await Profile()
+    ).findOne({ username: username });
+    if (!user) throw new Error("User not found!");
+    const posts: IPost[] = await (await Post()).find({ user_id: user._id });
     return cors(
       request,
-      new Response(JSON.stringify(user), {
+      new Response(JSON.stringify({ user: user, posts: posts }), {
         status: 200,
         headers: {
           "Content-Type": "application/json",

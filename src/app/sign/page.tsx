@@ -7,19 +7,17 @@ import {
 } from '@/components/ui/card';
 import { auth } from '@/lib/auth';
 import { GithubLogin } from '@/services/auth';
-import type { Metadata } from 'next'
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-
-  title: 'Sign',
-  description: 'Bro, just login it',
-}
+  title: "Sign",
+  description: "Bro, just login it",
+};
 export default async function LoginPage() {
   const session = await auth();
-  console.log(session);
   return (
     <div>
-     
       <form action={GithubLogin}>
         <Card className="w-full max-w-md text-wrap">
           <CardHeader>
