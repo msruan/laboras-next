@@ -59,7 +59,7 @@ export const Post = ({
   }
 
   const onClick = () => {
-    const link = `/posts/${post._id}`;
+    const link = `/p/${post._id}`;
     if (local != link) {
       router.push(link);
     }
