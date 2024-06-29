@@ -1,21 +1,21 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import { toast } from "sonner";
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
+import { toast } from 'sonner';
 
-import { updatePost as handleUpdate } from "@/actions/PostActions";
-import { IPost } from "@/models/posts";
-import { IProfile } from "@/models/profiles";
+import { updatePost as handleUpdate } from '@/actions/PostActions';
+import { IPost } from '@/models/posts';
+import { IProfile } from '@/models/profiles';
 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import { Card, CardFooter } from "../ui/card";
-import { Textarea } from "../ui/textarea";
-import { Icons } from "./Icons";
-import { PostContent } from "./PostContent";
-import { PostMenu } from "./PostMenu";
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Button } from '../ui/button';
+import { Card, CardFooter } from '../ui/card';
+import { Textarea } from '../ui/textarea';
+import { Icons } from './Icons';
+import { PostContent } from './PostContent';
+import { PostMenu } from './PostMenu';
 
 type IPostProps = {
   post: IPost;
@@ -96,7 +96,7 @@ export const Post = ({
       ) : (
         <>
           <div className="flex w-full pt-3 pl-5 pr-3 h-fit">
-            <Link href={`/posts/profile/${perfil?.username}`}>
+            <Link href={`/u/${perfil?.username}`}>
               <Avatar className="w-12 h-12 rounded-full">
                 <AvatarImage
                   src={
@@ -104,7 +104,6 @@ export const Post = ({
                     "https://p2.trrsf.com/image/fget/cf/1200/1600/middle/images.terra.com/2023/07/31/pedro-flamengo-uv5ta7zqn5us.jpg"
                   }
                 />
-
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </Link>

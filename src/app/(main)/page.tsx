@@ -1,13 +1,14 @@
+import { getPosts } from '@/actions/PostActions';
 import { MainPosts } from '@/components/MainPosts';
-import { auth } from '@/lib/auth';
-import type { Metadata } from 'next'
+import { IPost } from '@/models/posts';
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Laboras',
-  description: 'The worst social network :)',
-}
+  title: "Laboras",
+  description: "The worst social network :)",
+};
 export default async function HomePage() {
-  return (
-   <MainPosts/>
-  );
+  const posts: IPost[] = JSON.parse(JSON.stringify(await getPosts()));
+  return <MainPosts posts={posts} />;
 }
