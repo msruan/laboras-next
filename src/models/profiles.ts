@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import { IPost } from './posts';
+
 export interface IProfile {
   _id: string;
   first_name: string;
@@ -8,6 +10,7 @@ export interface IProfile {
   token: string;
   email: string;
   password: string;
+  posts: IPost[];
   profile_image_link?: string;
   bio?: string;
 }
