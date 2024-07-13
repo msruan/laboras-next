@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { Header } from '@/components/Header';
-import { MainPosts } from '@/components/MainPosts';
+import { PostsContainer } from '@/components/PostsContainer';
 import { Profile } from '@/components/profile/Profile';
 import { api } from '@/config/api';
 import { auth } from '@/lib/auth';
@@ -28,7 +28,7 @@ const UserPage: FC<Props> = async ({ params }) => {
         <Header title={profile.username} />
         <Profile profile={profile!} email={session?.user?.email!} />
       </div>
-      <MainPosts textbox={false} posts={posts} />
+      <PostsContainer textbox={false} posts={posts} />
     </div>
   );
 };
