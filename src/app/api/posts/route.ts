@@ -9,7 +9,8 @@ export const GET = async () => {
     await connectToDb();
 
     const posts : IPost[] = await  (await Post()).find();
-    return NextResponse.json(posts.reverse());
+
+    return NextResponse.json(posts.filter((post)=>post.linked_to===null).reverse());
   } catch (err) {
     console.log(err);
     return NextResponse.error();

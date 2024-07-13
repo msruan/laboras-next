@@ -8,12 +8,14 @@ import { IProfile } from '@/models/profiles';
 import { Post } from './post/Post';
 import { TextBox } from './TextBox';
 
-export const MainPosts = async ({
+export const PostsContainer = async ({
   posts,
   textbox = true,
+    linkedTo = null
 }: {
   posts: IPost[];
   textbox?: boolean;
+  linkedTo?: string | null;
 }) => {
   const profiles: IProfile[] = JSON.parse(
     JSON.stringify(await (await getUsers()).json())
@@ -26,7 +28,7 @@ export const MainPosts = async ({
   );
   return (
     <div className="flex flex-col h-full max-xl:border-0 gap-2 pl-3 pr-3 border-rebeccapurple2 border-r-2 border-l-2">
-      {textbox && <TextBox profile={perfil} linkedTo={null} />}
+      {textbox && <TextBox profile={perfil} linkedTo={linkedTo} />}
       <Toaster richColors />
       {posts!.map((post) => (
         <Post

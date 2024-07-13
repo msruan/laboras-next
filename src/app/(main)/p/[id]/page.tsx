@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { Header } from "@/components/Header";
-import { MainPosts } from "@/components/MainPosts";
+import { PostsContainer } from "@/components/PostsContainer";
 import Post from "@/components/post/Post";
 import { api } from "@/config/api";
 import { IPost } from "@/models/posts";
@@ -31,7 +31,7 @@ const PostPage: FC<Props> = async ({ params }) => {
     <div className="flex flex-col gap-2">
       <Header title="Post" />
       <Post perfil={profile} post={post} fullPage={true} fullBorder={false} />
-      <MainPosts posts={children} />
+      <PostsContainer linkedTo={post._id} posts={children} />
     </div>
   );
 };
