@@ -9,9 +9,10 @@ import { Card, CardContent, CardTitle } from '../ui/card';
 type IProfileProps = {
   profile: IProfile;
   email: string;
+  postsCount : number;
 };
 
-export const Profile = ({ profile, email }: IProfileProps) => {
+export const Profile = ({ profile, email, postsCount }: IProfileProps) => {
   const isCurrentUserProfile = profile.email === email;
   return (
     <Card className="flex max-sm:hidden flex-row items-center gap-16 p-9 px-20 rounded-none bg-transparent border-r-0 border-l-0 border-rebeccapurple2">
@@ -42,7 +43,7 @@ export const Profile = ({ profile, email }: IProfileProps) => {
         <CardContent className="flex flex-col gap-6 p-0 items-center">
           <div className="flex flex-row w-full gap-10 p-0 justify-center">
             <p>
-              300 <strong>publicações</strong>
+              {postsCount} <strong>publicações</strong>
             </p>
           </div>
 
