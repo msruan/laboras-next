@@ -21,9 +21,26 @@ export const {
       console.log(account);
       console.log(profile);
       if (account?.provider === "github") {
-        if (process.env.MEMBERS?.split(",").includes(profile?.login as string))
+        const members = process.env.MEMBERS_ID?.split(",");
+        console.log("mano os membros sao ", members);
+        let isMember = false;
+        members?.forEach((id) => {
+          console.log("entrei no loop com ",String(id));
+          console.log("e bicho, o profile id eh ",String(profile?.id));
+          if (String(id) === String(profile?.id)) {
+            isMember = true;
+          }
+        });
+        if (isMember) {
           return (await api.post("/sign", profile!))?.data?.response;
-        else return false;
+        } else {
+          console.log();
+          console.log("membros : ", process.env.MEMBERS_ID?.split(","));
+          console.log("o id eh ", profile?.id);
+          console.log("eh membro? ", isMember);
+          console.log();
+          return false;
+        }
       }
       return true;
     },
