@@ -12,7 +12,10 @@ export async function addPost(post: PostCreate) {
   return response.ok;
 }
 
-export async function updatePost(post: PostUpdate) {
+export async function updatePost(post: {
+  data:any;
+  _id: string
+}) {
   const response = await fetch(`${apiURL}/posts/${post._id}`, {
     method: "PATCH",
     body: JSON.stringify(post.data),

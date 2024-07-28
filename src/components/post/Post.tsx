@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
@@ -22,18 +23,21 @@ type IPostProps = {
   perfil: IProfile;
   fullPage: boolean;
   fullBorder: boolean;
+  userId: string;
 };
 
 export const Post = ({
   post,
   perfil,
   fullPage = false,
+  userId,
   fullBorder = false,
 }: IPostProps) => {
   const [editMode, setEditMode] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const local = usePathname();
   const router = useRouter();
+  console.log("rpz, sou o post e recebi o id ", userId);
 
   async function handleSaveEdit() {
     if (
@@ -67,17 +71,15 @@ export const Post = ({
 
   return (
     <Card
-      className={`flex flex-col
-          ${fullPage ? "" : "cursor-pointer"}
-    ${fullPage || editMode ? "bg-transparent" : "h-full bg-rebeccapurple"}
-    ${
-      editMode
-        ? "border-t-0 border-l-0 border-r-0 border-b-0 rounded-none"
-        : fullBorder
-        ? "border-purple-400 "
-        : "border-t-0 border-l-0 border-r-0 border-b-purple-400 rounded-none"
-    }
-    `}
+      className={clsx("flex flex-col", {
+        "cursor-pointer": fullPage,
+        "bg-transparent": fullPage || editMode,
+        "h-full bg-rebeccapurple": !(fullPage || editMode),
+        "border-t-0 border-l-0 border-r-0 border-b-0 rounded-none": editMode,
+        "border-purple-400 ": !editMode && fullBorder,
+        "border-t-0 border-l-0 border-r-0 border-b-purple-400 rounded-none":
+          !editMode && !fullBorder,
+      })}
     >
       {editMode ? (
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 border-t-0 border-b-0 border-l-0 border-r-0">
@@ -110,6 +112,7 @@ export const Post = ({
 
             <PostContent
               onClick={onClick}
+              userId={userId}
               perfil={perfil!}
               post={post}
               fullPage={fullPage}
@@ -123,8 +126,10 @@ export const Post = ({
       ${fullPage ? " w-1/4 max-md:w-full" : " w-1/4 max-md:w-full"}
       `}
               >
-                <Icons post={post} fullPage={fullPage}></Icons>
-                <PostMenu handleEdit={setEditMode} postId={post._id} />
+                <Icons userId={userId} post={post} fullPage={fullPage}></Icons>
+                {userId === post.user_id && (
+                  <PostMenu handleEdit={setEditMode} postId={post._id} />
+                )}
               </div>
             </CardFooter>
           )}

@@ -1,12 +1,17 @@
 // import { Login } from "@/actions/AuthAction";
 // import { GetProfileByEmail } from "@/actions/ProfileAction";
 
-import { SubmitButton } from '@/components/sign/SubmitButton';
+import { SubmitButton } from "@/components/sign/SubmitButton";
 import {
-    Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
-} from '@/components/ui/card';
-import { auth } from '@/lib/auth';
-import { GithubLogin } from '@/services/auth';
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { auth } from "@/lib/auth";
+import { GithubLogin } from "@/services/auth";
 
 import type { Metadata } from "next";
 
@@ -25,7 +30,7 @@ export default async function LoginPage() {
               Entre por sua conta em risco
             </CardTitle>
             <CardDescription className="text-purple-300">
-              Primeira vez aqui? É o mesmo botão
+              Novo por aqui? É o mesmo botão
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">

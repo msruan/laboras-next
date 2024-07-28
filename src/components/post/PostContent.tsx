@@ -1,15 +1,17 @@
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-import Link from 'next/link';
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import Link from "next/link";
 
-import { IPost } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import useClient from "@/hooks/use-client";
+import { IPost } from "@/models/posts";
+import { IProfile } from "@/models/profiles";
 
-import { CardContent } from '../ui/card';
-import { Icons } from './Icons';
-import { PostMenu } from './PostMenu';
+import { CardContent } from "../ui/card";
+import { Icons } from "./Icons";
+import { PostMenu } from "./PostMenu";
 
 interface IPostContentProps {
+  userId: string;
   perfil: IProfile;
   post: IPost;
   fullPage: boolean;
@@ -19,11 +21,13 @@ interface IPostContentProps {
 
 export function PostContent({
   perfil,
+  userId,
   post,
   fullPage,
   handleEdit,
   onClick,
 }: IPostContentProps) {
+  const isClient = useClient();
   return (
     <>
       <CardContent
@@ -45,7 +49,9 @@ export function PostContent({
               </Link>
             </div>
             <span className={"opacity-50 text-xs"}>
-              há {formatDistanceToNow(post?.createdAt, { locale: ptBR })}
+              há{" "}
+              {isClient &&
+                formatDistanceToNow(post?.createdAt, { locale: ptBR })}
             </span>
           </div>
 
@@ -66,7 +72,7 @@ export function PostContent({
       ${fullPage ? " w-1/4" : " w-1/4"}
       `}
             >
-              <Icons post={post} fullPage={fullPage}></Icons>
+              <Icons userId={userId} post={post} fullPage={fullPage}></Icons>
               <PostMenu handleEdit={handleEdit} postId={post?._id}></PostMenu>
             </div>
           </footer>
