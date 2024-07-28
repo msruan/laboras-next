@@ -1,10 +1,10 @@
-import { headers } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
 
-import cors from '@/lib/cors';
-import { connectToDb, OPTIONS } from '@/lib/utils';
-import { IPost, Post } from '@/models/posts';
-import { IProfile, Profile } from '@/models/profiles';
+import cors from "@/lib/cors";
+import { connectToDb, OPTIONS } from "@/lib/utils";
+import { IPost, Post } from "@/models/posts";
+import { IProfile, Profile } from "@/models/profiles";
 
 export const GET = async (request: Request, { params }: any) => {
   try {
@@ -19,12 +19,18 @@ export const GET = async (request: Request, { params }: any) => {
     const posts: IPost[] = await (await Post()).find({ user_id: user._id });
     return cors(
       request,
-      new Response(JSON.stringify({ user: user, posts: posts }), {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      new Response(
+        JSON.stringify({
+          user: user,
+          posts: posts.filter((post) => post.linked_to === null).reverse(),
+        }),
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
     );
   } catch (err) {
     console.log(err);
