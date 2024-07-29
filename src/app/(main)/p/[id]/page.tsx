@@ -1,12 +1,12 @@
-import { FC } from 'react';
+import { FC } from "react";
 
-import { Header } from '@/components/Header';
-import Post from '@/components/post/Post';
-import { PostsContainer } from '@/components/PostsContainer';
-import { api } from '@/config/api';
-import { auth } from '@/lib/auth';
-import { IPost } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import { Header } from "@/components/Header";
+import Post from "@/components/post/Post";
+import { PostsContainer } from "@/components/PostsContainer";
+import { api } from "@/config/api";
+import { auth } from "@/lib/auth";
+import { IPost } from "@/models/posts";
+import { IProfile } from "@/models/profiles";
 
 type Props = {
   params: {
@@ -32,8 +32,16 @@ const PostPage: FC<Props> = async ({ params }) => {
   return (
     <div className="flex flex-col gap-2">
       <Header title="Post" />
-      <Post userId={session?.user?.id!} perfil={profile} post={post} fullPage={true} fullBorder={false} />
-      <PostsContainer linkedTo={post._id} posts={children} />
+      <div className="max-sm:mt-8">
+        <Post
+          userId={session?.user?.id!}
+          perfil={profile}
+          post={post}
+          fullPage={true}
+          fullBorder={false}
+        />
+        <PostsContainer linkedTo={post._id} posts={children} />
+      </div>
     </div>
   );
 };

@@ -1,22 +1,25 @@
 "use client";
 
-import clsx from 'clsx';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
-import { toast } from 'sonner';
+import clsx from "clsx";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
 
-import { updatePost as handleUpdate } from '@/actions/PostActions';
-import { IPost } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import { updatePost as handleUpdate } from "@/actions/PostActions";
+import useClient from "@/hooks/use-client";
+import { IPost } from "@/models/posts";
+import { IProfile } from "@/models/profiles";
 
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Button } from '../ui/button';
-import { Card, CardFooter } from '../ui/card';
-import { Textarea } from '../ui/textarea';
-import { Icons } from './Icons';
-import { PostContent } from './PostContent';
-import { PostMenu } from './PostMenu';
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Card, CardFooter } from "../ui/card";
+import { Textarea } from "../ui/textarea";
+import { Icons } from "./Icons";
+import { PostContent } from "./PostContent";
+import { PostMenu } from "./PostMenu";
 
 type IPostProps = {
   post: IPost;
@@ -35,6 +38,7 @@ export const Post = ({
 }: IPostProps) => {
   const [editMode, setEditMode] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isClient = useClient();
   const local = usePathname();
   const router = useRouter();
   console.log("rpz, sou o post e recebi o id ", userId);
@@ -71,7 +75,7 @@ export const Post = ({
 
   return (
     <Card
-      className={clsx("flex flex-col", {
+      className={clsx("flex w-full flex-col", {
         "cursor-pointer": fullPage,
         "bg-transparent": fullPage || editMode,
         "h-full bg-rebeccapurple": !(fullPage || editMode),
@@ -97,19 +101,41 @@ export const Post = ({
         </div>
       ) : (
         <>
-          <div className="flex w-full pt-3 pl-5 pr-3 h-fit">
-            <Link href={`/u/${perfil?.username}`}>
-              <Avatar className="w-12 h-12 rounded-full">
-                <AvatarImage
-                  src={
-                    perfil?.profile_image_link ??
-                    "https://p2.trrsf.com/image/fget/cf/1200/1600/middle/images.terra.com/2023/07/31/pedro-flamengo-uv5ta7zqn5us.jpg"
-                  }
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </Link>
-
+          <div className="flex w-full pt-3 pl-8 pr-3 h-fit">
+            <div className="flex gap-5 w-full">
+              <Link href={`/u/${perfil?.username}`}>
+                <Avatar className="w-12 h-12 rounded-full">
+                  <AvatarImage
+                    src={
+                      perfil?.profile_image_link ??
+                      "https://p2.trrsf.com/image/fget/cf/1200/1600/middle/images.terra.com/2023/07/31/pedro-flamengo-uv5ta7zqn5us.jpg"
+                    }
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </Link>
+              <div className={""}>
+                <div
+                  className={`flex ${
+                    fullPage ? "flex-col" : ""
+                  } items-start text-aliceblue text-sm gap-2`}
+                >
+                  <Link href={`/u/${perfil?.username}`}>
+                    <h3>{perfil?.first_name}</h3>
+                  </Link>
+                  <Link href={`/u/${perfil?.username}`}>
+                    <h4 className="opacity-70">@{perfil?.username}</h4>
+                  </Link>
+                </div>
+                <span className={"opacity-50 text-xs"}>
+                  há{" "}
+                  {isClient &&
+                    formatDistanceToNow(post?.createdAt, { locale: ptBR })}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="p-5 ">
             <PostContent
               onClick={onClick}
               userId={userId}
