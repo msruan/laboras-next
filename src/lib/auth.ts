@@ -1,7 +1,7 @@
-import NextAuth from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
+import NextAuth from "next-auth";
+import GithubProvider from "next-auth/providers/github";
 
-import { api } from '@/config/api';
+import { api } from "@/config/api";
 
 export const {
   handlers: { GET, POST },
@@ -17,30 +17,29 @@ export const {
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log(user);
-      console.log(account);
-      console.log(profile);
+      // console.log(user);
+      // console.log(account);
+      // console.log(profile);
       if (account?.provider === "github") {
-        const members = process.env.MEMBERS_ID?.split(",");
-        console.log("mano os membros sao ", members);
-        let isMember = false;
-        members?.forEach((id) => {
-          console.log("entrei no loop com ",String(id));
-          console.log("e bicho, o profile id eh ",String(profile?.id));
-          if (String(id) === String(profile?.id)) {
-            isMember = true;
-          }
-        });
+        const members = [
+          "102762329",
+          "127994537",
+          "106036280",
+          "126991831",
+          "108002407",
+          "102397299",
+          "95635766",
+          "40568212",
+          "47527261",
+        ];
+        console.log("profile eh ", profile);
+        let isMember = members.includes(profile?.id as string);
         if (isMember) {
+          console.log("sim, eh membro");
+
           return (await api.post("/sign", profile!))?.data?.response;
-        } else {
-          console.log();
-          console.log("membros : ", process.env.MEMBERS_ID?.split(","));
-          console.log("o id eh ", profile?.id);
-          console.log("eh membro? ", isMember);
-          console.log();
-          return false;
         }
+        return false;
       }
       return true;
     },
