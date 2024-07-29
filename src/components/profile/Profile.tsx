@@ -1,21 +1,19 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { IProfile } from "@/models/profiles";
 
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { IProfile } from '@/models/profiles';
-
-import { Card, CardContent, CardTitle } from '../ui/card';
+import { Card, CardContent, CardTitle } from "../ui/card";
 
 type IProfileProps = {
   profile: IProfile;
   email: string;
-  postsCount : number;
+  postsCount: number;
 };
 
 export const Profile = ({ profile, email, postsCount }: IProfileProps) => {
   const isCurrentUserProfile = profile.email === email;
   return (
-    <Card className="flex max-sm:hidden flex-row items-center gap-16 p-9 px-20 rounded-none bg-transparent border-r-0 border-l-0 border-rebeccapurple2">
+    <Card className="flex flex-row max-sm:flex-row items-center gap-7 max-sm:p-5 sm:gap-16 max-sm:pb-10 p-9 px-20 rounded-none bg-transparent border-r-0 border-l-0 border-rebeccapurple2">
       <div className="flex flex-col h-full items-center justify-center gap-5">
         <Avatar className="h-56 w-56 max-xl:h-40 max-xl:w-40 max-sm:h-20 max-sm:w-20">
           <AvatarImage
@@ -70,5 +68,3 @@ export const Profile = ({ profile, email, postsCount }: IProfileProps) => {
     </Card>
   );
 };
-
-

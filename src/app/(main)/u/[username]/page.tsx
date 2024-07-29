@@ -24,15 +24,15 @@ const UserPage: FC<Props> = async ({ params }) => {
   console.log(response);
   return (
     <div className="flex flex-col h-full max-xl:border-0 gap-2 pl-3 pr-3 border-rebeccapurple2 border-r-2 border-l-2">
-      <div className="flex flex-col gap-1">
-        <Header title={profile.username} />
+      <Header title={profile.username} />
+      <div className="max-sm:mt-12 ">
         <Profile
           postsCount={posts.length}
           profile={profile!}
           email={session?.user?.email!}
         />
+        <PostsContainer textbox={false} posts={posts} />
       </div>
-      <PostsContainer textbox={false} posts={posts} />
     </div>
   );
 };
