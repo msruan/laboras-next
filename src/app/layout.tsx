@@ -1,5 +1,7 @@
 import "@/global.css";
+
 import { ThemeProvider } from "@/components/ui/theme-provider";
+
 export default function RootLayout({
   children,
 }: {
@@ -7,6 +9,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Laboras</title>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body>
         {/* Layout UI */}
         <ThemeProvider

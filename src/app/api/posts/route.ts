@@ -1,8 +1,8 @@
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { NextResponse } from 'next/server';
 
 import { connectToDb, DefaultResponse, OPTIONS } from '@/lib/utils';
-import { IPost, PostCreate, Post } from '@/models/posts';
-import {revalidatePath, revalidateTag} from "next/cache";
+import { IPost, Post, PostCreate } from '@/models/posts';
 
 export const GET = async () => {
   try {

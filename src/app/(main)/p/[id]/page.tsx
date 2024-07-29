@@ -1,12 +1,12 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Header } from "@/components/Header";
-import Post from "@/components/post/Post";
-import { PostsContainer } from "@/components/PostsContainer";
-import { api } from "@/config/api";
-import { auth } from "@/lib/auth";
-import { IPost } from "@/models/posts";
-import { IProfile } from "@/models/profiles";
+import { Header } from '@/components/Header';
+import Post from '@/components/post/Post';
+import { PostsContainer } from '@/components/PostsContainer';
+import { api } from '@/config/api';
+import { auth } from '@/lib/auth';
+import { IPost } from '@/models/posts';
+import { IProfile } from '@/models/profiles';
 
 type Props = {
   params: {
@@ -22,10 +22,10 @@ const PostPage: FC<Props> = async ({ params }) => {
   const profile: IProfile = (await api.get("/profiles/id/" + post.user_id))
     .data;
   const children: IPost[] = response.data.children;
-  console.log("perfil : : : : : : :     : : : : : :: : : : : : : : ");
-  console.log(profile);
-  console.log("post : : : : : : :     : : : : : :: : : : : : : : ");
-  console.log(post);
+  // console.log("perfil : : : : : : :     : : : : : :: : : : : : : : ");
+  // console.log(profile);
+  // console.log("post : : : : : : :     : : : : : :: : : : : : : : ");
+  // console.log(post);
 
   //   let relationedPosts: IPost[] | undefined;
 
