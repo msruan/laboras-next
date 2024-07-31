@@ -1,13 +1,13 @@
 "use server";
-import Link from 'next/link';
+import Link from "next/link";
 
-import { api } from '@/config/api';
-import { auth } from '@/lib/auth';
-import { IProfile } from '@/models/profiles';
+import { api } from "@/config/api";
+import { auth } from "@/lib/auth";
+import { IProfile } from "@/models/profiles";
 
-import { ProfileTag } from '../profile/ProfileTag';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Separator } from '../ui/separator';
+import { ProfileTag } from "../profile/ProfileTag";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Separator } from "../ui/separator";
 
 export const AsideMyProfile = async () => {
   const session = await auth();
@@ -21,29 +21,18 @@ export const AsideMyProfile = async () => {
     <div
       className={`flex flex-col max-xl:border-r-[1px] max-xl:border-gray-700  border-rebeccapurple2 xl:p-5 justify-between fixed top-0 left-0 min-h-screen overflow-x-hidden max-xl:w-fit max-md:hidden w-72 z-1`}
     >
-      {/*<style>*/}
-      {/*  {`*/}
-      {/*          h2 {*/}
-      {/*            font-family: 'Habbo', sans-serif;*/}
-      {/*            text-shadow: 2px 2px 15px rebeccapurple*/}
-      {/*          }*/}
-      {/*        dd`}*/}
-      {/*</style>*/}
-
       <div className="flex flex-col items-center justify-between w-full  h-screen p-5 text-5xl pb-7">
         <div className="flex flex-col items-center h-full gap-8">
           <div className="flex flex-col items-center gap-4">
             <Link href={"/"}>
-              <h2 className="max-xl:hidden">LABORAS</h2>
+              <h2 className="max-xl:hidden font-habbo">LABORAS</h2>
             </Link>
             <h2 className="xl:hidden">L</h2>
             <Separator></Separator>
           </div>
 
           <div className="flex flex-col w-full gap-4 text-5xl ">
-            {/*<NavbarIcon title={"Home"} icon={HomeIcon} iconFilled={HomeIconFilled} href="/" />*/}
-            {/*<NavbarIcon title="Profile" icon={UserCircleIcon} iconFilled={UserCircleIconFilled} href={`/u/${perfil?.username}`} />*/}
-            {/*<NavbarIcon title="Settings" icon={CogIcon} iconFilled={CogIconFilled} href="/config"/>*/}
+            {/* <Links/> */}
           </div>
         </div>
         <ProfileTag perfil={perfil!} />
@@ -57,3 +46,46 @@ export const AsideMyProfile = async () => {
     </div>
   );
 };
+
+// function Links() {
+//const pathname = usePathname();
+//   const localIsHome = local.pathname === "/posts";
+//   const localIsUser = local.pathname === `/posts/profile/${perfil?.username}`;
+//   const localIsConfig = local.pathname === "/config";
+//   return (
+//     <>
+//       <div className="fixed bottom-0 flex items-center justify-between w-full p-4 text-5xl bg-black md:hidden">
+//         <Link href="/posts">
+//           {localIsHome ? (
+//             <HomeIconFilled className="w-8 h-8 text-biancapurple" />
+//           ) : (
+//             <HomeIcon className="w-8 h-8 text-biancapurple" />
+//           )}
+//         </Link>
+
+//           <Link href={`/posts/profile/${perfil?.username}`}>
+//         {localIsUser ? (
+//             <UserCircleIconFilled className="w-8 h-8 text-biancapurple" />{" "}
+//           ) : (
+//               <UserCircleIcon className="w-8 h-8 text-biancapurple" />{" "}
+//           )}
+//           </Link>
+
+//           <Link href="/config">
+//         {localIsConfig ? (
+//             <CogIconFilled className="w-8 h-8 text-biancapurple" />{" "}
+//         ) : (
+//             <CogIcon className="w-8 h-8 text-biancapurple" />{" "}
+//           )}
+//           </Link>
+
+//           <Avatar className="w-8 h-8 rounded-full cursor-pointer">
+//             <AvatarImage
+//               src={perfil?.profile_image_link ?? "src/assets/chorro-timido.JPG"}
+//             />
+//             <AvatarFallback>CN</AvatarFallback>
+//           </Avatar>
+//       </div>
+//     </>
+//   );
+// }
