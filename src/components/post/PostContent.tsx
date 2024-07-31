@@ -41,9 +41,9 @@ export function PostContent({
             }
           >
             <div
-              className={`flex ${
-                fullPage ? "flex-col" : ""
-              } items-start text-aliceblue text-sm gap-2`}
+              className={`flex items-start text-aliceblue text-sm gap-0 ${
+                fullPage ? "flex-col" : "gap-2"
+              } `}
             >
               <Link href={`/u/${perfil?.username}`}>
                 <h3>{perfil?.first_name}</h3>
@@ -52,13 +52,14 @@ export function PostContent({
                 <h4 className="opacity-70">@{perfil?.username}</h4>
               </Link>
             </div>
-            <span className={"opacity-50 text-xs"}>
-              há{" "}
-              {isClient &&
-                formatDistanceToNow(post?.createdAt, { locale: ptBR })}
-            </span>
+            {!fullPage && (
+              <span className={"opacity-50 text-xs"}>
+                há{" "}
+                {isClient &&
+                  formatDistanceToNow(post?.createdAt, { locale: ptBR })}
+              </span>
+            )}
           </div>
-
           <div className="text-aliceblue font-sans text-base w-full">
             <p>{post?.content}</p>
           </div>
@@ -77,7 +78,9 @@ export function PostContent({
       `}
             >
               <Icons userId={userId} post={post} fullPage={fullPage}></Icons>
-              <PostMenu handleEdit={handleEdit} postId={post?._id}></PostMenu>
+              {userId === post.user_id && (
+                <PostMenu handleEdit={handleEdit} postId={post._id} />
+              )}
             </div>
           </footer>
         ) : (
