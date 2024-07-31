@@ -25,7 +25,10 @@ export const Profile = ({ profile, email, postsCount }: IProfileProps) => {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         {isCurrentUserProfile && (
-          <Button className="w-32 text-white rounded-full font-bold px-9">
+          <Button
+            disabled
+            className="w-32 text-white rounded-full font-bold px-9"
+          >
             Change image
           </Button>
         )}
@@ -59,7 +62,10 @@ export const Profile = ({ profile, email, postsCount }: IProfileProps) => {
             </p>
           </div>
           {isCurrentUserProfile && (
-            <Button className="font-bold p-4 px-9 w-16 h-8 bg-slate-700 hover:bg-slate-800 text-white rounded-full justify-self-center">
+            <Button
+              disabled
+              className="font-bold p-4 px-9 w-16 h-8 bg-slate-700 hover:bg-slate-800 text-white rounded-full justify-self-center"
+            >
               Edit bio
             </Button>
           )}

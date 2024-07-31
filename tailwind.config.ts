@@ -88,6 +88,7 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
+        habbo: ["var(--font-habbo)"],
         sans: ["Helvetica", "Arial", "sans-serif"],
       },
     },
