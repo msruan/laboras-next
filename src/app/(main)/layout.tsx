@@ -1,4 +1,4 @@
-import { AsideMyProfile } from '@/components/AsideMyProfile/AsideMyProfile';
+import { AsideMyProfile } from '@/components/sidebar/AsideMyProfile';
 import { AsidePeople } from '@/components/AsidePeople';
 
 import type { Metadata } from "next";
