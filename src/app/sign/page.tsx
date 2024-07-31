@@ -1,22 +1,17 @@
 // import { Login } from "@/actions/AuthAction";
 // import { GetProfileByEmail } from "@/actions/ProfileAction";
 
-import { SubmitButton } from "@/components/sign/SubmitButton";
+import { SubmitButton } from '@/components/sign/SubmitButton';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { auth } from "@/lib/auth";
-import { GithubLogin } from "@/services/auth";
+    Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
+} from '@/components/ui/card';
+import { auth } from '@/lib/auth';
+import { GithubLogin } from '@/services/auth';
 
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign",
+  title: "Login",
   description: "Bro, just login it",
 };
 export default async function LoginPage() {

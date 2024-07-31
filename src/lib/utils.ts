@@ -56,3 +56,4 @@ export const DefaultResponse = (
 export const DefaultError = (request: Request) => {
   return cors(request, NextResponse.error());
 };
+

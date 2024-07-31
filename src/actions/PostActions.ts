@@ -1,10 +1,10 @@
 "use server";
-import { apiURL as server } from "@/config/api";
-import { IPost, PostCreate, PostUpdate } from "@/models/posts";
+import { apiURL as server } from '@/config/api';
+import { IPost, PostCreate } from '@/models/posts';
 
 const apiURL = server();
 export async function addPost(post: PostCreate) {
-  console.log("entrei aqui mano");
+  // console.log("entrei aqui mano");
   const response = await fetch(`${apiURL}/posts`, {
     method: "POST",
     body: JSON.stringify(post),

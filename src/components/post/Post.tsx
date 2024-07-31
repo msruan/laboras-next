@@ -37,7 +37,7 @@ export const Post = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const local = usePathname();
   const router = useRouter();
-  console.log("rpz, sou o post e recebi o id ", userId);
+  // console.log("rpz, sou o post e recebi o id ", userId);
 
   async function handleSaveEdit() {
     if (

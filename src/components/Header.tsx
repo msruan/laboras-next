@@ -1,13 +1,13 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
-import { ChevronLeftIcon } from '@radix-ui/react-icons';
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
 export function Header({ title }: { title: string }) {
   const router = useRouter();
   return (
-    <div className="fixed justify-center items-center top-0 flex p-2 w-full bg-black border-b-[1px] border-b-gray-500 sm:hidden ">
+    <div className="fixed justify-center items-center z-10 top-0 flex p-2 w-full bg-black border-b-[1px] border-b-gray-500 sm:hidden ">
       <ChevronLeftIcon
         cursor={"pointer"}
         onClick={() => router.back()}

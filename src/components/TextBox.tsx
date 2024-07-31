@@ -1,21 +1,21 @@
 "use client";
-import { useRef } from 'react';
+import { useRef } from "react";
 
-import { addPost } from '@/actions/PostActions';
-import { PostCreate } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import { addPost } from "@/actions/PostActions";
+import { PostCreate } from "@/models/posts";
+import { IProfile } from "@/models/profiles";
 
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { Button } from './ui/button';
-import { useRouter } from 'next/navigation'
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 type TextBoxProps = {
   linkedTo: string | null;
   profile: IProfile;
 };
 export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
-  const router = useRouter()
+  const router = useRouter();
   async function handleClick() {
-    console.log("cliquei bixo")
+    console.log("cliquei bixo");
     if (input.current == null || input.current.value === "") {
       return;
     }
@@ -25,10 +25,10 @@ export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
       content: input.current.value,
       linked_to: linkedTo,
     };
-    console.log("chamei mano")
+    console.log("chamei mano");
     input.current.value = "";
-    await addPost(newPost)
-    router.refresh()
+    await addPost(newPost);
+    router.refresh();
   }
 
   const input = useRef<HTMLTextAreaElement>(null);
@@ -54,7 +54,9 @@ export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
             className="bg-transparent py-5 w-full content-center border-none text-white outline-none resize-none"
             name="text"
             maxLength={400}
-            placeholder={`No que voce está pensando ${profile.first_name}?`}
+            placeholder={`${
+              linkedTo ? "O que acha disso" : "No que voce está pensando"
+            } ${profile.first_name}?`}
           ></textarea>
         </div>
         <div className="self-end justify-self-end w-fit h-fit">
