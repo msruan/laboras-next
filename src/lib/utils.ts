@@ -57,13 +57,3 @@ export const DefaultError = (request: Request) => {
   return cors(request, NextResponse.error());
 };
 
-export function purgeChar(charToRemove: string, str: string | undefined) {
-  if (str === undefined) return "";
-  let filteredStr = "";
-  for (let char of str) {
-    if (char !== charToRemove) {
-      filteredStr += char;
-    }
-  }
-  return filteredStr;
-}
