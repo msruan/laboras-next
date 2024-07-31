@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
 import { api } from "@/config/api";
-import { purgeChar } from "./utils";
 
 export const {
   handlers: { GET, POST },
@@ -37,3 +36,13 @@ export const {
     },
   },
 });
+function purgeChar(charToRemove: string, str: string | undefined) {
+  if (str === undefined) return "";
+  let filteredStr = "";
+  for (let char of str) {
+    if (char !== charToRemove) {
+      filteredStr += char;
+    }
+  }
+  return filteredStr;
+}
