@@ -22,18 +22,26 @@ const PostPage: FC<Props> = async ({ params }) => {
   const profile: IProfile = (await api.get("/profiles/id/" + post.user_id))
     .data;
   const children: IPost[] = response.data.children;
-  console.log("perfil : : : : : : :     : : : : : :: : : : : : : : ");
-  console.log(profile);
-  console.log("post : : : : : : :     : : : : : :: : : : : : : : ");
-  console.log(post);
+  // console.log("perfil : : : : : : :     : : : : : :: : : : : : : : ");
+  // console.log(profile);
+  // console.log("post : : : : : : :     : : : : : :: : : : : : : : ");
+  // console.log(post);
 
   //   let relationedPosts: IPost[] | undefined;
 
   return (
     <div className="flex flex-col gap-2">
       <Header title="Post" />
-      <Post userId={session?.user?.id!} perfil={profile} post={post} fullPage={true} fullBorder={false} />
-      <PostsContainer linkedTo={post._id} posts={children} />
+      <div className="max-sm:mt-8">
+        <Post
+          userId={session?.user?.id!}
+          perfil={profile}
+          post={post}
+          fullPage={true}
+          fullBorder={false}
+        />
+        <PostsContainer linkedTo={post._id} posts={children} />
+      </div>
     </div>
   );
 };

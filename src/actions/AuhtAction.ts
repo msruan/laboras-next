@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 /**
  * The function `register` sends a POST request to a specified API endpoint with user registration data
@@ -27,6 +27,6 @@ export async function register(previousState: any, formData: FormData) {
     "http://localhost:3000/api/auth/signup",
     newUser
   );
-  console.log(response);
+  // console.log(response);
   return response.data;
 }
