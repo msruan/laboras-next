@@ -7,12 +7,14 @@ import { DropdownMenu, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { Logout } from "@/services/auth";
+import {LogOut as LogoutIcon } from "lucide-react"
 import { CogIcon, HomeIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import {
   CogIcon as CogIconFilled,
   HomeIcon as HomeIconFilled,
   UserCircleIcon as UserCircleIconFilled,
 } from "@heroicons/react/16/solid";
+import { Separator } from "../ui/separator";
 export function Links({
   username,
   avatarLink,
@@ -78,10 +80,14 @@ export function Links({
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <Button onClick={handleClik}>Sair</Button>
+        
+          <DropdownMenuContent className="w-24 mr-2 p-2">
+            <Separator/>
+            <DropdownMenuItem className="flex items-center" onClick={handleClik}>
+            <LogoutIcon className="mr-2 h-4 w-4" />
+              Sair
             </DropdownMenuItem>
+            <Separator/>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
