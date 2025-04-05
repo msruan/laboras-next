@@ -20,22 +20,29 @@ export const {
       // console.log(user);
       // console.log(account);
       // console.log(profile);
+      const privacyMode = process.env.APP_PRIVACY_MODE;
+      const allowedUsers = purgeChar(
+        " ",
+        process.env.APP_PRIVATE_GITHUB_USERS
+      ).split(",");
+
       if (account?.provider === "github") {
-        const members = purgeChar(" ", process.env.MEMBERS_ID).split(",");
-        let isMember = members.includes(String(profile?.id));
-        if (isMember) {
-          console.log("sim, eh membro");
-
-          return (await api.post("/sign", profile!))?.data?.response;
+        if (privacyMode === "private") {
+          const isMember = allowedUsers.includes(String(profile?.id));
+          if (isMember) {
+            console.log("sim, eh membro");
+            return (await api.post("/sign", profile!))?.data?.response;
+          }
+          console.log("nao eh membro");
+          return false;
         }
-
-        console.log("nao eh membro");
-        return false;
+        return (await api.post("/sign", profile!))?.data?.response;
       }
       return true;
     },
   },
 });
+
 function purgeChar(charToRemove: string, str: string | undefined) {
   if (str === undefined) return "";
   let filteredStr = "";
