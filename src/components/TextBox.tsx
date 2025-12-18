@@ -14,9 +14,10 @@ type TextBoxProps = {
 };
 export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
   const router = useRouter();
+  const input = useRef<HTMLTextAreaElement>(null);
+
   async function handleClick() {
-    console.log("cliquei bixo");
-    if (input.current == null || input.current.value === "") {
+    if (input.current == null || input.current.value.trim() === "") {
       return;
     }
 
@@ -25,16 +26,12 @@ export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
       content: input.current.value,
       linked_to: linkedTo,
     };
-    console.log("chamei mano");
     input.current.value = "";
     await addPost(newPost);
     router.refresh();
   }
 
-  const input = useRef<HTMLTextAreaElement>(null);
-
   return (
-    <div>
       <div className="flex flex-col w-full align-middle pb-10 border-b-2  pl-3 pr-3 border-rebeccapurple2">
         <div className="w-full flex flex-row gap-8 items-center">
           <Avatar className="w-12 h-12 rounded-full">
@@ -48,7 +45,10 @@ export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
 
           <textarea
             onKeyDown={(e) => {
-              e.key == "Enter" && handleClick();
+              if(e.key === 'Enter'){
+                e.preventDefault();
+                handleClick();
+              }
             }}
             ref={input}
             className="bg-transparent py-5 w-full content-center border-none text-white outline-none resize-none"
@@ -68,6 +68,5 @@ export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
           </Button>
         </div>
       </div>
-    </div>
   );
 };

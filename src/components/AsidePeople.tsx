@@ -19,7 +19,7 @@ export const AsidePeople = async () => {
         >
             {/*<Suspense fallback={<h2>Pending...</h2>}>*/}
             <h2 className="text-white font-sans text-2xl font-bold">
-                People signed
+                Pessoas logadas
             </h2>
             {/*<ScrollArea className="flex flex-row h-lvh w-60">*/}
                 <div className="min-h-full flex flex-col gap-11">

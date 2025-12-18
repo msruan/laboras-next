@@ -6,12 +6,11 @@ import { Card, CardContent, CardTitle } from "../ui/card";
 
 type IProfileProps = {
   profile: IProfile;
-  email: string;
+  isProfileOfLoggerUser: boolean;
   postsCount: number;
 };
 
-export const Profile = ({ profile, email, postsCount }: IProfileProps) => {
-  const isCurrentUserProfile = profile.email === email;
+export const Profile = ({ profile, isProfileOfLoggerUser, postsCount }: IProfileProps) => {
   return (
     <Card className="flex flex-row max-sm:flex-row items-center gap-7 max-sm:p-5 sm:gap-16 max-sm:pb-10 p-9 px-20 rounded-none bg-transparent border-r-0 border-l-0 border-rebeccapurple2">
       <div className="flex flex-col h-full items-center justify-center gap-5">
@@ -24,7 +23,7 @@ export const Profile = ({ profile, email, postsCount }: IProfileProps) => {
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        {isCurrentUserProfile && (
+        {isProfileOfLoggerUser && (
           <Button
             disabled
             className="w-32 text-white rounded-full font-bold px-9"
@@ -61,7 +60,7 @@ export const Profile = ({ profile, email, postsCount }: IProfileProps) => {
               )}
             </p>
           </div>
-          {isCurrentUserProfile && (
+          {isProfileOfLoggerUser && (
             <Button
               disabled
               className="font-bold p-4 px-9 w-16 h-8 bg-slate-700 hover:bg-slate-800 text-white rounded-full justify-self-center"

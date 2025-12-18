@@ -1,6 +1,3 @@
-// import { Login } from "@/actions/AuthAction";
-// import { GetProfileByEmail } from "@/actions/ProfileAction";
-
 import { SubmitButton } from '@/components/sign/SubmitButton';
 import {
     Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
@@ -14,8 +11,10 @@ export const metadata: Metadata = {
   title: "Login",
   description: "Bro, just login it",
 };
+
 export default async function LoginPage() {
   const session = await auth();
+
   return (
     <div>
       <form action={GithubLogin}>

@@ -10,7 +10,6 @@ export interface IPost {
     linked_to: string | null;
     liked_by: string[];
     desliked_by: string[];
-
 }
 
 export type PostCreate = {
