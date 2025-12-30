@@ -1,17 +1,15 @@
-
 # Laboras (Next)
 
-A Laboras fullstack clone made in Next.js 
+A Laboras fullstack clone made in Next.js
+
 ## Related
 
 Reach the main repository of [Laboras](https://github.com/bianca-bezerra/Laboras) project
-
 
 ## Features
 
 - Posts CRUD
 - Profiles, follow users
-
 
 ## Environment Variables
 
@@ -28,6 +26,7 @@ To run this project, you will need to add the following environment variables to
 `AUTH_SECRET`: Secret used by _Auths.js_ to encode the JWT and encrypt things in transit. [More info](https://authjs.dev/getting-started/deployment#auth_secret)
 
 `GITHUB_SECRET`, `GITHUB_ID`: Variables to define GitHub as provider on _Auth.js_. [More info](https://authjs.dev/getting-started/authentication/oauth)
+
 ## Run Locally
 
 Clone the project
@@ -56,16 +55,16 @@ npm run dev
 pnpm dev
 ```
 
-
 ## Author
 
 - [@msruan](https://www.github.com/msruan)
 
-
 ## Todo
 
-- Add guest mode or create a public deploy instance
-- Add MongoDB docker compose to use locally
+- [OK] Add guest mode or create a public deploy instance
+- [OK] Add MongoDB docker compose to use locally
+- Add Loggertape
+- Change ServerComponents calling API Routes (antipattern) to pure db calls 
 - Improve login page
 - Use social ID insted of email to identify OAuth users on the database
 - Settings section
