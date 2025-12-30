@@ -1,10 +1,11 @@
-import axios, { AxiosInstance } from 'axios';
+import { env } from "@/env/server";
+import axios, { AxiosInstance } from "axios";
 
-export const apiURL = ()=>(process.env.SERVER_URL + "/api");
+export const apiURL = env.SERVER_URL + "/api";
 // const nextURL = "https://laboras-api.vercel.app/api";
 
 export const api: AxiosInstance = axios.create({
-  baseURL: apiURL(),
+  baseURL: apiURL,
   headers: {
     "Content-type": "application/json",
   },

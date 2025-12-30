@@ -1,7 +1,8 @@
-import { headers } from 'next/headers';
-
-import { connectToDb, DefaultError, DefaultResponse, OPTIONS } from '@/lib/utils';
-import { IProfile, Profile } from '@/models/profiles';
+import {
+  connectToDb,
+} from "@/lib/utils";
+import { IProfile, ProfileDB } from "@/models/profile.model";
+import { NextResponse } from "next/server";
 
 export const POST = async (request: Request) => {
   try {
@@ -9,12 +10,13 @@ export const POST = async (request: Request) => {
     // const headersList = headers();
     // const token = headersList.get("authorization")?.split(" ")[1];
     // const user: IProfile | null = await (await Profile()).findOne({ token: token });
-    const user: IProfile | null = await (await Profile()).findOne({ username: (await request.json())?.username });
-    return DefaultResponse(request, user);
+    const user: IProfile | null = await ProfileDB.findOne({
+      username: (await request.json())?.username,
+    });
+
+    return NextResponse.json(user);
   } catch (err) {
-    console.log(err);
-    return DefaultError(request);
+    console.error(err);
+    return NextResponse.error();
   }
 };
-
-export { OPTIONS };

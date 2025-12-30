@@ -15,7 +15,6 @@ import img1 from "@/../public/img1.svg";
 import img2 from "@/../public/img2.svg";
 import img3 from "@/../public/img3.svg";
 import img4 from "@/../public/img4.svg";
-import { Card, CardContent } from "@/components/ui/card";
 
 const SignLayout = ({ children }: { children: React.ReactNode }) => {
 

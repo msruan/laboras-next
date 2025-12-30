@@ -1,27 +1,17 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-import cors from '@/lib/cors';
-import { connectToDb, OPTIONS } from '@/lib/utils';
-import { Profile } from '@/models/profiles';
+import { connectToDb } from "@/lib/utils";
+import { ProfileDB } from "@/models/profile.model";
 
-export const GET = async (request: Request) => {
+export const GET = async (_request: Request) => {
   try {
     await connectToDb();
 
-    const users = await (await Profile()).find();
-    return cors(
-      request,
-      new Response(JSON.stringify(users), {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-    );
+    const users = await ProfileDB.find();
+
+    return NextResponse.json(users)
   } catch (err) {
     console.log(err);
     return NextResponse.error();
   }
 };
-
-export { OPTIONS };

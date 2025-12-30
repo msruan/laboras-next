@@ -1,15 +1,14 @@
-import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
 import { connectToDb } from "@/lib/utils";
-import { Post } from "@/models/posts";
+import { PostDB } from "@/models/post.model";
 
-export const GET = async (request: NextApiRequest, { params }: any) => {
+export const GET = async (_request: Request, { params }: any) => {
   try {
     await connectToDb();
     const { id } = params;
 
-    const posts = await (await Post()).find({ user_id: id });
+    const posts = await PostDB.find({ user_id: id });
     return NextResponse.json(posts);
   } catch (err) {
     console.log(err);

@@ -1,29 +1,17 @@
-import { headers } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-import cors from '@/lib/cors';
-import { connectToDb, OPTIONS } from '@/lib/utils';
-import { Profile } from '@/models/profiles';
+import { connectToDb } from "@/lib/utils";
+import { ProfileDB } from "@/models/profile.model";
 
-export const GET = async (request: Request, { params }: any) => {
+export const GET = async (_request: Request, { params }: any) => {
   try {
     await connectToDb();
     const { email } = params;
 
-    const user = await (await Profile()).findOne({ email: email });
-    return cors(
-      request,
-      new Response(JSON.stringify(user), {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-    );
+    const user = await ProfileDB.findOne({ email: email });
+    return NextResponse.json(user)
   } catch (err) {
     console.log(err);
     return NextResponse.error();
   }
 };
-
-export { OPTIONS };

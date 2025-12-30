@@ -1,4 +1,4 @@
-import { deletePost } from '@/actions/PostActions';
+import { deletePost } from '@/api/post.mutations';
 import { EllipsisHorizontalIcon, PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
 
 import {

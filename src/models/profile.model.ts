@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from "mongoose";
 
-import { IPost } from './posts';
+import { IPost } from "./post.model";
 
 export interface IProfile {
   _id: string;
@@ -14,15 +14,6 @@ export interface IProfile {
   profile_image_link?: string;
   bio?: string;
 }
-
-export type ISignupProfile = {
-  id: string;
-  first_name: string;
-  last_name: string;
-  username: string;
-  email: string;
-  password: string;
-};
 
 const ProfileSchema = new mongoose.Schema<IProfile>(
   {
@@ -63,6 +54,7 @@ const ProfileSchema = new mongoose.Schema<IProfile>(
   },
   { timestamps: true }
 );
-export const Profile = async () =>
-  (await mongoose.models?.Profile) ||
-  (await mongoose.model("Profile", ProfileSchema));
+
+export const ProfileDB =
+  (mongoose.models?.Profile as Model<IProfile>) ||
+  mongoose.model("Profile", ProfileSchema);

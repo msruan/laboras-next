@@ -1,16 +1,18 @@
-import { revalidatePath, revalidateTag } from 'next/cache';
-import { NextResponse } from 'next/server';
+import { revalidatePath, revalidateTag } from "next/cache";
+import { NextResponse } from "next/server";
 
-import { connectToDb, DefaultResponse, OPTIONS } from '@/lib/utils';
-import { IPost, Post, PostCreate } from '@/models/posts';
+import { connectToDb } from "@/lib/utils";
+import { IPost, PostDB, CreatePostDTO } from "@/models/post.model";
 
 export const GET = async () => {
   try {
     await connectToDb();
 
-    const posts : IPost[] = await  (await Post()).find();
+    const posts: IPost[] = await PostDB.find();
 
-    return NextResponse.json(posts.filter((post)=>post.linked_to===null).reverse());
+    return NextResponse.json(
+      posts.filter((post) => post.linked_to === null).reverse()
+    );
   } catch (err) {
     console.log(err);
     return NextResponse.error();
@@ -20,20 +22,19 @@ export const GET = async () => {
 export const POST = async (request: Request) => {
   try {
     await connectToDb();
-    console.log("conectei baby")
-    const postSchema: PostCreate = await request.json();
-    const post = await Post();
-    const newPost = await new post(postSchema);
-    console.log("supostamente criei o troço")
+    console.log("Conectei baby");
+
+    const postSchema: CreatePostDTO = await request.json();
+    const newPost = new PostDB(postSchema);
+    console.log("Supostamente criei o troço");
     await newPost.save();
-    console.log("salvei divo")
-    revalidatePath("/")
+    console.log("Salvei divo");
+    revalidatePath("/");
     revalidateTag("all-posts");
-    return DefaultResponse(request, post);
+
+    return NextResponse.json(newPost);
   } catch (err) {
     console.log(err);
     return NextResponse.error();
   }
 };
-
-export { OPTIONS };

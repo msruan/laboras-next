@@ -1,17 +1,16 @@
-import { NextApiRequest } from 'next';
-import { revalidateTag } from 'next/cache';
-import { NextResponse } from 'next/server';
+import { revalidateTag } from "next/cache";
+import { NextResponse } from "next/server";
 
-import { connectToDb, DefaultResponse, OPTIONS } from '@/lib/utils';
-import { IPost, Post } from '@/models/posts';
+import { connectToDb } from "@/lib/utils";
+import { IPost, PostDB } from "@/models/post.model";
 
-export const GET = async (request: NextApiRequest, { params }: any) => {
+export const GET = async (_request: Request, { params }: any) => {
   try {
     await connectToDb();
     const { id } = params;
 
-    const post = await (await Post()).findById(id);
-    const children = await (await Post()).find({ linked_to: id });
+    const post = await PostDB.findById(id);
+    const children = await PostDB.find({ linked_to: id });
     return NextResponse.json({ post: post, children: children });
   } catch (err) {
     console.log(err);
@@ -19,12 +18,12 @@ export const GET = async (request: NextApiRequest, { params }: any) => {
   }
 };
 
-export const DELETE = async (request: NextApiRequest, { params }: any) => {
+export const DELETE = async (_request: Request, { params }: any) => {
   try {
     await connectToDb();
     const { id } = params;
 
-    const post = await (await Post()).findByIdAndDelete(id);
+    const post = await PostDB.findByIdAndDelete(id);
     if (post) {
       revalidateTag("all-posts");
       return NextResponse.json({ sucess: true });
@@ -35,19 +34,17 @@ export const DELETE = async (request: NextApiRequest, { params }: any) => {
   }
 };
 
-export const PATCH = async (request: any, { params }: any) => {
+export const PATCH = async (request: Request, { params }: any) => {
   try {
     await connectToDb();
     const { id } = params;
     const postAtualizado: IPost = await request.json();
-    const post = await (await Post()).findByIdAndUpdate(id, postAtualizado);
+    const post = await PostDB.findByIdAndUpdate(id, postAtualizado);
     console.log("mana eu atualizei");
     revalidateTag("all-posts");
-    return DefaultResponse(request, post);
+    return NextResponse.json(post);
   } catch (err) {
     console.log(err);
     return NextResponse.error();
   }
 };
-
-export { OPTIONS };

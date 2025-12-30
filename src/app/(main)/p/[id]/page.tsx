@@ -1,12 +1,11 @@
 import { FC } from 'react';
 
-import { Header } from '@/components/Header';
-import Post from '@/components/post/Post';
-import { PostsContainer } from '@/components/PostsContainer';
 import { api } from '@/config/api';
 import { auth } from '@/lib/auth';
-import { IPost } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import { IPost } from '@/models/post.model';
+import { IProfile } from '@/models/profile.model';
+import { PostPage } from '@/components/pages/post-page';
+import { getUserByEmail, getUsers } from '@/api/user.queries';
 
 type Props = {
   params: {
@@ -14,36 +13,31 @@ type Props = {
   };
 };
 
-const PostPage: FC<Props> = async ({ params }) => {
-  const session = await auth();
+const Post: FC<Props> = async ({ params }) => {
   const { id } = params;
+
   const response = await api.get("/posts/" + id);
+
   const post: IPost = response.data.post;
   const profile: IProfile = (await api.get("/profiles/id/" + post.user_id))
     .data;
   const children: IPost[] = response.data.children;
-  // console.log("perfil : : : : : : :     : : : : : :: : : : : : : : ");
-  // console.log(profile);
-  // console.log("post : : : : : : :     : : : : : :: : : : : : : : ");
-  // console.log(post);
 
-  //   let relationedPosts: IPost[] | undefined;
+  const session = await auth();
+  const user = await getUserByEmail(session?.user?.email!)
+
+  const profiles = await getUsers()
 
   return (
-    <div className="flex flex-col gap-2">
-      <Header title="Post" />
-      <div className="max-sm:mt-8">
-        <Post
-          userId={session?.user?.id!}
-          perfil={profile}
-          post={post}
-          fullPage={true}
-          fullBorder={false}
-        />
-        <PostsContainer linkedTo={post._id} posts={children} />
-      </div>
-    </div>
+    <PostPage
+      profiles={profiles}
+      currentUser={user}
+      post={post}
+      postChildren={children}
+      profile={profile}
+      userId={session?.user?.id!}
+    />
   );
 };
 //Todo: fazer fetchs separados, para deixar a pagina carregar sem esperar pelos comentarios
-export default PostPage;
+export default Post;

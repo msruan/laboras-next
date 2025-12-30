@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { IProfile } from '@/models/profiles';
+import { IProfile } from '@/models/profile.model';
 
 import { Card, CardContent } from '../ui/card';
 

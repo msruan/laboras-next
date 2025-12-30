@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IProfile } from "@/models/profiles";
+import { IProfile } from "@/models/profile.model";
 
 import { Card, CardContent, CardTitle } from "../ui/card";
 

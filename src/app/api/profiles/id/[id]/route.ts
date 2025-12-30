@@ -1,20 +1,19 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-import { connectToDb, DefaultResponse, OPTIONS } from '@/lib/utils';
-import { Profile } from '@/models/profiles';
+import { connectToDb } from "@/lib/utils";
+import { ProfileDB } from "@/models/profile.model";
 
-export const GET = async (request: any, { params }: any) => {
+export const GET = async (_request: Request, { params }: any) => {
   try {
     await connectToDb();
     const { id } = params;
-    console.log("o diabo do id eh ", id);
+    console.info("The requested id profile is ", id);
 
-    const user = await (await Profile()).findById(id);
-    return DefaultResponse(request, user);
+    const user = await ProfileDB.findById(id);
+    return NextResponse.json(user);
   } catch (err) {
     console.log(err);
     return NextResponse.error();
   }
 };
 
-export { OPTIONS };

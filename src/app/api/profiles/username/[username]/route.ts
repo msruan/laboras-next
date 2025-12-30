@@ -1,41 +1,26 @@
-import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import cors from "@/lib/cors";
-import { connectToDb, OPTIONS } from "@/lib/utils";
-import { IPost, Post } from "@/models/posts";
-import { IProfile, Profile } from "@/models/profiles";
+import { connectToDb } from "@/lib/utils";
+import { IPost, PostDB } from "@/models/post.model";
+import { IProfile, ProfileDB } from "@/models/profile.model";
 
-export const GET = async (request: Request, { params }: any) => {
+export const GET = async (_request: Request, { params }: any) => {
   try {
     await connectToDb();
     const { username } = params;
     console.log("o username eh", username);
 
-    const user: IProfile | null = await (
-      await Profile()
-    ).findOne({ username: username });
+    const user: IProfile | null = await ProfileDB.findOne({ username: username });
     if (!user) throw new Error("User not found!");
-    const posts: IPost[] = await (await Post()).find({ user_id: user._id });
-    return cors(
-      request,
-      new Response(
-        JSON.stringify({
-          user: user,
-          posts: posts.filter((post) => post.linked_to === null).reverse(),
-        }),
-        {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-    );
+    const posts: IPost[] = await PostDB.find({ user_id: user._id });
+
+    return NextResponse.json({
+      user: user,
+      posts: posts.filter((post) => post.linked_to === null).reverse(),
+    });
+
   } catch (err) {
     console.log(err);
     return NextResponse.error();
   }
 };
-
-export { OPTIONS };

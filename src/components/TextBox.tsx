@@ -1,9 +1,9 @@
 "use client";
 import { useRef } from "react";
 
-import { addPost } from "@/actions/PostActions";
-import { PostCreate } from "@/models/posts";
-import { IProfile } from "@/models/profiles";
+import { addPost } from "@/api/post.mutations";
+import { CreatePostDTO } from "@/models/post.model";
+import { IProfile } from "@/models/profile.model";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -21,7 +21,7 @@ export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
       return;
     }
 
-    const newPost: PostCreate = {
+    const newPost: CreatePostDTO = {
       user_id: profile._id,
       content: input.current.value,
       linked_to: linkedTo,

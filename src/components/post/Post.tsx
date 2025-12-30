@@ -6,9 +6,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-import { updatePost as handleUpdate } from '@/actions/PostActions';
-import { IPost } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import { updatePost as handleUpdate } from '@/api/post.mutations';
+import { IPost } from '@/models/post.model';
+import { IProfile } from '@/models/profile.model';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
@@ -18,21 +18,21 @@ import { Icons } from './Icons';
 import { PostContent } from './PostContent';
 import { PostMenu } from './PostMenu';
 
-type IPostProps = {
-  post: IPost;
-  perfil: IProfile;
+interface PostProps {
+  userId: string;
+  postContent: IPost;
+  ownerProfile: IProfile;
   fullPage: boolean;
   fullBorder: boolean;
-  userId: string;
 };
 
-export const Post = ({
-  post,
-  perfil,
+export const PostCard = ({
+  postContent: post,
+  ownerProfile: perfil,
   fullPage = false,
   userId,
   fullBorder = false,
-}: IPostProps) => {
+}: PostProps) => {
   const [editMode, setEditMode] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const local = usePathname();
@@ -52,7 +52,7 @@ export const Post = ({
         }),
         {
           loading: "Atualizando post...",
-          success: (data) => {
+          success: (_data) => {
             router.refresh();
             return `Post atualizado!`;
           },
@@ -138,5 +138,3 @@ export const Post = ({
     </Card>
   );
 };
-
-export default Post;

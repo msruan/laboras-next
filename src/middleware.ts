@@ -1,13 +1,16 @@
 import { auth } from "@/lib/auth";
+import { env } from "./env/server";
 
 export default auth((req) => {
+  const loginUrl = new URL("/login", env.SERVER_URL);
+  const homeUrl = new URL("/", env.SERVER_URL);
+
   if (!req.auth && req.nextUrl.pathname !== "/login") {
-    const newUrl = new URL("/login", process.env.SERVER_URL);
-    return Response.redirect(newUrl);
+    return Response.redirect(loginUrl);
   } else if (req.auth && req.nextUrl.pathname === "/login") {
-    const newUrl = new URL("/", process.env.SERVER_URL);
-    return Response.redirect(newUrl);
+    return Response.redirect(homeUrl);
   }
+  return;
 });
 
 export const config = {

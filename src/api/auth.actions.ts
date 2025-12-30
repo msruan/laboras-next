@@ -1,11 +1,11 @@
-"use server";
+"use server"
 
 import { signIn, signOut } from '@/lib/auth';
 
-export const GithubLogin = async () => {
+export const githubLoginAction = async () => {
   await signIn("github", { redirectTo: "/" });
 };
 
-export const Logout = async () => {
+export const logoutAction = async () => {
   await signOut();
 };

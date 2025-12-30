@@ -1,18 +1,18 @@
-import { Profile } from 'next-auth';
-import { NextResponse } from 'next/server';
+import { Profile } from "next-auth";
+import { NextResponse } from "next/server";
 
-import { connectToDb } from '@/lib/utils';
-import { Profile as ProfileDB } from '@/models/profiles';
+import { connectToDb } from "@/lib/utils";
+import { ProfileDB as ProfileDB } from "@/models/profile.model";
 
 export const POST = async (request: Request) => {
   try {
     await connectToDb();
-    const profileDB = await ProfileDB();
     const profile: Profile = await request.json();
 
-    const oldAccount = await profileDB.findOne({ username: profile?.login });
+    const oldAccount = await ProfileDB.findOne({ username: profile?.login });
     const hasAccount = oldAccount !== undefined && oldAccount !== null;
-    if (hasAccount) return NextResponse.json({response :true});
+
+    if (hasAccount) return NextResponse.json({ response: true });
 
     const profileSchema = {
       first_name: profile.name,
@@ -23,8 +23,10 @@ export const POST = async (request: Request) => {
       profile_image_link: profile?.avatar_url,
       bio: profile?.bio,
     };
-    const newProfile = await new profileDB(profileSchema);
+
+    const newProfile = new ProfileDB(profileSchema);
     await newProfile.save();
+
     return NextResponse.json({ response: true });
   } catch (err) {
     console.log(err);

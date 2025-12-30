@@ -3,7 +3,7 @@ import {
     Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
 } from '@/components/ui/card';
 import { auth } from '@/lib/auth';
-import { GithubLogin } from '@/services/auth';
+import { githubLoginAction } from '@/api/auth.actions';
 
 import type { Metadata } from "next";
 
@@ -17,7 +17,7 @@ export default async function LoginPage() {
 
   return (
     <div>
-      <form action={GithubLogin}>
+      <form action={githubLoginAction}>
         <Card className="w-full max-w-md text-wrap">
           <CardHeader>
             <CardTitle className="text-2xl font-bold tracking-tighter">
