@@ -1,0 +1,35 @@
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongodb2026
+      MONGO_INITDB_DATABASE: laboras
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      - mongo-compose-network
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      - mongo-compose-network
+    environment:
+      # ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      # ME_CONFIG_MONGODB_AMINPASSWORD: mongodb2026
+      ME_CONFIG_MONGODB_URL: mongodb://root:mongodb2026@mongo:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: mongoexpress2026
+
+volumes:
+  mongodb_data_container:
+
+networks:
+  mongo-compose-network:
+    driver: bridge
