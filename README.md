@@ -63,9 +63,9 @@ pnpm dev
 
 - [OK] Add guest mode or create a public deploy instance
 - [OK] Add MongoDB docker compose to use locally
+- [OK] Improve login page
 - Add Loggertape
 - Change ServerComponents calling API Routes (antipattern) to pure db calls 
-- Improve login page
 - Use social ID insted of email to identify OAuth users on the database
 - Settings section
 - Add musics and chat resources
