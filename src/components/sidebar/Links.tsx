@@ -27,7 +27,7 @@ export function Links({
 
   const router = useRouter();
   const handleLogout = () => {
-    logoutAction().then(() => router.replace("/sign"));
+    logoutAction().then(() => router.replace("/login"));
   };
 
   const pathname = usePathname();

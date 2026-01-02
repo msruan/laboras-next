@@ -4,6 +4,7 @@ import { useState } from "react";
 import { updatePost as handleUpdate } from "@/api/post.mutations";
 import { IPost } from "@/models/post.model";
 import { FaceFrownIcon, StarIcon } from "@heroicons/react/16/solid";
+import { logger } from "@/lib/logger";
 
 type IconsProps = {
   post: IPost;
@@ -12,7 +13,8 @@ type IconsProps = {
 };
 
 export const Icons = ({ post, fullPage: _, userId }: IconsProps) => {
-  console.debug("The user id received was ", userId)
+  logger.trace(`The user id received was ${userId}`);
+
   const [isLiked, setIsLiked] = useState<boolean>(post.liked_by.includes(userId));
   const [isDesliked, setIsDesliked] = useState<boolean>(post.desliked_by.includes(userId));
 

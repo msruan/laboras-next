@@ -3,12 +3,13 @@ import { NextResponse } from "next/server";
 import { connectToDb } from "@/lib/utils";
 import { IPost, PostDB } from "@/models/post.model";
 import { IProfile, ProfileDB } from "@/models/profile.model";
+import { logger } from "@/lib/logger";
 
 export const GET = async (_request: Request, { params }: any) => {
   try {
     await connectToDb();
     const { username } = params;
-    console.log("o username eh", username);
+    logger.trace(`The received username is ${username}`);
 
     const user: IProfile | null = await ProfileDB.findOne({ username: username });
     if (!user) throw new Error("User not found!");
@@ -20,7 +21,7 @@ export const GET = async (_request: Request, { params }: any) => {
     });
 
   } catch (err) {
-    console.log(err);
+    logger.error(String(err));
     return NextResponse.error();
   }
 };

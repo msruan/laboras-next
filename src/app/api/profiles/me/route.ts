@@ -1,6 +1,7 @@
 import {
   connectToDb,
 } from "@/lib/utils";
+import { logger } from "@/lib/logger";
 import { IProfile, ProfileDB } from "@/models/profile.model";
 import { NextResponse } from "next/server";
 
@@ -16,7 +17,7 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json(user);
   } catch (err) {
-    console.error(err);
+    logger.error(String(err));
     return NextResponse.error();
   }
 };

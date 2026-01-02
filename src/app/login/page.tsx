@@ -20,7 +20,7 @@ export default async function LoginPage() {
   return (
     <div className='space-y-12'>
       <div className="flex flex-col justify-center w-full items-center">
-        <h1 className={`text-6xl xl:text-7xl ${styles.habbo} font-habbo`}>
+        <h1 className={`text-6xl ${styles.habbo} font-habbo`}>
           <span className={`${styles.letter} ${styles.l}`}>L</span>
           <span className={`${styles.letter} ${styles.a}`}>A</span>
           <span className={`${styles.letter} ${styles.b}`}>B</span>

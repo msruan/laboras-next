@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { connectToDb } from "@/lib/utils";
 import { ProfileDB as ProfileDB } from "@/models/profile.model";
+import { logger } from "@/lib/logger";
 
 export const POST = async (request: Request) => {
   try {
@@ -29,7 +30,7 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json({ response: true });
   } catch (err) {
-    console.log(err);
+    logger.error(String(err));
     return NextResponse.json({ response: false });
   }
 };

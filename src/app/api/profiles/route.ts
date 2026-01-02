@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { connectToDb } from "@/lib/utils";
 import { ProfileDB } from "@/models/profile.model";
+import { logger } from "@/lib/logger";
 
 export const GET = async (_request: Request) => {
   try {
@@ -11,7 +12,7 @@ export const GET = async (_request: Request) => {
 
     return NextResponse.json(users)
   } catch (err) {
-    console.log(err);
+    logger.error(String(err));
     return NextResponse.error();
   }
 };

@@ -4,6 +4,10 @@ const nextConfig = {
     buildActivityPosition: 'bottom-right'
   },
   reactStrictMode: true,
+  experimental: {
+    instrumentationHook: true,
+    typedRoutes: true,
+  },
   logging: {
     fetches: {
       fullUrl: true,

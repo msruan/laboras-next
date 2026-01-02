@@ -37,7 +37,6 @@ export const PostCard = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const local = usePathname();
   const router = useRouter();
-  // console.log("rpz, sou o post e recebi o id ", userId);
 
   async function handleSaveEdit() {
     if (
@@ -63,7 +62,7 @@ export const PostCard = ({
   }
 
   const onClick = () => {
-    const link = `/p/${post._id}`;
+    const link = `/p/${post._id}` as const;
     if (local != link) {
       router.push(link);
     }

@@ -2,8 +2,10 @@ import { auth } from "@/lib/auth";
 import { env } from "./env/server";
 
 export default auth((req) => {
-  const loginUrl = new URL("/login", env.SERVER_URL);
-  const homeUrl = new URL("/", env.SERVER_URL);
+  const loginUrl = URL.parse("/login", env.SERVER_URL);
+  const homeUrl = URL.parse("/", env.SERVER_URL);
+
+  if (!loginUrl || !homeUrl) throw new Error()
 
   if (!req.auth && req.nextUrl.pathname !== "/login") {
     return Response.redirect(loginUrl);

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { connectToDb } from "@/lib/utils";
 import { ProfileDB } from "@/models/profile.model";
+import { logger } from "@/lib/logger";
 
 export const GET = async (_request: Request, { params }: any) => {
   try {
@@ -11,7 +12,7 @@ export const GET = async (_request: Request, { params }: any) => {
     const user = await ProfileDB.findOne({ email: email });
     return NextResponse.json(user)
   } catch (err) {
-    console.log(err);
+    logger.error(String(err));
     return NextResponse.error();
   }
 };
