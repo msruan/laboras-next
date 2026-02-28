@@ -1,6 +1,5 @@
 {
-  "name": "laboras-back",
-  "version": "0.1.0",
+  "name": "laboras-next",
   "private": true,
   "scripts": {
     "dev": "next dev",

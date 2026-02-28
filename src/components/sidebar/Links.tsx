@@ -65,7 +65,7 @@ export function Links({
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar className="w-8 h-8 md:hidden rounded-full cursor-pointer">
-              <AvatarImage src={avatarLink ?? "src/assets/chorro-timido.JPG"} />
+              <AvatarImage src={avatarLink ?? "/chorro-timido.JPG"} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>

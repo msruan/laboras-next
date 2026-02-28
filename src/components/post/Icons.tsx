@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { updatePost as handleUpdate } from "@/api/post.mutations";
+import { updatePost as handleUpdate } from "@/api/post.actions";
 import { IPost } from "@/models/post.model";
 import { FaceFrownIcon, StarIcon } from "@heroicons/react/16/solid";
 import { logger } from "@/lib/logger";

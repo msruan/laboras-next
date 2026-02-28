@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-import { updatePost as handleUpdate } from '@/api/post.mutations';
+import { updatePost as handleUpdate } from '@/api/post.actions';
 import { IPost } from '@/models/post.model';
 import { IProfile } from '@/models/profile.model';
 

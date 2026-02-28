@@ -40,7 +40,7 @@ export const AsideMyProfile = async () => {
           <ProfileTag perfil={currentUserProfile} />
           <Avatar className="w-12 xl:hidden h-12 rounded-full cursor-pointer">
             <AvatarImage
-              src={currentUserProfile?.profile_image_link ?? "src/assets/chorro-timido.JPG"}
+              src={currentUserProfile?.profile_image_link ?? "/chorro-timido.JPG"}
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
