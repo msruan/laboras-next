@@ -19,7 +19,7 @@ export const AsidePeople = async () => {
       <div className="min-h-full flex flex-col gap-11">
         {users.length > 0 &&
           users.map((profile) => (
-            <ProfileTag key={profile?.username} perfil={profile} />
+            <ProfileTag key={profile?.username} profile={profile} />
           ))}
       </div>
       {/*</ScrollArea>*/}

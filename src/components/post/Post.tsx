@@ -102,7 +102,7 @@ export const PostCard = ({
                 <AvatarImage
                   src={
                     perfil?.profile_image_link ??
-                    "https://p2.trrsf.com/image/fget/cf/1200/1600/middle/images.terra.com/2023/07/31/pedro-flamengo-uv5ta7zqn5us.jpg"
+                    "/images/pedro-flamengo.jpg"
                   }
                 />
                 <AvatarFallback>CN</AvatarFallback>

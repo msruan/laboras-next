@@ -6,7 +6,8 @@ import { IProfile } from '@/models/profile.model';
 import UserPage from '@/components/pages/user-page';
 import { getProfileByUsername, getUserByEmail } from '@/api/user.queries';
 import { EntityNotFoundException } from '@/exceptions';
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
+import { logger } from '@/lib/logger';
 
 type Props = {
   params: {
@@ -22,8 +23,10 @@ const User: FC<Props> = async ({ params }) => {
   try {
     data = await getProfileByUsername(username)
   } catch (err) {
+    logger.error(String(err));
+
     if (err instanceof EntityNotFoundException) {
-      redirect(`/404`)
+      notFound();
     }
     throw err;
   }

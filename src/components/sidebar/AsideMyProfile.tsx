@@ -8,6 +8,7 @@ import { ProfileTag } from "../profile/ProfileTag";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 import { getUserByEmail } from "@/api/user.queries";
+import { DesktopLogoutMenu } from "./DesktopLogoutMenu";
 
 export const AsideMyProfile = async () => {
   const session = await auth();
@@ -37,14 +38,17 @@ export const AsideMyProfile = async () => {
               />
             </div>
           </div>
-          <ProfileTag perfil={currentUserProfile} />
-          <Avatar className="w-12 xl:hidden h-12 rounded-full cursor-pointer">
-            <AvatarImage
-              src={currentUserProfile?.profile_image_link ?? "/images/chorro-timido.jpg"}
-            />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <DesktopLogoutMenu>
+            <ProfileTag profile={currentUserProfile} />
+          </DesktopLogoutMenu>
+
         </div>
+        <Avatar className="w-12 xl:hidden h-12 rounded-full cursor-pointer">
+          <AvatarImage
+            src={currentUserProfile?.profile_image_link ?? "/images/chorro-timido.jpg"}
+          />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
       </div>
       <Links
         footer

@@ -14,6 +14,7 @@ import {
   UserCircleIcon as UserIconFilled,
 } from "@heroicons/react/16/solid";
 import { Separator } from "../ui/separator";
+import { Route } from "next";
 
 export function Links({
   username,
@@ -43,17 +44,17 @@ export function Links({
         {
           [
             {
-              href: '/',
+              href: '/' as const,
               Icon: pathname === "/" ? HomeIconFilled : HomeIconEmpty,
               label: 'Home'
             },
             {
-              href: `/u/${username}`,
+              href: `/u/${username}` as Route,
               Icon: pathname === `/u/${username}` ? UserIconFilled : UserIconEmpty,
               label: 'Profile'
             }
           ].map((link) =>
-            <Link key={link.label} href="/">
+            <Link key={link.label} href={link.href}>
               <Button className=" flex items-center max-xl:p-0 max-xl:pb-2 max-xl:justify-center justify-start w-full gap-4 p-1 xl:pl-3 text-lg font-bold text-white transition-all duration-200 bg-transparent rounded-full h-fit pr-7 hover:bg-rebeccapurple">
                 <link.Icon className="w-8 max-xl:mr-0 h-8 mr-1 text-biancapurple" />
                 <span className="max-xl:hidden ml-2 text-biancapurple">{link.label}</span>

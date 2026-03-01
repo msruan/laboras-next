@@ -20,7 +20,7 @@ export const Profile = ({ profile, isProfileOfLoggerUser, postsCount }: IProfile
           <AvatarImage
             src={
               profile.profile_image_link ??
-              "https://i.pinimg.com/originals/b5/81/61/b58161c8a74b05c68eeefae22908ce35.jpg"
+              "/images/chorro-cooking.jpg"
             }
           />
           <AvatarFallback>CN</AvatarFallback>

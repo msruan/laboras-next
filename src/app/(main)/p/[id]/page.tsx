@@ -5,6 +5,9 @@ import { IPost } from '@/models/post.model';
 import { PostPage } from '@/components/pages/post-page';
 import { getUserByEmail, getUsers } from '@/api/user.queries';
 import { getPostById } from '@/api/post.queries';
+import { EntityNotFoundException } from '@/exceptions';
+import { notFound } from 'next/navigation';
+import { logger } from '@/lib/logger';
 
 type Props = {
   params: {
@@ -15,7 +18,19 @@ type Props = {
 const Post: FC<Props> = async ({ params }) => {
   const { id } = params;
 
-  const response = await getPostById(id);
+  let response;
+
+  try {
+    response = await getPostById(id);
+  } catch (err) {
+    logger.error(String(err));
+
+    if (err instanceof EntityNotFoundException) {
+      notFound();
+    }
+    throw err;
+  }
+
 
   const post: IPost = response.post;
   const children: IPost[] = response.children;
