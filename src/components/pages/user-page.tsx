@@ -1,0 +1,29 @@
+import { Header } from '@/components/Header';
+import { PostsContainer } from '@/components/PostsContainer';
+import { Profile } from '@/components/profile/Profile';
+import { IPost } from '@/models/post.model';
+import { IProfile } from '@/models/profile.model';
+
+type Props = {
+  currentUser: IProfile
+  profile: IProfile;
+  profilePosts: IPost[];
+  isProfileOfLoggerUser: boolean;
+};
+
+function UserPage(props: Props) {
+  return (
+    <div className="flex flex-col h-full max-xl:border-0 gap-2 pl-3 pr-3 border-rebeccapurple2 border-r-2 border-l-2">
+      <Header title={props.profile.username} />
+      <div className="max-sm:mt-12 ">
+        <Profile
+          postsCount={props.profilePosts.length}
+          profile={props.profile}
+          isProfileOfLoggerUser={props.isProfileOfLoggerUser}
+        />
+        <PostsContainer currentUser={props.currentUser} textbox={false} posts={props.profilePosts} profiles={[props.profile]} />
+      </div>
+    </div>
+  );
+};
+export default UserPage;

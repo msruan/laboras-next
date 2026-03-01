@@ -82,10 +82,37 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        'text-slide': {
+          '0%, 11%': {
+            transform: 'translateY(0%)'
+          },
+          '14%, 25%': {
+            transform: 'translateY(-12.5%)'
+          },
+          '28%, 39%': {
+            transform: 'translateY(-25%)'
+          },
+          '42%, 53%': {
+            transform: 'translateY(-37.5%)'
+          },
+          '56%, 67%': {
+            transform: 'translateY(-50%)'
+          },
+          '70%, 81%': {
+            transform: 'translateY(-62.5%)'
+          },
+          '84%, 95%': {
+            transform: 'translateY(-75%)'
+          },
+          '100%': {
+            transform: 'translateY(-87.5%)'
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        'text-slide': 'text-slide 12.5s cubic-bezier(0.83, 0, 0.17, 1) infinite'
       },
       fontFamily: {
         habbo: ["var(--font-habbo)"],

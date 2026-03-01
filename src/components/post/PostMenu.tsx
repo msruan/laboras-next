@@ -1,4 +1,4 @@
-import { deletePost } from '@/actions/PostActions';
+import { deletePost } from '@/api/post.actions';
 import { EllipsisHorizontalIcon, PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
 
 import {
@@ -24,7 +24,7 @@ export function PostMenu({ postId, handleEdit }: PostMenuProps) {
         {/* <Button variant="outline">Open</Button> */}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-28">
-        <DropdownMenuGroup>
+        <DropdownMenuGroup className='*:cursor-pointer'>
           <DropdownMenuItem
             onClick={() => {
               handleEdit(true);

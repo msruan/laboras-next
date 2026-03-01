@@ -2,36 +2,33 @@ import "@/global.css";
 
 import localFont from "next/font/local";
 
-import { ThemeProvider } from "@/components/ui/theme-provider";
+import { Metadata } from "next";
+import RootProvider from "./providers";
+import { ReactNode } from "react";
 
-// Font files can be colocated inside of `app`
 const habboFont = localFont({
-  src: "./../assets/habbo-font/HabboFont.ttf",
+  src: "../../public/fonts/HabboFont.ttf",
   display: "swap",
   variable: "--font-habbo",
 });
 
+export const metadata: Metadata = {
+  title: "Laboras",
+  description: "A Piauian social network"
+}
+
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en" className={`${habboFont.variable} font-sans h-full`}>
-      <head>
-        <title>Laboras</title>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
       <body className="h-full">
-        {/* Layout UI */}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
+        <RootProvider
         >
           <main>{children}</main>
-        </ThemeProvider>
+        </RootProvider>
       </body>
     </html>
   );

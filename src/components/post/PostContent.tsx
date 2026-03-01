@@ -3,8 +3,8 @@ import { ptBR } from "date-fns/locale";
 import Link from "next/link";
 
 import useClient from "@/hooks/use-client";
-import { IPost } from "@/models/posts";
-import { IProfile } from "@/models/profiles";
+import { IPost } from "@/models/post.model";
+import { IProfile } from "@/models/profile.model";
 
 import { CardContent } from "../ui/card";
 import { Icons } from "./Icons";
