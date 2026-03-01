@@ -1,32 +1,59 @@
 "use server";
 
-import { apiURL } from "@/config/api";
-import { CreatePostDTO } from "@/models/post.model";
+import { logger } from "@/lib/logger";
+import { connectToDb } from "@/lib/utils";
+import { CreatePostDTO, PostDB } from "@/models/post.model";
+import { revalidatePath, revalidateTag } from "next/cache";
 
-export async function addPost(post: CreatePostDTO): Promise<boolean> {
-  const response = await fetch(`${apiURL}/posts`, {
-    method: "POST",
-    body: JSON.stringify(post),
-  });
+export async function addPost(payload: CreatePostDTO): Promise<void> {
+  try {
+    await connectToDb();
 
-  return response.ok;
+    const newPost = new PostDB(payload);
+
+    await newPost.save();
+    logger.info("New post created!");
+
+    revalidatePath("/");
+    revalidateTag("all-posts");
+
+    return;
+  } catch (err) {
+    logger.error(String(err));
+    throw err;
+  }
 }
 
-export async function updatePost(post: { data: any; _id: string }): Promise<boolean> {
-  const response = await fetch(`${apiURL}/posts/${post._id}`, {
-    method: "PATCH",
-    body: JSON.stringify(post.data),
-  });
-
-  return response.ok;
+export async function updatePost(payload: { data: any; _id: string }): Promise<void> {
+  try {
+    await connectToDb();
+    const post = await PostDB.findByIdAndUpdate(payload._id, payload.data);
+    if (!post) {
+      throw new Error("Post not found")
+    }
+    logger.info("Post atualizado!");
+    revalidateTag("all-posts");
+    return;
+  } catch (err) {
+    logger.error(String(err));
+    throw err;
+  }
 }
 
-export async function deletePost(postId: string): Promise<boolean> {
-  const response = await fetch(`${apiURL}/posts/${postId}`, {
-    method: "DELETE",
-  });
+export async function deletePost(postId: string): Promise<void> {
 
-  return response.ok;
+  try {
+    await connectToDb();
+
+    const post = await PostDB.findByIdAndDelete(postId);
+    if (!post) {
+      throw new Error("Post not found")
+    }
+    revalidateTag("all-posts");
+  } catch (err) {
+    logger.error(String(err));
+    throw err;
+  }
 }
 
 

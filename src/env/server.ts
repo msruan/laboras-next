@@ -10,8 +10,8 @@ export const env = createEnv({
     SERVER_URL: z.url(),
     APP_PRIVACY_MODE: z.enum(["public", "private"]),
     APP_PRIVATE_GITHUB_USERS: z
-      .string()
-      .transform((str) => purgeChar(" ", str).split(",")).default([]),
+      .string().optional()
+      .transform((str) => str ? purgeChar(" ", str).split(",") : str),
     // Auth.js config
     AUTH_SECRET: z.string().min(32),
     GITHUB_SECRET: z.string().min(1),

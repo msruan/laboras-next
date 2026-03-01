@@ -1,11 +1,12 @@
 import { FC } from 'react';
 
-import { api } from '@/config/api';
 import { auth } from '@/lib/auth';
 import { IPost } from '@/models/post.model';
 import { IProfile } from '@/models/profile.model';
 import UserPage from '@/components/pages/user-page';
-import { getUserByEmail } from '@/api/user.queries';
+import { getProfileByUsername, getUserByEmail } from '@/api/user.queries';
+import { EntityNotFoundException } from '@/exceptions';
+import { redirect } from 'next/navigation';
 
 type Props = {
   params: {
@@ -16,10 +17,19 @@ type Props = {
 const User: FC<Props> = async ({ params }) => {
   const { username } = params;
 
-  const data = await api.get(`/profiles/username/${username}`);
+  let data;
 
-  const userProfile: IProfile = data.data.user;
-  const userPosts: IPost[] = data.data.posts;
+  try {
+    data = await getProfileByUsername(username)
+  } catch (err) {
+    if (err instanceof EntityNotFoundException) {
+      redirect(`/404`)
+    }
+    throw err;
+  }
+
+  const userProfile: IProfile = data.user;
+  const userPosts: IPost[] = data.posts;
 
   const session = await auth();
   const user: IProfile = await getUserByEmail(session?.user?.email ?? "")

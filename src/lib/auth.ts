@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
-import { api } from "@/config/api";
 import { env } from "@/env/server";
 import { logger } from "@/lib/logger";
+import { apiSign } from "@/api/auth.actions";
 
 export const {
   handlers: { GET, POST },
@@ -25,23 +25,20 @@ export const {
 
       const privacyMode = env.APP_PRIVACY_MODE;
 
-      if (account?.provider === "github") {
+      if (account?.provider === "github" && profile) {
         if (privacyMode === "private") {
           const allowedUsers = env.APP_PRIVATE_GITHUB_USERS;
 
-          const isMember = allowedUsers.includes(String(profile?.id));
+          const isMember = allowedUsers?.includes(String(profile.id));
 
-          if (isMember) {
-            logger.debug("Yes, it's private member");
-            return (await api.post("/sign", profile!))?.data?.response;
+          if (!isMember) {
+            logger.warn("No, it's unauthorized user");
+            return false;
           }
-
-          logger.warn("No, it's unauthorized user");
-          return false;
         }
-        return (await api.post("/sign", profile!))?.data?.response;
+        return await apiSign(profile);
       }
-      return true;
+      return false;
     },
   },
 });

@@ -4,13 +4,6 @@ import { PostsContainer } from '@/components/PostsContainer';
 import { auth } from '@/lib/auth';
 import { IProfile } from '@/models/profile.model';
 
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Laboras",
-  description: "The worst social network :)",
-};
-
 const Home = async () => {
   const [posts, profiles, session] = await Promise.all([getPosts(), getUsers(), auth()]);
 

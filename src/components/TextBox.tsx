@@ -36,7 +36,7 @@ export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
       <div className="w-full flex flex-row gap-8 items-center">
         <Avatar className="w-12 h-12 rounded-full">
           <AvatarImage
-            src={profile?.profile_image_link ?? "/chorro-timido.JPG"}
+            src={profile?.profile_image_link ?? "/images/chorro-timido.jpg"}
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
