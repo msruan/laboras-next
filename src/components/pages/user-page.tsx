@@ -1,10 +1,11 @@
 import { Header } from '@/components/Header';
 import { PostsContainer } from '@/components/PostsContainer';
 import { Profile } from '@/components/profile/Profile';
-import { IPost } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import { IPost } from '@/models/post.model';
+import { IProfile } from '@/models/profile.model';
 
 type Props = {
+  currentUser: IProfile
   profile: IProfile;
   profilePosts: IPost[];
   isProfileOfLoggerUser: boolean;
@@ -20,7 +21,7 @@ function UserPage(props: Props) {
           profile={props.profile}
           isProfileOfLoggerUser={props.isProfileOfLoggerUser}
         />
-        <PostsContainer textbox={false} posts={props.profilePosts} />
+        <PostsContainer currentUser={props.currentUser} textbox={false} posts={props.profilePosts} profiles={[props.profile]} />
       </div>
     </div>
   );

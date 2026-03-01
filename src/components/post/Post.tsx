@@ -6,9 +6,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-import { updatePost as handleUpdate } from '@/actions/PostActions';
-import { IPost } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import { updatePost as handleUpdate } from '@/api/post.actions';
+import { IPost } from '@/models/post.model';
+import { IProfile } from '@/models/profile.model';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
@@ -18,26 +18,25 @@ import { Icons } from './Icons';
 import { PostContent } from './PostContent';
 import { PostMenu } from './PostMenu';
 
-type IPostProps = {
-  post: IPost;
-  perfil: IProfile;
+interface PostProps {
+  userId: string;
+  postContent: IPost;
+  ownerProfile: IProfile;
   fullPage: boolean;
   fullBorder: boolean;
-  userId: string;
 };
 
-export const Post = ({
-  post,
-  perfil,
+export const PostCard = ({
+  postContent: post,
+  ownerProfile: perfil,
   fullPage = false,
   userId,
   fullBorder = false,
-}: IPostProps) => {
+}: PostProps) => {
   const [editMode, setEditMode] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const local = usePathname();
   const router = useRouter();
-  // console.log("rpz, sou o post e recebi o id ", userId);
 
   async function handleSaveEdit() {
     if (
@@ -52,7 +51,7 @@ export const Post = ({
         }),
         {
           loading: "Atualizando post...",
-          success: (data) => {
+          success: (_data) => {
             router.refresh();
             return `Post atualizado!`;
           },
@@ -63,7 +62,7 @@ export const Post = ({
   }
 
   const onClick = () => {
-    const link = `/p/${post._id}`;
+    const link = `/p/${post._id}` as const;
     if (local != link) {
       router.push(link);
     }
@@ -103,7 +102,7 @@ export const Post = ({
                 <AvatarImage
                   src={
                     perfil?.profile_image_link ??
-                    "https://p2.trrsf.com/image/fget/cf/1200/1600/middle/images.terra.com/2023/07/31/pedro-flamengo-uv5ta7zqn5us.jpg"
+                    "/images/pedro-flamengo.jpg"
                   }
                 />
                 <AvatarFallback>CN</AvatarFallback>
@@ -138,5 +137,3 @@ export const Post = ({
     </Card>
   );
 };
-
-export default Post;

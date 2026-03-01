@@ -6,15 +6,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenu, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { Logout } from "@/services/auth";
-import {LogOut as LogoutIcon } from "lucide-react"
-import { CogIcon, HomeIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import { logoutAction } from '@/api/auth.actions';
+import { LogOut as LogoutIcon } from "lucide-react"
+import { HomeIcon as HomeIconEmpty, UserCircleIcon as UserIconEmpty } from "@heroicons/react/24/outline";
 import {
-  CogIcon as CogIconFilled,
   HomeIcon as HomeIconFilled,
-  UserCircleIcon as UserCircleIconFilled,
+  UserCircleIcon as UserIconFilled,
 } from "@heroicons/react/16/solid";
 import { Separator } from "../ui/separator";
+import { Route } from "next";
+
 export function Links({
   username,
   avatarLink,
@@ -24,14 +25,14 @@ export function Links({
   username: string;
   avatarLink: string;
 }) {
-  const pathname = usePathname();
-  const localIsHome = pathname === "/";
-  const localIsUser = pathname === `/u/${username}`;
-  //   const localIsConfig = pathname === "/config";
+
   const router = useRouter();
-  const handleClik = () => {
-    Logout().then(() => router.replace("/sign"));
+  const handleLogout = () => {
+    logoutAction().then(() => router.replace("/login"));
   };
+
+  const pathname = usePathname();
+
   return (
     <>
       <div
@@ -40,54 +41,43 @@ export function Links({
           (footer ? "md:hidden bg-black px-10" : "")
         }
       >
-        <Link href="/">
-          <Button className=" flex items-center max-xl:p-0 max-xl:pb-2 max-xl:justify-center justify-start w-full gap-4 p-1 xl:pl-3 text-lg font-bold text-white transition-all duration-200 bg-transparent rounded-full h-fit pr-7 hover:bg-rebeccapurple">
-            {localIsHome ? (
-              <>
-                <HomeIconFilled className="w-8 max-xl:mr-0 h-8 mr-1 text-biancapurple" />
-              </>
-            ) : (
-              <HomeIcon className="w-8 max-xl:mr-0 h-8 mr-1 text-biancapurple" />
-            )}
-            <span className="max-xl:hidden ml-2  text-biancapurple">Home</span>
-          </Button>
-        </Link>
-        <Link href={`/u/${username}`}>
-          <Button className="md:mt-3 flex items-center max-xl:p-0 max-xl:pb-2 max-xl:justify-center justify-start w-full gap-4 p-1 xl:pl-3 text-lg font-bold text-white transition-all duration-200 bg-transparent rounded-full h-fit pr-7 hover:bg-rebeccapurple">
-            {localIsUser ? (
-              <>
-                <UserCircleIconFilled className="w-8 max-xl:mr-0 h-8 mr-1 text-biancapurple" />
-              </>
-            ) : (
-              <UserCircleIcon className="w-8 max-xl:mr-0 h-8 mr-1 text-biancapurple" />
-            )}
-            <span className="max-xl:hidden ml-2  text-biancapurple">
-              Profile
-            </span>
-          </Button>
-        </Link>
-        {/* <Link href="/config">
-          {localIsConfig ? (
-            <CogIconFilled className="w-8 h-8 text-biancapurple" />
-          ) : (
-            <CogIcon className="w-8 h-8 text-biancapurple" />
-          )}
-        </Link> */}
+        {
+          [
+            {
+              href: '/' as const,
+              Icon: pathname === "/" ? HomeIconFilled : HomeIconEmpty,
+              label: 'Home'
+            },
+            {
+              href: `/u/${username}` as Route,
+              Icon: pathname === `/u/${username}` ? UserIconFilled : UserIconEmpty,
+              label: 'Profile'
+            }
+          ].map((link) =>
+            <Link key={link.label} href={link.href}>
+              <Button className=" flex items-center max-xl:p-0 max-xl:pb-2 max-xl:justify-center justify-start w-full gap-4 p-1 xl:pl-3 text-lg font-bold text-white transition-all duration-200 bg-transparent rounded-full h-fit pr-7 hover:bg-rebeccapurple">
+                <link.Icon className="w-8 max-xl:mr-0 h-8 mr-1 text-biancapurple" />
+                <span className="max-xl:hidden ml-2 text-biancapurple">{link.label}</span>
+              </Button>
+            </Link>
+          )
+        }
+
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar className="w-8 h-8 md:hidden rounded-full cursor-pointer">
-              <AvatarImage src={avatarLink ?? "src/assets/chorro-timido.JPG"} />
+              <AvatarImage src={avatarLink ?? "/images/chorro-timido.jpg"} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-        
+
           <DropdownMenuContent className="w-24 mr-2 p-2">
-            <Separator/>
-            <DropdownMenuItem className="flex items-center" onClick={handleClik}>
-            <LogoutIcon className="mr-2 h-4 w-4" />
+            <Separator />
+            <DropdownMenuItem className="flex items-center" onClick={handleLogout}>
+              <LogoutIcon className="mr-2 h-4 w-4" />
               Sair
             </DropdownMenuItem>
-            <Separator/>
+            <Separator />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

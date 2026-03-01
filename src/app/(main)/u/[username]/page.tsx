@@ -1,10 +1,13 @@
 import { FC } from 'react';
 
-import { api } from '@/config/api';
 import { auth } from '@/lib/auth';
-import { IPost } from '@/models/posts';
-import { IProfile } from '@/models/profiles';
+import { IPost } from '@/models/post.model';
+import { IProfile } from '@/models/profile.model';
 import UserPage from '@/components/pages/user-page';
+import { getProfileByUsername, getUserByEmail } from '@/api/user.queries';
+import { EntityNotFoundException } from '@/exceptions';
+import { notFound } from 'next/navigation';
+import { logger } from '@/lib/logger';
 
 type Props = {
   params: {
@@ -14,15 +17,28 @@ type Props = {
 
 const User: FC<Props> = async ({ params }) => {
   const { username } = params;
-  
+
+  let data;
+
+  try {
+    data = await getProfileByUsername(username)
+  } catch (err) {
+    logger.error(String(err));
+
+    if (err instanceof EntityNotFoundException) {
+      notFound();
+    }
+    throw err;
+  }
+
+  const userProfile: IProfile = data.user;
+  const userPosts: IPost[] = data.posts;
+
   const session = await auth();
-  
-  const data = await api.get(`/profiles/username/${username}`);
-  const profile: IProfile = data.data.user;
-  const posts: IPost[] = data.data.posts;
+  const user: IProfile = await getUserByEmail(session?.user?.email ?? "")
 
   return (
-    <UserPage profile={profile} profilePosts={posts} isProfileOfLoggerUser={session?.user?.email === profile.email}/>
+    <UserPage currentUser={user} profile={userProfile} profilePosts={userPosts} isProfileOfLoggerUser={session?.user?.email === userProfile.email} />
   );
 };
 
