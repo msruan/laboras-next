@@ -1,7 +1,5 @@
 "use server";
 
-import Link from "next/link";
-
 import { auth } from "@/lib/auth";
 import { IProfile } from "@/models/profile.model";
 import { Links } from "./Links";
@@ -11,6 +9,7 @@ import { Separator } from "../ui/separator";
 import { getUserByEmail } from "@/api/user.queries";
 import { DesktopLogoutMenu } from "./DesktopLogoutMenu";
 import { Assets } from "@/assets";
+import { LaborasLogo } from "./LaborasLogo";
 
 export const AsideMyProfile = async () => {
   const session = await auth();
@@ -24,12 +23,7 @@ export const AsideMyProfile = async () => {
         <div className="flex flex-col items-center justify-between w-full  h-screen p-5 text-5xl pb-7">
           <div className="flex flex-col items-center h-full gap-8">
             <div className="flex flex-col items-center gap-4">
-              <Link href={"/"}>
-                <h2 className="max-xl:hidden font-habbo">
-                  L<span className="max-xl:hidden">ABORAS</span>
-                </h2>
-              </Link>
-
+              <LaborasLogo/>
               <Separator />
             </div>
 
