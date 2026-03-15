@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import mongoose from "mongoose";
-import { env } from "@/env/server";
+import { env } from "@/env";
 import { logger } from "@/lib/logger";
 
 export function cn(...inputs: ClassValue[]) {

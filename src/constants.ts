@@ -1,3 +1,3 @@
-import { env } from "./env/server";
+import { env } from "./env";
 
 export const apiURL = env.SERVER_URL + "/api";

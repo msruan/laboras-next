@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 import { updatePost as handleUpdate } from "@/api/post.actions";
@@ -12,8 +13,9 @@ type IconsProps = {
   userId: string;
 };
 
-export const Icons = ({ post, fullPage: _, userId }: IconsProps) => {
+export const Icons = ({ post: postParam, fullPage: _, userId }: IconsProps) => {
   logger.trace(`The user id received was ${userId}`);
+  const post = {...postParam};
 
   const [isLiked, setIsLiked] = useState<boolean>(post.liked_by.includes(userId));
   const [isDesliked, setIsDesliked] = useState<boolean>(post.desliked_by.includes(userId));

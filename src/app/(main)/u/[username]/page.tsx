@@ -10,13 +10,13 @@ import { notFound } from 'next/navigation';
 import { logger } from '@/lib/logger';
 
 type Props = {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 };
 
-const User: FC<Props> = async ({ params }) => {
-  const { username } = params;
+const User = async ({ params }: Props) => {
+  const { username } = await params;
 
   let data;
 

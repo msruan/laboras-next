@@ -23,7 +23,7 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="en" className={`${habboFont.variable} font-sans h-full`}>
+    <html lang="en" className={`${habboFont.variable} font-sans h-full`} suppressHydrationWarning>
       <body className="h-full">
         <RootProvider
         >

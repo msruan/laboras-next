@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
-import { env } from "@/env/server";
+import { env } from "@/env";
 import { logger } from "@/lib/logger";
 import { apiSign } from "@/api/auth.actions";
 

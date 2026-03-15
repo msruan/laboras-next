@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { auth } from '@/lib/auth';
 import { IPost } from '@/models/post.model';
 import { PostPage } from '@/components/pages/post-page';
@@ -9,14 +7,14 @@ import { EntityNotFoundException } from '@/exceptions';
 import { notFound } from 'next/navigation';
 import { logger } from '@/lib/logger';
 
-type Props = {
-  params: {
+interface Props {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-const Post: FC<Props> = async ({ params }) => {
-  const { id } = params;
+const Post = async ({params}: Props) => {
+  const { id } = await params;
 
   let response;
 

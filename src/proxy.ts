@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { env } from "./env/server";
+import { env } from "./env";
 
 export default auth((req) => {
   const loginUrl = URL.parse("/login", env.SERVER_URL);
