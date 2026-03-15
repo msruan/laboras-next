@@ -1,4 +1,5 @@
 "use server";
+
 import Link from "next/link";
 
 import { auth } from "@/lib/auth";
@@ -9,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 import { getUserByEmail } from "@/api/user.queries";
 import { DesktopLogoutMenu } from "./DesktopLogoutMenu";
+import { Assets } from "@/assets";
 
 export const AsideMyProfile = async () => {
   const session = await auth();
@@ -45,7 +47,7 @@ export const AsideMyProfile = async () => {
         </div>
         <Avatar className="w-12 xl:hidden h-12 rounded-full cursor-pointer">
           <AvatarImage
-            src={currentUserProfile?.profile_image_link ?? "/images/chorro-timido.jpg"}
+            src={currentUserProfile?.profile_image_link ?? Assets.images.shyDog}
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>

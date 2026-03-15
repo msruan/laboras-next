@@ -15,6 +15,7 @@ import {
 } from "@heroicons/react/16/solid";
 import { Separator } from "../ui/separator";
 import { Route } from "next";
+import { Assets } from "@/assets";
 
 export function Links({
   username,
@@ -66,7 +67,7 @@ export function Links({
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar className="w-8 h-8 md:hidden rounded-full cursor-pointer">
-              <AvatarImage src={avatarLink ?? "/images/chorro-timido.jpg"} />
+              <AvatarImage src={avatarLink ??  Assets.images.shyDog} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>

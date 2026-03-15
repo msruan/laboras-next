@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IProfile } from '@/models/profile.model';
 
 import { Card, CardContent } from '../ui/card';
+import { Assets } from '@/assets';
 
 type IProfileProps = {
   profile: IProfile;
@@ -15,7 +16,7 @@ export const ProfileTag = ({ profile }: IProfileProps) => {
       <Card className="w-full bg-rebeccapurple2 flex gap-4 p-2 border-0 rounded-full hover:bg-rebeccapurple transition-all duration-150">
         <Avatar className="w-12 h-12 rounded-full cursor-pointer">
           <AvatarImage
-            src={profile.profile_image_link ?? "/images/chorro-timido.jpg"}
+            src={profile.profile_image_link ?? Assets.images.shyDog}
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>

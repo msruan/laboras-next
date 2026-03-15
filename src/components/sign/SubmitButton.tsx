@@ -1,13 +1,12 @@
 "use client";
 
-import { Session } from 'next-auth';
 import { useFormStatus } from 'react-dom';
 
 import { GitHubLogoIcon, ReloadIcon } from '@radix-ui/react-icons';
 
 import { Button } from '../ui/button';
 
-export function SubmitButton({ session }: { session: Session | null }) {
+export function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <>
@@ -19,7 +18,6 @@ export function SubmitButton({ session }: { session: Session | null }) {
       ) : (
         <Button
           variant="outline"
-          disabled={session?.user !== undefined}
           className="mt-2"
         >
           <GitHubLogoIcon className="mr-2" />

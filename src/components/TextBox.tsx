@@ -8,6 +8,7 @@ import { IProfile } from "@/models/profile.model";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { Assets } from "@/assets";
 type TextBoxProps = {
   linkedTo: string | null;
   profile: IProfile;
@@ -36,7 +37,7 @@ export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
       <div className="w-full flex flex-row gap-8 items-center">
         <Avatar className="w-12 h-12 rounded-full">
           <AvatarImage
-            src={profile?.profile_image_link ?? "/images/chorro-timido.jpg"}
+            src={profile?.profile_image_link ?? Assets.images.shyDog}
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>

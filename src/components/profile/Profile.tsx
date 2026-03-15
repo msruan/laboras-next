@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { IProfile } from "@/models/profile.model";
 
 import { Card, CardContent, CardTitle } from "../ui/card";
+import { Assets } from "@/assets";
 
 type IProfileProps = {
   profile: IProfile;
@@ -20,7 +21,7 @@ export const Profile = ({ profile, isProfileOfLoggerUser, postsCount }: IProfile
           <AvatarImage
             src={
               profile.profile_image_link ??
-              "/images/chorro-cooking.jpg"
+             Assets.images.cookingDog
             }
           />
           <AvatarFallback>CN</AvatarFallback>

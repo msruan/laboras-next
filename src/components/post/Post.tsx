@@ -17,6 +17,7 @@ import { Textarea } from '../ui/textarea';
 import { Icons } from './Icons';
 import { PostContent } from './PostContent';
 import { PostMenu } from './PostMenu';
+import { Assets } from '@/assets';
 
 interface PostProps {
   userId: string;
@@ -102,7 +103,7 @@ export const PostCard = ({
                 <AvatarImage
                   src={
                     perfil?.profile_image_link ??
-                    "/images/pedro-flamengo.jpg"
+                   Assets.images.soccerPlayer
                   }
                 />
                 <AvatarFallback>CN</AvatarFallback>

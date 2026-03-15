@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Assets } from "@/assets";
 
 function NotFoundPage() {
   return (
@@ -10,7 +11,7 @@ function NotFoundPage() {
       <Card className="text-center flex flex-col items-center justify-center gap-10 py-10">
         <h1 className="text-6xl font-bold">PAGE NOT FOUND</h1>
         <div className="relative inline-flex justify-center items-center">
-          <Image unoptimized height={600} width={600} alt="" src="/images/404.jpg" />
+          <Image unoptimized height={600} width={600} alt="" src={Assets.images.notFound}/>
         </div>
         <p className="text-3xl box-border">
           are you <strong>lost</strong> baby bunny?...but do not worry! <br />{" "}

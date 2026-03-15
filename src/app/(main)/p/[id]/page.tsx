@@ -49,5 +49,6 @@ const Post = async ({params}: Props) => {
     />
   );
 };
+
 //Todo: fazer fetchs separados, para deixar a pagina carregar sem esperar pelos comentarios
 export default Post;

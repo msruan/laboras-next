@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { auth } from '@/lib/auth';
 import { IPost } from '@/models/post.model';
 import { IProfile } from '@/models/profile.model';
@@ -8,12 +6,23 @@ import { getProfileByUsername, getUserByEmail } from '@/api/user.queries';
 import { EntityNotFoundException } from '@/exceptions';
 import { notFound } from 'next/navigation';
 import { logger } from '@/lib/logger';
+import { Metadata } from 'next';
 
 type Props = {
   params: Promise<{
     username: string;
   }>;
 };
+
+export async function generateMetadata(
+  { params }: Props,
+): Promise<Metadata> {
+  const { username } = await params;
+ 
+  return {
+    title: username,
+  }
+}
 
 const User = async ({ params }: Props) => {
   const { username } = await params;
