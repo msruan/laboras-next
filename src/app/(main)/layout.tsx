@@ -1,14 +1,11 @@
 import { AsideMyProfile } from '@/components/sidebar/AsideMyProfile';
 import { AsidePeople } from '@/components/AsidePeople';
+import { ReactNode } from 'react';
 
 export default function MainLayout({
   children,
 }: {
-  children: React.ReactNode;
-  params: {
-    tag: string;
-    item: string;
-  };
+  children: ReactNode;
 }) {
   return (
     <div>

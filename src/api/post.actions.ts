@@ -15,7 +15,7 @@ export async function addPost(payload: CreatePostDTO): Promise<void> {
     logger.info("New post created!");
 
     revalidatePath("/");
-    revalidateTag("all-posts");
+    revalidateTag("all-posts", "max");
 
     return;
   } catch (err) {
@@ -32,7 +32,7 @@ export async function updatePost(payload: { data: any; _id: string }): Promise<v
       throw new Error("Post not found")
     }
     logger.info("Post atualizado!");
-    revalidateTag("all-posts");
+    revalidateTag("all-posts", "max");
     return;
   } catch (err) {
     logger.error(String(err));
@@ -49,7 +49,7 @@ export async function deletePost(postId: string): Promise<void> {
     if (!post) {
       throw new Error("Post not found")
     }
-    revalidateTag("all-posts");
+    revalidateTag("all-posts", "max");
   } catch (err) {
     logger.error(String(err));
     throw err;
