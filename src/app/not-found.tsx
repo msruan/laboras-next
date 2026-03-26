@@ -6,10 +6,10 @@ import { Card } from "@/components/ui/card";
 
 function NotFoundPage() {
 	return (
-		<div className="h-screen items-center flex flex-col justify-center">
-			<Card className="text-center flex flex-col items-center justify-center gap-10 py-10">
-				<h1 className="text-6xl font-bold">PAGE NOT FOUND</h1>
-				<div className="relative inline-flex justify-center items-center">
+		<div className="flex h-screen flex-col items-center justify-center">
+			<Card className="flex flex-col items-center justify-center gap-10 py-10 text-center">
+				<h1 className="font-bold text-6xl">PAGE NOT FOUND</h1>
+				<div className="relative inline-flex items-center justify-center">
 					<Image
 						unoptimized
 						height={600}
@@ -18,12 +18,12 @@ function NotFoundPage() {
 						src={Assets.images.notFound}
 					/>
 				</div>
-				<p className="text-3xl box-border">
+				<p className="box-border text-3xl">
 					are you <strong>lost</strong> baby bunny?...but do not worry! <br />{" "}
 					they are are here to guide you
 				</p>
 				<Link href="/">
-					<Button className="font-bold text-white cursor-pointer rounded-full">
+					<Button className="cursor-pointer rounded-full font-bold text-white">
 						GO HOME
 					</Button>
 				</Link>

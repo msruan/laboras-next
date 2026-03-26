@@ -23,7 +23,7 @@ export function DesktopLogoutMenu({ children }: { children: ReactNode }) {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>{children}</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-24 mr-2 p-2">
+			<DropdownMenuContent className="mr-2 w-24 p-2">
 				<Separator />
 				<DropdownMenuItem className="flex items-center" onClick={handleLogout}>
 					<LogOut className="mr-2 h-4 w-4" />

@@ -33,9 +33,9 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 	}
 
 	return (
-		<div className="flex flex-col w-full align-middle pb-10 border-b-2  pl-3 pr-3 border-rebeccapurple2">
-			<div className="w-full flex flex-row gap-8 items-center">
-				<Avatar className="w-12 h-12 rounded-full">
+		<div className="flex w-full flex-col border-rebeccapurple2 border-b-2 pr-3 pb-10 pl-3 align-middle">
+			<div className="flex w-full flex-row items-center gap-8">
+				<Avatar className="h-12 w-12 rounded-full">
 					<AvatarImage
 						src={profile?.profile_image_link ?? Assets.images.shyDog}
 					/>
@@ -50,7 +50,7 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 						}
 					}}
 					ref={input}
-					className="bg-transparent py-5 w-full content-center border-none text-white outline-none resize-none"
+					className="w-full resize-none content-center border-none bg-transparent py-5 text-white outline-none"
 					name="text"
 					maxLength={400}
 					placeholder={`${
@@ -58,10 +58,10 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 					} ${profile.first_name}?`}
 				></textarea>
 			</div>
-			<div className="self-end justify-self-end w-fit h-fit">
+			<div className="h-fit w-fit self-end justify-self-end">
 				<Button
 					onClick={handleClick}
-					className=" bg-rebeccapurple2 hover:bg-rebeccapurple w-full h-full rounded-full font-bold"
+					className="h-full w-full rounded-full bg-rebeccapurple2 font-bold hover:bg-rebeccapurple"
 				>
 					POST
 				</Button>

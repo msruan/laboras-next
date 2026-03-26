@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html
 			lang="en"
-			className={`${habboFont.variable} font-sans h-full`}
+			className={`${habboFont.variable} h-full font-sans`}
 			suppressHydrationWarning
 		>
 			<body className="h-full">

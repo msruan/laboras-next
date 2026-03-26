@@ -18,16 +18,16 @@ export const AsideMyProfile = async () => {
 	return (
 		<>
 			<div
-				className={`flex flex-col max-xl:border-r-[1px] max-xl:border-gray-700 border-rebeccapurple2 xl:p-5 justify-between fixed top-0 left-0 min-h-screen overflow-x-hidden max-xl:w-fit max-md:hidden w-72 z-1`}
+				className="fixed top-0 left-0 z-1 flex min-h-screen w-72 flex-col justify-between overflow-x-hidden border-rebeccapurple2 max-md:hidden max-xl:w-fit max-xl:border-gray-700 max-xl:border-r-[1px] xl:p-5"
 			>
-				<div className="flex flex-col items-center justify-between w-full  h-screen p-5 text-5xl pb-7">
-					<div className="flex flex-col items-center h-full gap-8">
+				<div className="flex h-screen w-full flex-col items-center justify-between p-5 pb-7 text-5xl">
+					<div className="flex h-full flex-col items-center gap-8">
 						<div className="flex flex-col items-center gap-4">
 							<LaborasLogo />
 							<Separator />
 						</div>
 
-						<div className="flex flex-col w-full gap-4 text-5xl ">
+						<div className="flex w-full flex-col gap-4 text-5xl">
 							<Links
 								username={currentUserProfile.username}
 								avatarLink={
@@ -40,7 +40,7 @@ export const AsideMyProfile = async () => {
 						<UserProfileTag user={currentUserProfile} />
 					</DesktopLogoutMenu>
 				</div>
-				<Avatar className="w-12 xl:hidden h-12 rounded-full cursor-pointer">
+				<Avatar className="h-12 w-12 cursor-pointer rounded-full xl:hidden">
 					<AvatarImage
 						src={currentUserProfile?.profile_image_link ?? Assets.images.shyDog}
 					/>

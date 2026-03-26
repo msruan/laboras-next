@@ -7,13 +7,13 @@ import { Card, CardContent } from "../ui/card";
 export const UserProfileTag = ({ user }: { user: User }) => {
 	return (
 		<Link className="w-full max-xl:hidden" href={`/u/${user.username}`}>
-			<Card className="w-full bg-rebeccapurple2 flex gap-4 p-2 border-0 rounded-full hover:bg-rebeccapurple transition-all duration-150">
-				<Avatar className="w-12 h-12 rounded-full cursor-pointer">
+			<Card className="flex w-full gap-4 rounded-full border-0 bg-rebeccapurple2 p-2 transition-all duration-150 hover:bg-rebeccapurple">
+				<Avatar className="h-12 w-12 cursor-pointer rounded-full">
 					<AvatarImage src={user.profile_image_link ?? Assets.images.shyDog} />
 					<AvatarFallback>CN</AvatarFallback>
 				</Avatar>
-				<CardContent className="flex gap-5 break-all justify-center items-center p-0">
-					<div className="flex flex-col items-start text-aliceblue text-sm gap-0.5">
+				<CardContent className="flex items-center justify-center gap-5 break-all p-0">
+					<div className="flex flex-col items-start gap-0.5 text-aliceblue text-sm">
 						<h3>
 							<strong>{user?.first_name}</strong>
 						</h3>

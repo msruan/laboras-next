@@ -12,7 +12,7 @@ export function LaborasLogo() {
 			{actualCelebration ? (
 				<actualCelebration.customLogo />
 			) : (
-				<h2 className="max-xl:hidden font-habbo">
+				<h2 className="font-habbo max-xl:hidden">
 					L<span className="max-xl:hidden">ABORAS</span>
 				</h2>
 			)}

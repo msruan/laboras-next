@@ -13,9 +13,9 @@ type Props = {
 
 export function UserDetailPage(props: Props) {
 	return (
-		<div className="flex flex-col h-full max-xl:border-0 gap-2 pl-3 pr-3 border-rebeccapurple2 border-r-2 border-l-2">
+		<div className="flex h-full flex-col gap-2 border-rebeccapurple2 border-r-2 border-l-2 pr-3 pl-3 max-xl:border-0">
 			<Header title={props.profile.username} />
-			<div className="max-sm:mt-12 ">
+			<div className="max-sm:mt-12">
 				<UserProfile
 					postsCount={props.profilePosts.length}
 					user={props.profile}

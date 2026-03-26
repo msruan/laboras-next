@@ -22,12 +22,12 @@ export function PostsContainer({
 	textbox = true,
 }: Props) {
 	return (
-		<div className="flex flex-col h-full max-xl:border-0 gap-2 pl-3 pr-3 border-rebeccapurple2 border-r-2 border-l-2">
+		<div className="flex h-full flex-col gap-2 border-rebeccapurple2 border-r-2 border-l-2 pr-3 pl-3 max-xl:border-0">
 			<Toaster richColors />
 
 			{textbox && <TextBox profile={currentUser} linkedTo={linkedTo} />}
 
-			{posts!.map((post) => (
+			{posts.map((post) => (
 				<PostCard
 					userId={currentUser._id}
 					key={post._id}
