@@ -3,7 +3,7 @@ import { Toaster } from 'sonner';
 import { IPost } from '@/models/post.model';
 import { User } from '@/models/user.model';
 
-import { PostCard } from './post/Post';
+import { PostCard } from './post/PostCard';
 import { TextBox } from './TextBox';
 
 interface Props {

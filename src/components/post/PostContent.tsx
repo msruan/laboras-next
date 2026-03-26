@@ -42,9 +42,10 @@ export function PostContent({
             }
           >
             <div
-              className={`flex items-start text-aliceblue text-sm gap-0 ${
-                fullPage ? "flex-col" : "gap-2"
-              } `}
+              className={cn(
+                "flex items-start text-aliceblue text-sm gap-2",
+                fullPage && "flex-col gap-0"
+              )}
             >
               <Link href={`/u/${owner?.username}`}>
                 <h3>{owner?.first_name}</h3>
@@ -67,14 +68,14 @@ export function PostContent({
         </div>
         {fullPage ? (
           <footer
-            className={`text-white opacity-70 text-xs mt-10 border-t-purple-50 flex items-center`}
+            className="text-white opacity-70 text-xs mt-10 border-t-purple-50 flex items-center"
           >
             <p className="w-3/4">
               Data de publicação:{" "}
               {new Date(post.createdAt).toLocaleDateString()}
             </p>
             <div
-              className={cn("flex flex-row justify-between pr-7 pb-1 h-fit", fullPage ? " w-1/4" : " w-1/4")}
+              className="flex flex-row justify-between pr-7 pb-1 h-fit w-1/4"
             >
               <Icons userId={userId} post={post} fullPage={fullPage}></Icons>
               {userId === post.user_id && (

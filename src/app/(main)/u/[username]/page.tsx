@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { IPost } from '@/models/post.model';
 import type { User } from '@/models/user.model';
-import UserPage from '@/components/pages/user-page';
+import {UserDetailPage} from '@/components/pages/user-page';
 import { getProfileByUsername, getUserByEmail } from '@/api/user.queries';
 import { EntityNotFoundException } from '@/exceptions';
 import { notFound } from 'next/navigation';
@@ -47,7 +47,7 @@ const UserDetail = async ({ params }: Props) => {
   const user: User = await getUserByEmail(session?.user?.email ?? "")
 
   return (
-    <UserPage currentUser={user} profile={userProfile} profilePosts={userPosts} isProfileOfLoggerUser={session?.user?.email === userProfile.email} />
+    <UserDetailPage currentUser={user} profile={userProfile} profilePosts={userPosts} isProfileOfLoggerUser={session?.user?.email === userProfile.email} />
   );
 };
 

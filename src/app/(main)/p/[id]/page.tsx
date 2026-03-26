@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth';
 import { IPost } from '@/models/post.model';
-import { PostPage } from '@/components/pages/post-page';
+import { PostDetailPage } from '@/components/pages/post-detail-page';
 import { getUserByEmail, getUsers } from '@/api/user.queries';
 import { getPostById } from '@/api/post.queries';
 import { EntityNotFoundException } from '@/exceptions';
@@ -13,7 +13,7 @@ interface Props {
   }>;
 };
 
-const Post = async ({params}: Props) => {
+const PostDetail = async ({params}: Props) => {
   const { id } = await params;
 
   let response;
@@ -39,7 +39,7 @@ const Post = async ({params}: Props) => {
   const users = await getUsers()
 
   return (
-    <PostPage
+    <PostDetailPage
       users={users}
       currentUser={user}
       post={post}
@@ -51,4 +51,4 @@ const Post = async ({params}: Props) => {
 };
 
 //Todo: fazer fetchs separados, para deixar a pagina carregar sem esperar pelos comentarios
-export default Post;
+export default PostDetail;

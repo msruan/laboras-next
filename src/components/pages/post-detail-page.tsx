@@ -1,5 +1,5 @@
 import { Header } from '@/components/Header';
-import { PostCard } from '@/components/post/Post';
+import { PostCard } from '@/components/post/PostCard';
 import { PostsContainer } from '@/components/PostsContainer';
 import { IPost } from '@/models/post.model';
 import { User } from '@/models/user.model';
@@ -13,7 +13,7 @@ type Props = {
   users: User[]
 };
 
-export function PostPage({ postChildren, post, owner, userId, currentUser, users }: Props) {
+export function PostDetailPage({ postChildren, post, owner, userId, currentUser, users }: Props) {
   return (
     <div className="flex flex-col gap-2">
       <Header title="Post" />

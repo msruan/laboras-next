@@ -6,7 +6,7 @@
   },
 
   // TypeScript
-  "typescript.preferences.autoImportSpecifierExcludeRegexes": [
+  "js/ts.preferences.autoImportSpecifierExcludeRegexes": [
     // useRouter should be imported from `next/navigation` instead of `next/router`
     "next/router",
     // give priority for Link to next/link instead of lucide-react
