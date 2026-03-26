@@ -1,35 +1,33 @@
 import "@/global.css";
 
+import type { Metadata } from "next";
 import localFont from "next/font/local";
-
-import { Metadata } from "next";
+import type { ReactNode } from "react";
 import RootProvider from "./providers";
-import { ReactNode } from "react";
 
 const habboFont = localFont({
-  src: "../../public/fonts/HabboFont.ttf",
-  display: "swap",
-  variable: "--font-habbo",
+	src: "../../public/fonts/HabboFont.ttf",
+	display: "swap",
+	variable: "--font-habbo",
 });
 
 export const metadata: Metadata = {
-  title: "Laboras",
-  description: "A Piauian social network"
-}
+	title: "Laboras",
+	description: "A Piauian social network",
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  return (
-    <html lang="en" className={`${habboFont.variable} font-sans h-full`} suppressHydrationWarning>
-      <body className="h-full">
-        <RootProvider
-        >
-          <main>{children}</main>
-        </RootProvider>
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: { children: ReactNode }) {
+	return (
+		<html
+			lang="en"
+			className={`${habboFont.variable} font-sans h-full`}
+			suppressHydrationWarning
+		>
+			<body className="h-full">
+				<RootProvider>
+					<main>{children}</main>
+				</RootProvider>
+			</body>
+		</html>
+	);
 }
