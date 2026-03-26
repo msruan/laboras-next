@@ -1,12 +1,12 @@
 import { Header } from '@/components/Header';
 import { PostsContainer } from '@/components/PostsContainer';
-import { Profile } from '@/components/profile/Profile';
+import { UserProfile } from '@/components/user/UserProfile';
 import { IPost } from '@/models/post.model';
-import { IProfile } from '@/models/profile.model';
+import { User } from '@/models/user.model';
 
 type Props = {
-  currentUser: IProfile
-  profile: IProfile;
+  currentUser: User
+  profile: User;
   profilePosts: IPost[];
   isProfileOfLoggerUser: boolean;
 };
@@ -16,12 +16,12 @@ function UserPage(props: Props) {
     <div className="flex flex-col h-full max-xl:border-0 gap-2 pl-3 pr-3 border-rebeccapurple2 border-r-2 border-l-2">
       <Header title={props.profile.username} />
       <div className="max-sm:mt-12 ">
-        <Profile
+        <UserProfile
           postsCount={props.profilePosts.length}
-          profile={props.profile}
-          isProfileOfLoggerUser={props.isProfileOfLoggerUser}
+          user={props.profile}
+          isTheLoggedUser={props.isProfileOfLoggerUser}
         />
-        <PostsContainer currentUser={props.currentUser} textbox={false} posts={props.profilePosts} profiles={[props.profile]} />
+        <PostsContainer currentUser={props.currentUser} textbox={false} posts={props.profilePosts} users={[props.profile]} />
       </div>
     </div>
   );

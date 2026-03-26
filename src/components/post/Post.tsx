@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 
 import { updatePost as handleUpdate } from '@/api/post.actions';
 import { IPost } from '@/models/post.model';
-import { IProfile } from '@/models/profile.model';
+import { User } from '@/models/user.model';
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
@@ -22,14 +22,14 @@ import { Assets } from '@/assets';
 interface PostProps {
   userId: string;
   postContent: IPost;
-  ownerProfile: IProfile;
+  owner: User;
   fullPage: boolean;
   fullBorder: boolean;
 };
 
 export const PostCard = ({
   postContent: post,
-  ownerProfile: perfil,
+  owner,
   fullPage = false,
   userId,
   fullBorder = false,
@@ -98,11 +98,11 @@ export const PostCard = ({
       ) : (
         <>
           <div className="flex w-full pt-3 pl-5 pr-3 h-fit">
-            <Link href={`/u/${perfil?.username}`}>
+            <Link href={`/u/${owner?.username}`}>
               <Avatar className="w-12 h-12 rounded-full">
                 <AvatarImage
                   src={
-                    perfil?.profile_image_link ??
+                    owner?.profile_image_link ??
                    Assets.images.soccerPlayer
                   }
                 />
@@ -113,7 +113,7 @@ export const PostCard = ({
             <PostContent
               onClick={onClick}
               userId={userId}
-              perfil={perfil!}
+              owner={owner!}
               post={post}
               fullPage={fullPage}
               handleEdit={setEditMode}

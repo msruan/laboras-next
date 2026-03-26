@@ -2,13 +2,13 @@ import { EntityNotFoundException } from "@/exceptions";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
 import { IPost, PostDB } from "@/models/post.model";
-import { IProfile, ProfileDB } from "@/models/profile.model";
+import { User, UserDB } from "@/models/user.model";
 
-export async function getUsers(): Promise<IProfile[]> {
+export async function getUsers(): Promise<User[]> {
   try {
     await connectToDb();
 
-    const users = await ProfileDB.find();
+    const users = await UserDB.find();
 
     return JSON.parse(JSON.stringify(users));
   } catch (err) {
@@ -17,11 +17,11 @@ export async function getUsers(): Promise<IProfile[]> {
   }
 }
 
-export async function getUserByEmail(email: string): Promise<IProfile> {
+export async function getUserByEmail(email: string): Promise<User> {
   try {
     await connectToDb();
 
-    const user = await ProfileDB.findOne({ email: email });
+    const user = await UserDB.findOne({ email: email });
     if (!user) {
       throw new EntityNotFoundException("User not found")
     }
@@ -33,31 +33,14 @@ export async function getUserByEmail(email: string): Promise<IProfile> {
   }
 }
 
-export async function getProfileById(id: string): Promise<IProfile>{
-   try {
-    await connectToDb();
-
-    const user = await ProfileDB.findById(id);
-    logger.trace(`The requested id profile is ${id}`);
-    
-    if (!user) {
-      throw new EntityNotFoundException("User not found")
-    }
-
-    return JSON.parse(JSON.stringify(user));
-  } catch (err) {
-    logger.error(String(err));
-    throw err;
-  }
-}
-
-export async function getProfileByUsername(username: string): Promise<{user: IProfile, posts: IPost[]}>{
+export async function getProfileByUsername(username: string): Promise<{user: User, posts: IPost[]}>{
     try {
     await connectToDb();
     logger.trace(`The received username is ${username}`);
 
-    const user: IProfile | null = await ProfileDB.findOne({ username: username });
+    const user: User | null = await UserDB.findOne({ username: username });
     if (!user) throw new EntityNotFoundException("User not found!");
+    
     const posts: IPost[] = await PostDB.find({ user_id: user._id });
 
     return JSON.parse(JSON.stringify({

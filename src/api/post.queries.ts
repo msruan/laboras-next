@@ -3,7 +3,7 @@ import { EntityNotFoundException } from "@/exceptions";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
 import { IPost, PostDB } from "@/models/post.model";
-import { IProfile, ProfileDB } from "@/models/profile.model";
+import { User, UserDB } from "@/models/user.model";
 import mongoose from "mongoose";
 
 export async function getPosts(): Promise<IPost[]> {
@@ -17,7 +17,7 @@ export async function getPosts(): Promise<IPost[]> {
   return data;
 }
 
-export async function getPostById(postId: string): Promise<{ post: IPost; postProfile: IProfile; children: IPost[] }> {
+export async function getPostById(postId: string): Promise<{ post: IPost; postProfile: User; children: IPost[] }> {
   try {
     const isIdValid = mongoose.Types.ObjectId.isValid(postId);
     if (!isIdValid) {
@@ -31,7 +31,7 @@ export async function getPostById(postId: string): Promise<{ post: IPost; postPr
       throw new EntityNotFoundException("Post not found")
     }
 
-    const postProfile = await ProfileDB.findById(post.user_id)
+    const postProfile = await UserDB.findById(post.user_id)
     if (!postProfile) {
       throw new EntityNotFoundException("Post profile not found")
     }

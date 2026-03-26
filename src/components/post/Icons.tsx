@@ -6,6 +6,7 @@ import { updatePost as handleUpdate } from "@/api/post.actions";
 import { IPost } from "@/models/post.model";
 import { FaceFrownIcon, StarIcon } from "@heroicons/react/16/solid";
 import { logger } from "@/lib/logger";
+import { cn } from "@/lib/utils";
 
 type IconsProps = {
   post: IPost;
@@ -66,9 +67,7 @@ export const Icons = ({ post: postParam, fullPage: _, userId }: IconsProps) => {
       <div className="flex justify-between items-center text-sm">
         <span>{post.likes > 0 && post.likes}</span>
         <StarIcon
-          className={
-            `h-4 w-4 ` + (isLiked ? " text-yellow-500" : "text-gray-500")
-          }
+          className={cn("h-4 w-4", isLiked ? " text-yellow-500" : "text-gray-500")}
           onClick={handleLike}
           cursor="pointer"
         />
@@ -77,9 +76,7 @@ export const Icons = ({ post: postParam, fullPage: _, userId }: IconsProps) => {
       <div className="flex justify-between items-center text-sm">
         <span>{post.deslikes > 0 && post.deslikes}</span>
         <FaceFrownIcon
-          className={
-            `h-4 w-4 ` + (isDesliked ? "text-red-500" : " text-gray-500")
-          }
+          className={cn("h-4 w-4", isDesliked ? " text-red-500" : "text-gray-500")}
           onClick={handleDeslike}
           cursor="pointer"
         />

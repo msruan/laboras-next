@@ -36,15 +36,15 @@ const Post = async ({params}: Props) => {
   const session = await auth();
   const user = await getUserByEmail(session?.user?.email!)
 
-  const profiles = await getUsers()
+  const users = await getUsers()
 
   return (
     <PostPage
-      profiles={profiles}
+      users={users}
       currentUser={user}
       post={post}
       postChildren={children}
-      profile={user}
+      owner={user}
       userId={session?.user?.id!}
     />
   );

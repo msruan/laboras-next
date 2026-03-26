@@ -1,17 +1,17 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IProfile } from "@/models/profile.model";
+import { User } from "@/models/user.model";
 
 import { Card, CardContent, CardTitle } from "../ui/card";
 import { Assets } from "@/assets";
 
-type IProfileProps = {
-  profile: IProfile;
-  isProfileOfLoggerUser: boolean;
+interface Props {
+  user: User;
+  isTheLoggedUser: boolean;
   postsCount: number;
 };
 
-export const Profile = ({ profile, isProfileOfLoggerUser, postsCount }: IProfileProps) => {
+export const UserProfile = ({ user, isTheLoggedUser, postsCount }: Props) => {
   const defaultBio = "Meiga e abusada, faço você se perder! e quem foi que disse que eu estava apaixonada por você? eu só quero saber! linda e perfumada, ah, na tua mente! faz o que quiser comigo na imaginação. homem do teu tipo eu uso mas se chega lá, eu digo não..."
   
   return (
@@ -20,13 +20,13 @@ export const Profile = ({ profile, isProfileOfLoggerUser, postsCount }: IProfile
         <Avatar className="h-56 w-56 max-xl:h-40 max-xl:w-40 max-sm:h-20 max-sm:w-20">
           <AvatarImage
             src={
-              profile.profile_image_link ??
+              user.profile_image_link ??
              Assets.images.cookingDog
             }
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        {isProfileOfLoggerUser && (
+        {isTheLoggedUser && (
           <Button
             disabled
             className="w-32 text-white rounded-full font-bold px-9"
@@ -39,7 +39,7 @@ export const Profile = ({ profile, isProfileOfLoggerUser, postsCount }: IProfile
       <div className="flex flex-col w-full gap-3 items-center">
         <CardTitle className="text-2xl font-bold tracking-tighter">
           {`${
-            profile ? profile.first_name + " " + profile.last_name : "Nada n"
+            user ? user.first_name + " " + user.last_name : "Nada n"
           }`}
         </CardTitle>
 
@@ -52,10 +52,10 @@ export const Profile = ({ profile, isProfileOfLoggerUser, postsCount }: IProfile
 
           <div className="flex w-fit h-fit text-wrap ">
             <p className="break-normal text-ellipsis ">
-              {profile.bio ?? defaultBio}
+              {user.bio ?? defaultBio}
             </p>
           </div>
-          {isProfileOfLoggerUser && (
+          {isTheLoggedUser && (
             <Button
               disabled
               className="font-bold p-4 px-9 w-16 h-8 bg-slate-700 hover:bg-slate-800 text-white rounded-full justify-self-center"

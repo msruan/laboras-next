@@ -1,9 +1,9 @@
 "use server";
 
 import { auth } from "@/lib/auth";
-import { IProfile } from "@/models/profile.model";
+import { User } from "@/models/user.model";
 import { Links } from "./Links";
-import { ProfileTag } from "../profile/ProfileTag";
+import { UserProfileTag } from "../user/UserProfileTag";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 import { getUserByEmail } from "@/api/user.queries";
@@ -13,7 +13,7 @@ import { LaborasLogo } from "./LaborasLogo";
 
 export const AsideMyProfile = async () => {
   const session = await auth();
-  const currentUserProfile: IProfile = await getUserByEmail(session?.user?.email!);
+  const currentUserProfile: User = await getUserByEmail(session?.user?.email!);
 
   return (
     <>
@@ -30,12 +30,12 @@ export const AsideMyProfile = async () => {
             <div className="flex flex-col w-full gap-4 text-5xl ">
               <Links
                 username={currentUserProfile.username}
-                avatarLink={currentUserProfile.profile_image_link ?? ""}
+                avatarLink={currentUserProfile.profile_image_link ?? Assets.images.shyDog}
               />
             </div>
           </div>
           <DesktopLogoutMenu>
-            <ProfileTag profile={currentUserProfile} />
+            <UserProfileTag user={currentUserProfile} />
           </DesktopLogoutMenu>
 
         </div>
@@ -49,7 +49,7 @@ export const AsideMyProfile = async () => {
       <Links
         footer
         username={currentUserProfile.username}
-        avatarLink={currentUserProfile.profile_image_link ?? ""}
+        avatarLink={currentUserProfile.profile_image_link ?? Assets.images.shyDog}
       />
     </>
   );

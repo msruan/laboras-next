@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth';
 import { IPost } from '@/models/post.model';
-import { IProfile } from '@/models/profile.model';
+import type { User } from '@/models/user.model';
 import UserPage from '@/components/pages/user-page';
 import { getProfileByUsername, getUserByEmail } from '@/api/user.queries';
 import { EntityNotFoundException } from '@/exceptions';
@@ -24,7 +24,7 @@ export async function generateMetadata(
   }
 }
 
-const User = async ({ params }: Props) => {
+const UserDetail = async ({ params }: Props) => {
   const { username } = await params;
 
   let data;
@@ -40,15 +40,15 @@ const User = async ({ params }: Props) => {
     throw err;
   }
 
-  const userProfile: IProfile = data.user;
+  const userProfile: User = data.user;
   const userPosts: IPost[] = data.posts;
 
   const session = await auth();
-  const user: IProfile = await getUserByEmail(session?.user?.email ?? "")
+  const user: User = await getUserByEmail(session?.user?.email ?? "")
 
   return (
     <UserPage currentUser={user} profile={userProfile} profilePosts={userPosts} isProfileOfLoggerUser={session?.user?.email === userProfile.email} />
   );
 };
 
-export default User;
+export default UserDetail;

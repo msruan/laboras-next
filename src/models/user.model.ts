@@ -2,12 +2,11 @@ import mongoose, { Model } from "mongoose";
 
 import { IPost } from "./post.model";
 
-export interface IProfile {
+export interface User {
   _id: string;
   first_name: string;
   last_name: string;
   username: string;
-  token: string;
   email: string;
   password: string;
   posts: IPost[];
@@ -15,7 +14,7 @@ export interface IProfile {
   bio?: string;
 }
 
-const ProfileSchema = new mongoose.Schema<IProfile>(
+const UserSchema = new mongoose.Schema<User>(
   {
     username: {
       type: String,
@@ -38,23 +37,18 @@ const ProfileSchema = new mongoose.Schema<IProfile>(
     password: {
       type: String,
     },
-    token: {
-      type: String,
-    },
     bio: {
       type: String,
-      default:
-        "meiga e abusada, faço você se perder e quem foi que disse que eu estava apaixonada por você? eu só quero saber",
+      required: false
     },
     profile_image_link: {
       type: String,
-      default:
-        "https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png",
+      required: false,
     },
   },
   { timestamps: true }
 );
 
-export const ProfileDB =
-  (mongoose.models?.Profile as Model<IProfile>) ||
-  mongoose.model("Profile", ProfileSchema);
+export const UserDB =
+(mongoose.models?.Profile as Model<User>) ||
+  mongoose.model("Profile", UserSchema);

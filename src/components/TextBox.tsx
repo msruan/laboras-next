@@ -3,17 +3,19 @@ import { useRef } from "react";
 
 import { addPost } from "@/api/post.actions";
 import { CreatePostDTO } from "@/models/post.model";
-import { IProfile } from "@/models/profile.model";
+import { User } from "@/models/user.model";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { Assets } from "@/assets";
-type TextBoxProps = {
+
+interface Props {
   linkedTo: string | null;
-  profile: IProfile;
+  profile: User;
 };
-export const TextBox = ({ linkedTo = null, profile }: TextBoxProps) => {
+
+export const TextBox = ({ linkedTo = null, profile }: Props) => {
   const router = useRouter();
   const input = useRef<HTMLTextAreaElement>(null);
 

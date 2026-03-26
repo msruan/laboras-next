@@ -2,30 +2,30 @@ import { Header } from '@/components/Header';
 import { PostCard } from '@/components/post/Post';
 import { PostsContainer } from '@/components/PostsContainer';
 import { IPost } from '@/models/post.model';
-import { IProfile } from '@/models/profile.model';
+import { User } from '@/models/user.model';
 
 type Props = {
   userId: string;
-  profile: IProfile;
+  owner: User;
   post: IPost;
   postChildren: IPost[]
-  currentUser: IProfile;
-  profiles: IProfile[]
+  currentUser: User;
+  users: User[]
 };
 
-export function PostPage({ postChildren, post, profile, userId, currentUser, profiles }: Props) {
+export function PostPage({ postChildren, post, owner, userId, currentUser, users }: Props) {
   return (
     <div className="flex flex-col gap-2">
       <Header title="Post" />
       <div className="max-sm:mt-8">
         <PostCard
           userId={userId}
-          ownerProfile={profile}
+          owner={owner}
           postContent={post}
           fullPage={true}
           fullBorder={false}
         />
-        <PostsContainer currentUser={currentUser} profiles={profiles} linkedTo={post._id} posts={postChildren} />
+        <PostsContainer currentUser={currentUser} users={users} linkedTo={post._id} posts={postChildren} />
       </div>
     </div>
   );

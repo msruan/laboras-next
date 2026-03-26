@@ -4,15 +4,16 @@ import Link from "next/link";
 
 import useClient from "@/hooks/use-client";
 import { IPost } from "@/models/post.model";
-import { IProfile } from "@/models/profile.model";
+import { User } from "@/models/user.model";
 
 import { CardContent } from "../ui/card";
 import { Icons } from "./Icons";
 import { PostMenu } from "./PostMenu";
+import { cn } from "@/lib/utils";
 
-interface IPostContentProps {
+interface Props {
   userId: string;
-  perfil: IProfile;
+  owner: User;
   post: IPost;
   fullPage: boolean;
   onClick: () => void;
@@ -20,13 +21,13 @@ interface IPostContentProps {
 }
 
 export function PostContent({
-  perfil,
+  owner,
   userId,
   post,
   fullPage,
   handleEdit,
   onClick,
-}: IPostContentProps) {
+}: Props) {
   const isClient = useClient();
   return (
     <>
@@ -45,11 +46,11 @@ export function PostContent({
                 fullPage ? "flex-col" : "gap-2"
               } `}
             >
-              <Link href={`/u/${perfil?.username}`}>
-                <h3>{perfil?.first_name}</h3>
+              <Link href={`/u/${owner?.username}`}>
+                <h3>{owner?.first_name}</h3>
               </Link>
-              <Link href={`/u/${perfil?.username}`}>
-                <h4 className="opacity-70">@{perfil?.username}</h4>
+              <Link href={`/u/${owner?.username}`}>
+                <h4 className="opacity-70">@{owner?.username}</h4>
               </Link>
             </div>
             {!fullPage && (
@@ -73,9 +74,7 @@ export function PostContent({
               {new Date(post.createdAt).toLocaleDateString()}
             </p>
             <div
-              className={`flex flex-row justify-between pr-7 pb-1 h-fit
-      ${fullPage ? " w-1/4" : " w-1/4"}
-      `}
+              className={cn("flex flex-row justify-between pr-7 pb-1 h-fit", fullPage ? " w-1/4" : " w-1/4")}
             >
               <Icons userId={userId} post={post} fullPage={fullPage}></Icons>
               {userId === post.user_id && (
