@@ -28,3 +28,21 @@ export async function connectToDb() {
 		throw new Error("Error connecting to database!" + error);
 	}
 }
+
+export function filterUndefinedOrEmptyStringProperties<T>(obj: T): Partial<T> {
+	const filteredObject: Partial<T> = {};
+
+	for (const key in obj) {
+		const value = obj[key];
+
+		// Verifica se o valor não é undefined e, se for string, se não está vazia
+		if (
+			value !== undefined &&
+			!(typeof value === "string" && value.trim() === "")
+		) {
+			filteredObject[key] = value;
+		}
+	}
+
+	return filteredObject;
+}

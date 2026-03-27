@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Assets } from "@/assets";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -24,41 +25,32 @@ export const UserProfile = ({ user, isTheLoggedUser, postsCount }: Props) => {
 					<AvatarFallback>CN</AvatarFallback>
 				</Avatar>
 				{isTheLoggedUser && (
-					<Button
-						disabled
-						className="w-32 rounded-full px-9 font-bold text-white"
-					>
-						Change image
-					</Button>
+					<Link href="/settings">
+						<Button className="rounded-xl px-9 font-bold hover:underline">
+							Editar perfil
+						</Button>
+					</Link>
 				)}
 			</div>
 
-			<div className="flex w-full flex-col items-center gap-3">
-				<CardTitle className="font-bold text-2xl tracking-tighter">
-					{`${user ? `${user.first_name} ${user.last_name}` : "Nada n"}`}
+			<div className="flex w-full flex-col items-start gap-3">
+				<CardTitle className="text-start font-bold text-2xl tracking-tighter">
+					{user.first_name}
 				</CardTitle>
 
-				<CardContent className="flex flex-col items-center gap-6 p-0">
+				<CardContent className="space-y-6 p-0">
 					<div className="flex w-full flex-row justify-center gap-10 p-0">
-						<p>
+						<p className="w-full text-start">
 							{postsCount}{" "}
 							<strong>publicaç{postsCount !== 1 ? "ões" : "ão"}</strong>
 						</p>
 					</div>
 
-					<div className="flex h-fit w-fit text-wrap">
-						<p className="text-ellipsis break-normal">
+					<div className="flex h-fit">
+						<p className="text-ellipsis text-wrap break-normal text-start">
 							{user.bio ?? defaultBio}
 						</p>
 					</div>
-					{isTheLoggedUser && (
-						<Button
-							disabled
-							className="h-8 w-16 justify-self-center rounded-full bg-slate-700 p-4 px-9 font-bold text-white hover:bg-slate-800"
-						>
-							Edit bio
-						</Button>
-					)}
 				</CardContent>
 			</div>
 		</Card>

@@ -52,3 +52,11 @@ const UserSchema = new mongoose.Schema<User>(
 export const UserDB =
 	(mongoose.models?.Profile as Model<User>) ||
 	mongoose.model("Profile", UserSchema);
+
+export interface UserUpdateDTO {
+	_id: string;
+	name?: string;
+	username?: string;
+	avatarUrl?: string;
+	bio?: string;
+}

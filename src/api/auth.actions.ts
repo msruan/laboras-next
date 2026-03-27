@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import type { Profile } from "next-auth";
 import { apiURL } from "@/constants";
 import { signIn, signOut } from "@/lib/auth";
@@ -10,6 +11,7 @@ export const githubLoginAction = async () => {
 
 export const logoutAction = async () => {
 	await signOut();
+	redirect("/login");
 };
 
 export async function apiSign(profile: Profile): Promise<boolean> {
