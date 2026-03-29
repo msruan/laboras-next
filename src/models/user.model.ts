@@ -1,14 +1,11 @@
 import mongoose, { type Model } from "mongoose";
 
-import type { Post } from "./post.model";
-
 export interface UserDTO {
 	_id: string;
 	first_name: string;
 	username: string;
 	email: string;
 	password: string;
-	posts: Post[];
 	profile_image_link?: string;
 	bio?: string;
 }
@@ -29,6 +26,8 @@ const UserSchema = new mongoose.Schema<UserDTO>(
 			type: String,
 			required: true,
 			unique: true,
+			minlength: 5,
+			lowercase: true,
 		},
 		password: {
 			type: String,

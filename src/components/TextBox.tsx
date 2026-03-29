@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-import { addPost } from "@/api/post.actions";
+import { createPost } from "@/api/post.actions";
 import { Assets } from "@/assets";
 import type { CreatePostDTO } from "@/models/post.model";
 import type { User } from "@/models/user.model";
@@ -28,7 +28,7 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 			linked_to: linkedTo,
 		};
 		input.current.value = "";
-		await addPost(newPost);
+		await createPost(newPost);
 		router.refresh();
 	}
 

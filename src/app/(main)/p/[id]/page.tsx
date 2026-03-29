@@ -1,6 +1,7 @@
+import mongoose from "mongoose";
 import { notFound } from "next/navigation";
 import { getPostById } from "@/api/post.queries";
-import { getUserByEmail, getUsers } from "@/api/user.queries";
+import { getUserByEmail } from "@/api/user.queries";
 import { PostDetailPage } from "@/components/pages/post-detail-page";
 import { EntityNotFoundException } from "@/exceptions";
 import { auth } from "@/lib/auth";
@@ -14,12 +15,24 @@ interface Props {
 }
 
 const PostDetail = async ({ params }: Props) => {
+	const session = await auth();
+	const user = await getUserByEmail(session?.user?.email ?? "");
+	const userId = session?.user?.id;
+
 	const { id } = await params;
 
-	let response;
+	const isIdValid = mongoose.Types.ObjectId.isValid(id);
+	if (!isIdValid) {
+		notFound();
+	}
+
+	let data: {
+		post: Post;
+		replies: Post[];
+	};
 
 	try {
-		response = await getPostById(id);
+		data = await getPostById(id);
 	} catch (err) {
 		logger.error(String(err));
 
@@ -29,25 +42,15 @@ const PostDetail = async ({ params }: Props) => {
 		throw err;
 	}
 
-	const post: Post = response.post;
-	const children: Post[] = response.children;
-
-	const session = await auth();
-	const user = await getUserByEmail(session?.user?.email!);
-
-	const users = await getUsers();
-
 	return (
 		<PostDetailPage
-			users={users}
 			currentUser={user}
-			post={post}
-			postChildren={children}
-			owner={user}
-			userId={session?.user?.id!}
+			post={data.post}
+			replies={data.replies}
+			userId={userId ?? ""}
 		/>
 	);
 };
 
-//Todo: fazer fetchs separados, para deixar a pagina carregar sem esperar pelos comentarios
+//TODO: make paralell fetchs allow page show up without wait for the comments
 export default PostDetail;

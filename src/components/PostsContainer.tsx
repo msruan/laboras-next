@@ -8,7 +8,6 @@ import { TextBox } from "./TextBox";
 
 interface Props {
 	currentUser: User;
-	users: User[];
 	posts: Post[];
 	textbox?: boolean;
 	linkedTo?: string | null;
@@ -17,7 +16,6 @@ interface Props {
 export function PostsContainer({
 	currentUser,
 	posts,
-	users,
 	linkedTo = null,
 	textbox = true,
 }: Props) {
@@ -29,12 +27,11 @@ export function PostsContainer({
 
 			{posts.map((post) => (
 				<PostCard
-					userId={currentUser.id}
-					key={post._id}
-					postContent={post}
+					currentUserId={currentUser.id}
+					key={post.id}
+					post={post}
 					fullPage={false}
 					fullBorder={true}
-					owner={users.find((profile) => profile.id === post.user_id)!}
 				/>
 			))}
 		</div>

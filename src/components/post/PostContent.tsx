@@ -5,14 +5,12 @@ import Link from "next/link";
 import useClient from "@/hooks/use-client";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/models/post.model";
-import type { User } from "@/models/user.model";
 import { CardContent } from "../ui/card";
 import { Icons } from "./Icons";
 import { PostMenu } from "./PostMenu";
 
 interface Props {
 	userId: string;
-	owner: User;
 	post: Post;
 	fullPage: boolean;
 	onClick: () => void;
@@ -20,7 +18,6 @@ interface Props {
 }
 
 export function PostContent({
-	owner,
 	userId,
 	post,
 	fullPage,
@@ -41,11 +38,11 @@ export function PostContent({
 							fullPage && "flex-col gap-0",
 						)}
 					>
-						<Link href={`/u/${owner?.username}`}>
-							<h3>{owner?.name}</h3>
+						<Link href={`/u/${post.owner?.username}`}>
+							<h3>{post.owner?.name}</h3>
 						</Link>
-						<Link href={`/u/${owner?.username}`}>
-							<h4 className="opacity-70">@{owner?.username}</h4>
+						<Link href={`/u/${post.owner?.username}`}>
+							<h4 className="opacity-70">@{post.owner?.username}</h4>
 						</Link>
 					</div>
 					{!fullPage && (
@@ -63,12 +60,12 @@ export function PostContent({
 			{fullPage && (
 				<footer className="mt-10 flex items-center border-t-purple-50 text-white text-xs opacity-70">
 					<p className="w-3/4">
-						Data de publicação: {new Date(post.createdAt).toLocaleDateString()}
+						Data de publicação: {new Date(post.createdAt).toLocaleString()}
 					</p>
 					<div className="flex h-fit w-1/4 flex-row justify-between pr-7 pb-1">
-						<Icons userId={userId} post={post} fullPage={fullPage}></Icons>
-						{userId === post.user_id && (
-							<PostMenu handleEdit={handleEdit} postId={post._id} />
+						<Icons userId={userId} post={post} fullPage={fullPage} />
+						{userId === post.owner?.id && (
+							<PostMenu handleEdit={handleEdit} postId={post.id} />
 						)}
 					</div>
 				</footer>

@@ -1,10 +1,13 @@
-import mongoose from "mongoose";
 import { apiURL } from "@/constants";
 import { EntityNotFoundException } from "@/exceptions";
 import { logger } from "@/lib/logger";
-import { connectToDb } from "@/lib/utils";
-import { type Post, PostDB } from "@/models/post.model";
-import { type User, UserDB } from "@/models/user.model";
+import { connectToDb, parseObjToJson } from "@/lib/utils";
+import {
+	type Post,
+	PostDB,
+	type PostDTO,
+	parsePost,
+} from "@/models/post.model";
 
 export async function getPosts(): Promise<Post[]> {
 	const response = await fetch(`${apiURL}/posts`, {
@@ -13,33 +16,30 @@ export async function getPosts(): Promise<Post[]> {
 		next: { tags: ["all-posts"] },
 	});
 
-	const data: Post[] = await response.json();
-	return data;
+	return await response.json();
 }
 
 export async function getPostById(
 	postId: string,
-): Promise<{ post: Post; postProfile: User; children: Post[] }> {
+): Promise<{ post: Post; replies: Post[] }> {
 	try {
-		const isIdValid = mongoose.Types.ObjectId.isValid(postId);
-		if (!isIdValid) {
-			throw new EntityNotFoundException("Post not found");
-		}
-
 		await connectToDb();
 
-		const post = await PostDB.findById(postId);
-		if (!post) {
+		const rawPost = await PostDB.findById(postId).populate("owner");
+		if (!rawPost) {
 			throw new EntityNotFoundException("Post not found");
 		}
+		const post = parseObjToJson<PostDTO>(rawPost);
 
-		const postProfile = await UserDB.findById(post.user_id);
-		if (!postProfile) {
-			throw new EntityNotFoundException("Post profile not found");
-		}
+		const rawReplies = await PostDB.find({ linked_to: postId }).populate(
+			"owner",
+		);
+		const replies = parseObjToJson<PostDTO[]>(rawReplies);
 
-		const children = await PostDB.find({ linked_to: postId });
-		return JSON.parse(JSON.stringify({ post, postProfile, children }));
+		return {
+			post: parsePost(post),
+			replies: replies.map(parsePost),
+		};
 	} catch (err) {
 		logger.error(String(err));
 		throw err;

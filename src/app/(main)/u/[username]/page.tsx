@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProfileByUsername, getUserByEmail } from "@/api/user.queries";
+import { getUserByEmail, getUserByUsername } from "@/api/user.queries";
 import { UserDetailPage } from "@/components/pages/user-page";
 import { EntityNotFoundException } from "@/exceptions";
 import { auth } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 import type { Post } from "@/models/post.model";
+import type { User } from "@/models/user.model";
 
 type Props = {
 	params: Promise<{
@@ -22,12 +23,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const UserDetail = async ({ params }: Props) => {
+	const session = await auth();
+	const currentUser = await getUserByEmail(session?.user?.email ?? "");
+
 	const { username } = await params;
 
-	let data;
+	let data: {
+		user: User;
+		userPosts: Post[];
+	};
 
 	try {
-		data = await getProfileByUsername(username);
+		data = await getUserByUsername(username);
 	} catch (err) {
 		logger.error(String(err));
 
@@ -37,18 +44,11 @@ const UserDetail = async ({ params }: Props) => {
 		throw err;
 	}
 
-	const userProfile = data.user;
-	const userPosts: Post[] = data.posts;
-
-	const session = await auth();
-	const user = await getUserByEmail(session?.user?.email ?? "");
-
 	return (
 		<UserDetailPage
-			currentUser={user}
-			profile={userProfile}
-			profilePosts={userPosts}
-			isProfileOfLoggerUser={session?.user?.email === userProfile.email}
+			currentUser={currentUser}
+			user={data.user}
+			userPosts={data.userPosts}
 		/>
 	);
 };

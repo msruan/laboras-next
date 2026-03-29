@@ -6,37 +6,26 @@ import type { User } from "@/models/user.model";
 
 type Props = {
 	userId: string;
-	owner: User;
 	post: Post;
-	postChildren: Post[];
+	replies: Post[];
 	currentUser: User;
-	users: User[];
 };
 
-export function PostDetailPage({
-	postChildren,
-	post,
-	owner,
-	userId,
-	currentUser,
-	users,
-}: Props) {
+export function PostDetailPage({ replies, post, userId, currentUser }: Props) {
 	return (
 		<div className="flex flex-col gap-2">
 			<Header title="Post" />
 			<div className="max-sm:mt-8">
 				<PostCard
-					userId={userId}
-					owner={owner}
-					postContent={post}
+					currentUserId={userId}
+					post={post}
 					fullPage={true}
 					fullBorder={false}
 				/>
 				<PostsContainer
 					currentUser={currentUser}
-					users={users}
-					linkedTo={post._id}
-					posts={postChildren}
+					linkedTo={post.id}
+					posts={replies}
 				/>
 			</div>
 		</div>

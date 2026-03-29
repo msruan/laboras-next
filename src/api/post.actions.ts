@@ -3,13 +3,20 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
-import { type CreatePostDTO, PostDB } from "@/models/post.model";
+import {
+	type CreatePostDTO,
+	PostDB,
+	type UpdatePostDTO,
+} from "@/models/post.model";
 
-export async function addPost(payload: CreatePostDTO): Promise<void> {
+export async function createPost(payload: CreatePostDTO): Promise<void> {
 	try {
 		await connectToDb();
 
-		const newPost = new PostDB(payload);
+		const newPost = new PostDB({
+			owner: payload.user_id,
+			...payload,
+		});
 
 		await newPost.save();
 		logger.info("New post created!");
@@ -24,17 +31,18 @@ export async function addPost(payload: CreatePostDTO): Promise<void> {
 	}
 }
 
-export async function updatePost(payload: {
-	data: any;
-	_id: string;
-}): Promise<void> {
+export async function updatePost(payload: UpdatePostDTO): Promise<void> {
 	try {
 		await connectToDb();
-		const post = await PostDB.findByIdAndUpdate(payload._id, payload.data);
+
+		const id = payload._id;
+		delete payload._id;
+
+		const post = await PostDB.findByIdAndUpdate(id, payload);
 		if (!post) {
 			throw new Error("Post not found");
 		}
-		logger.info("Post atualizado!");
+		logger.info("Post was updated!");
 		revalidateTag("all-posts", "max");
 		return;
 	} catch (err) {

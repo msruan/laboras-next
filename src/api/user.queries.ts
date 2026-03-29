@@ -1,7 +1,12 @@
 import { EntityNotFoundException } from "@/exceptions";
 import { logger } from "@/lib/logger";
-import { connectToDb } from "@/lib/utils";
-import { type Post, PostDB } from "@/models/post.model";
+import { connectToDb, parseObjToJson } from "@/lib/utils";
+import {
+	type Post,
+	PostDB,
+	type PostDTO,
+	parsePost,
+} from "@/models/post.model";
 import {
 	parseUser,
 	type User,
@@ -9,12 +14,12 @@ import {
 	type UserDTO,
 } from "@/models/user.model";
 
-export async function getUsers(): Promise<User[]> {
+export async function getAllUsers(): Promise<User[]> {
 	try {
 		await connectToDb();
 
 		const rawUsers = await UserDB.find();
-		const users: UserDTO[] = JSON.parse(JSON.stringify(rawUsers));
+		const users = parseObjToJson<UserDTO[]>(rawUsers);
 
 		return users.map(parseUser);
 	} catch (err) {
@@ -31,8 +36,7 @@ export async function getUserByEmail(email: string): Promise<User> {
 		if (!rawUser) {
 			throw new EntityNotFoundException("User not found");
 		}
-
-		const user: UserDTO = JSON.parse(JSON.stringify(rawUser));
+		const user = parseObjToJson<UserDTO>(rawUser);
 
 		return parseUser(user);
 	} catch (err) {
@@ -41,24 +45,25 @@ export async function getUserByEmail(email: string): Promise<User> {
 	}
 }
 
-export async function getProfileByUsername(
+export async function getUserByUsername(
 	username: string,
-): Promise<{ user: User; posts: Post[] }> {
+): Promise<{ user: User; userPosts: Post[] }> {
 	try {
 		await connectToDb();
 		logger.trace(`The received username is ${username}`);
 
 		const rawUser = await UserDB.findOne({ username: username });
 		if (!rawUser) throw new EntityNotFoundException("User not found!");
+		const user = parseObjToJson<UserDTO>(rawUser);
 
-		const user = JSON.parse(JSON.stringify(rawUser));
-
-		const rawPosts = await PostDB.find({ user_id: rawUser._id });
-		const posts: Post[] = JSON.parse(JSON.stringify(rawPosts));
+		const rawPosts = await PostDB.find({ linked_to: null }, null, {
+			sort: "-createdAt",
+		}).populate("owner");
+		const posts = parseObjToJson<PostDTO[]>(rawPosts);
 
 		return {
 			user: parseUser(user),
-			posts: posts.filter((post) => post.linked_to === null).reverse(),
+			userPosts: posts.map(parsePost),
 		};
 	} catch (err) {
 		logger.error(String(err));

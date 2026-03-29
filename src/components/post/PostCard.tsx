@@ -9,7 +9,6 @@ import { updatePost as handleUpdate } from "@/api/post.actions";
 import { Assets } from "@/assets";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/models/post.model";
-import type { User } from "@/models/user.model";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Card, CardFooter } from "../ui/card";
@@ -19,18 +18,16 @@ import { PostContent } from "./PostContent";
 import { PostMenu } from "./PostMenu";
 
 interface PostProps {
-	userId: string;
-	postContent: Post;
-	owner: User;
+	currentUserId: string;
+	post: Post;
 	fullPage: boolean;
 	fullBorder: boolean;
 }
 
 export const PostCard = ({
-	postContent: post,
-	owner,
+	post,
 	fullPage = false,
-	userId,
+	currentUserId,
 	fullBorder = false,
 }: PostProps) => {
 	const [editMode, setEditMode] = useState(false);
@@ -46,8 +43,8 @@ export const PostCard = ({
 			setEditMode(!editMode);
 			toast.promise(
 				handleUpdate({
-					_id: post._id,
-					data: { content: textareaRef.current.value },
+					_id: post.id,
+					content: textareaRef.current.value,
 				}),
 				{
 					loading: "Atualizando post...",
@@ -62,7 +59,7 @@ export const PostCard = ({
 	}
 
 	const onClick = () => {
-		const link = `/p/${post._id}` as const;
+		const link = `/p/${post.id}` as const;
 		if (local !== link) {
 			router.push(link);
 		}
@@ -88,8 +85,7 @@ export const PostCard = ({
 						autoFocus={true}
 						className="w-noavatar bg-rebeccapurple"
 						placeholder="Edit your message here."
-						id={`post-${post._id}`}
-					></Textarea>
+					/>
 					<Button onClick={handleSaveEdit} variant="ghost">
 						Salvar
 					</Button>
@@ -97,10 +93,10 @@ export const PostCard = ({
 			) : (
 				<>
 					<div className="flex h-fit w-full pt-3 pr-3 pl-5">
-						<Link href={`/u/${owner?.username}`}>
+						<Link href={`/u/${post.owner?.username}`}>
 							<Avatar className="h-12 w-12 rounded-full">
 								<AvatarImage
-									src={owner?.avatarUrl ?? Assets.images.soccerPlayer}
+									src={post.owner?.avatarUrl ?? Assets.images.soccerPlayer}
 								/>
 								<AvatarFallback>CN</AvatarFallback>
 							</Avatar>
@@ -108,8 +104,7 @@ export const PostCard = ({
 
 						<PostContent
 							onClick={onClick}
-							userId={userId}
-							owner={owner}
+							userId={currentUserId}
 							post={post}
 							fullPage={fullPage}
 							handleEdit={setEditMode}
@@ -118,9 +113,9 @@ export const PostCard = ({
 					{!fullPage && (
 						<CardFooter className="flex h-fit items-center justify-end">
 							<div className="flex h-fit w-1/4 flex-row justify-between pr-7 pb-1 max-md:w-full">
-								<Icons userId={userId} post={post} fullPage={fullPage}></Icons>
-								{userId === post.user_id && (
-									<PostMenu handleEdit={setEditMode} postId={post._id} />
+								<Icons userId={currentUserId} post={post} fullPage={fullPage} />
+								{currentUserId === post.owner?.id && (
+									<PostMenu handleEdit={setEditMode} postId={post.id} />
 								)}
 							</div>
 						</CardFooter>

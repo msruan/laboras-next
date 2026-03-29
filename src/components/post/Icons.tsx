@@ -18,59 +18,55 @@ export const Icons = ({ post: postParam, fullPage: _, userId }: IconsProps) => {
 	const post = { ...postParam };
 
 	const [isLiked, setIsLiked] = useState<boolean>(
-		post.liked_by.includes(userId),
+		post.likedBy.includes(userId),
 	);
 	const [isDesliked, setIsDesliked] = useState<boolean>(
-		post.desliked_by.includes(userId),
+		post.deslikedBy.includes(userId),
 	);
 
 	async function handleLike() {
 		if (isLiked) {
 			post.likes--;
-			post.liked_by = post.liked_by.filter((id) => id !== userId);
+			post.likedBy = post.likedBy.filter((id) => id !== userId);
 		} else {
-			post.liked_by.push(userId);
+			post.likedBy.push(userId);
 			post.likes++;
 			if (isDesliked) {
 				post.deslikes--;
-				post.desliked_by = post.desliked_by.filter((id) => id !== userId);
+				post.deslikedBy = post.deslikedBy.filter((id) => id !== userId);
 				setIsDesliked(false);
 			}
 		}
 		setIsLiked(!isLiked);
 		await handleUpdate({
-			_id: post._id,
-			data: {
-				likes: post.likes,
-				deslikes: post.deslikes,
-				liked_by: post.liked_by,
-				desliked_by: post.desliked_by,
-			},
+			_id: post.id,
+			likes: post.likes,
+			deslikes: post.deslikes,
+			liked_by: post.likedBy,
+			desliked_by: post.deslikedBy,
 		});
 	}
 
 	function handleDeslike() {
 		if (isDesliked) {
 			post.deslikes--;
-			post.desliked_by = post.desliked_by.filter((id) => id !== userId);
+			post.deslikedBy = post.deslikedBy.filter((id) => id !== userId);
 		} else {
 			post.deslikes++;
-			post.desliked_by.push(userId);
+			post.deslikedBy.push(userId);
 			if (isLiked) {
 				post.likes--;
-				post.liked_by = post.liked_by.filter((id) => id !== userId);
+				post.likedBy = post.likedBy.filter((id) => id !== userId);
 				setIsLiked(false);
 			}
 		}
 		setIsDesliked(!isDesliked);
 		handleUpdate({
-			_id: post._id,
-			data: {
-				likes: post.likes,
-				deslikes: post.deslikes,
-				liked_by: post.liked_by,
-				desliked_by: post.desliked_by,
-			},
+			_id: post.id,
+			likes: post.likes,
+			deslikes: post.deslikes,
+			liked_by: post.likedBy,
+			desliked_by: post.deslikedBy,
 		});
 	}
 

@@ -14,19 +14,14 @@ interface CustomConnection extends mongoose.Connection {
 const connection: CustomConnection = {} as CustomConnection;
 
 export async function connectToDb() {
-	try {
-		if (connection.isConnected) {
-			logger.debug("Using existing connection!");
-			return;
-		}
-
-		const db: typeof mongoose = await mongoose.connect(env.MONGO);
-		connection.isConnected = db.connections[0]?.readyState === 1;
-		logger.debug("Database connected!");
-	} catch (error) {
-		logger.error(String(error));
-		throw new Error("Error connecting to database!" + error);
+	if (connection.isConnected) {
+		logger.debug("Using existing connection!");
+		return;
 	}
+
+	const db: typeof mongoose = await mongoose.connect(env.MONGO);
+	connection.isConnected = db.connections[0]?.readyState === 1;
+	logger.debug("Database connected!");
 }
 
 export function filterUndefinedOrEmptyStringProperties<T>(obj: T): Partial<T> {
@@ -45,4 +40,8 @@ export function filterUndefinedOrEmptyStringProperties<T>(obj: T): Partial<T> {
 	}
 
 	return filteredObject;
+}
+
+export function parseObjToJson<T>(obj: any): T {
+	return JSON.parse(JSON.stringify(obj));
 }

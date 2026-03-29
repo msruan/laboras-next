@@ -1,17 +1,19 @@
 import { NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
-import { type Post, PostDB } from "@/models/post.model";
+import { type Post, PostDB, parsePost } from "@/models/post.model";
 
 export const GET = async () => {
 	try {
 		await connectToDb();
 
-		const posts: Post[] = await PostDB.find();
+		const rawPosts = await PostDB.find({ linked_to: null }, null, {
+			sort: "-createdAt",
+		}).populate("owner");
 
-		return NextResponse.json(
-			posts.filter((post) => post.linked_to === null).reverse(),
-		);
+		const posts: Post[] = rawPosts.map(parsePost);
+
+		return NextResponse.json(posts);
 	} catch (err) {
 		logger.error(String(err));
 		return NextResponse.error();
