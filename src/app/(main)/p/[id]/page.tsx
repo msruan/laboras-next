@@ -5,7 +5,7 @@ import { PostDetailPage } from "@/components/pages/post-detail-page";
 import { EntityNotFoundException } from "@/exceptions";
 import { auth } from "@/lib/auth";
 import { logger } from "@/lib/logger";
-import type { IPost } from "@/models/post.model";
+import type { Post } from "@/models/post.model";
 
 interface Props {
 	params: Promise<{
@@ -29,8 +29,8 @@ const PostDetail = async ({ params }: Props) => {
 		throw err;
 	}
 
-	const post: IPost = response.post;
-	const children: IPost[] = response.children;
+	const post: Post = response.post;
+	const children: Post[] = response.children;
 
 	const session = await auth();
 	const user = await getUserByEmail(session?.user?.email!);

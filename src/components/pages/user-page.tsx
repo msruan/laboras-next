@@ -1,13 +1,13 @@
 import { Header } from "@/components/Header";
 import { PostsContainer } from "@/components/PostsContainer";
 import { UserProfile } from "@/components/user/UserProfile";
-import type { IPost } from "@/models/post.model";
+import type { Post } from "@/models/post.model";
 import type { User } from "@/models/user.model";
 
 type Props = {
 	currentUser: User;
 	profile: User;
-	profilePosts: IPost[];
+	profilePosts: Post[];
 	isProfileOfLoggerUser: boolean;
 };
 

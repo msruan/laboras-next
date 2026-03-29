@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { updatePost as handleUpdate } from "@/api/post.actions";
 import { Assets } from "@/assets";
 import { cn } from "@/lib/utils";
-import type { IPost } from "@/models/post.model";
+import type { Post } from "@/models/post.model";
 import type { User } from "@/models/user.model";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -20,7 +20,7 @@ import { PostMenu } from "./PostMenu";
 
 interface PostProps {
 	userId: string;
-	postContent: IPost;
+	postContent: Post;
 	owner: User;
 	fullPage: boolean;
 	fullBorder: boolean;

@@ -1,4 +1,5 @@
 import { Fireworks } from "@fireworks-js/react";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import Snowfall from "react-snowfall";
 import { Assets } from "@/assets";
@@ -21,7 +22,7 @@ class Christmas implements Celebration {
 	}
 
 	customLogo() {
-		return <img src={Assets.images.celebrations.christmasLogo} />;
+		return <Image src={Assets.images.celebrations.christmasLogo} alt="" />;
 	}
 }
 
@@ -58,7 +59,7 @@ class NewYear implements Celebration {
 	}
 
 	customLogo() {
-		return <img src={Assets.images.celebrations.newYearLogo} />;
+		return <Image src={Assets.images.celebrations.newYearLogo} alt="" />;
 	}
 }
 

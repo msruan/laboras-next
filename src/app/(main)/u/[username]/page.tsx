@@ -5,7 +5,7 @@ import { UserDetailPage } from "@/components/pages/user-page";
 import { EntityNotFoundException } from "@/exceptions";
 import { auth } from "@/lib/auth";
 import { logger } from "@/lib/logger";
-import type { IPost } from "@/models/post.model";
+import type { Post } from "@/models/post.model";
 
 type Props = {
 	params: Promise<{
@@ -38,7 +38,7 @@ const UserDetail = async ({ params }: Props) => {
 	}
 
 	const userProfile = data.user;
-	const userPosts: IPost[] = data.posts;
+	const userPosts: Post[] = data.posts;
 
 	const session = await auth();
 	const user = await getUserByEmail(session?.user?.email ?? "");

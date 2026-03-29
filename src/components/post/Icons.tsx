@@ -5,10 +5,10 @@ import { useState } from "react";
 import { updatePost as handleUpdate } from "@/api/post.actions";
 import { logger } from "@/lib/logger";
 import { cn } from "@/lib/utils";
-import type { IPost } from "@/models/post.model";
+import type { Post } from "@/models/post.model";
 
 type IconsProps = {
-	post: IPost;
+	post: Post;
 	fullPage: boolean;
 	userId: string;
 };

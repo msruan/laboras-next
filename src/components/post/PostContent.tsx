@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import useClient from "@/hooks/use-client";
 import { cn } from "@/lib/utils";
-import type { IPost } from "@/models/post.model";
+import type { Post } from "@/models/post.model";
 import type { User } from "@/models/user.model";
 import { CardContent } from "../ui/card";
 import { Icons } from "./Icons";
@@ -13,7 +13,7 @@ import { PostMenu } from "./PostMenu";
 interface Props {
 	userId: string;
 	owner: User;
-	post: IPost;
+	post: Post;
 	fullPage: boolean;
 	onClick: () => void;
 	handleEdit: (value: boolean) => void;

@@ -1,6 +1,6 @@
 import mongoose, { type Model } from "mongoose";
 
-import type { IPost } from "./post.model";
+import type { Post } from "./post.model";
 
 export interface UserDTO {
 	_id: string;
@@ -8,7 +8,7 @@ export interface UserDTO {
 	username: string;
 	email: string;
 	password: string;
-	posts: IPost[];
+	posts: Post[];
 	profile_image_link?: string;
 	bio?: string;
 }

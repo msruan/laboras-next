@@ -1,14 +1,14 @@
 import { Header } from "@/components/Header";
 import { PostsContainer } from "@/components/PostsContainer";
 import { PostCard } from "@/components/post/PostCard";
-import type { IPost } from "@/models/post.model";
+import type { Post } from "@/models/post.model";
 import type { User } from "@/models/user.model";
 
 type Props = {
 	userId: string;
 	owner: User;
-	post: IPost;
-	postChildren: IPost[];
+	post: Post;
+	postChildren: Post[];
 	currentUser: User;
 	users: User[];
 };

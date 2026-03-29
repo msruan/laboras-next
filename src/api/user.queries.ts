@@ -1,7 +1,7 @@
 import { EntityNotFoundException } from "@/exceptions";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
-import { type IPost, PostDB } from "@/models/post.model";
+import { type Post, PostDB } from "@/models/post.model";
 import {
 	parseUser,
 	type User,
@@ -43,7 +43,7 @@ export async function getUserByEmail(email: string): Promise<User> {
 
 export async function getProfileByUsername(
 	username: string,
-): Promise<{ user: User; posts: IPost[] }> {
+): Promise<{ user: User; posts: Post[] }> {
 	try {
 		await connectToDb();
 		logger.trace(`The received username is ${username}`);
@@ -54,7 +54,7 @@ export async function getProfileByUsername(
 		const user = JSON.parse(JSON.stringify(rawUser));
 
 		const rawPosts = await PostDB.find({ user_id: rawUser._id });
-		const posts: IPost[] = JSON.parse(JSON.stringify(rawPosts));
+		const posts: Post[] = JSON.parse(JSON.stringify(rawPosts));
 
 		return {
 			user: parseUser(user),

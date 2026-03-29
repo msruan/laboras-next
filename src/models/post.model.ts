@@ -1,6 +1,6 @@
 import mongoose, { type Model } from "mongoose";
 
-export interface IPost {
+export interface Post {
 	_id: string;
 	user_id: string;
 	content: string;
@@ -18,7 +18,7 @@ export interface CreatePostDTO {
 	linked_to: string | null;
 }
 
-const PostSchema = new mongoose.Schema<IPost>(
+const PostSchema = new mongoose.Schema<Post>(
 	{
 		user_id: { type: String, required: true },
 		content: {
@@ -48,4 +48,4 @@ const PostSchema = new mongoose.Schema<IPost>(
 );
 
 export const PostDB =
-	(mongoose.models?.Post as Model<IPost>) || mongoose.model("Post", PostSchema);
+	(mongoose.models?.Post as Model<Post>) || mongoose.model("Post", PostSchema);

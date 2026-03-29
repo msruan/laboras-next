@@ -1,6 +1,6 @@
 import { Toaster } from "sonner";
 
-import type { IPost } from "@/models/post.model";
+import type { Post } from "@/models/post.model";
 import type { User } from "@/models/user.model";
 
 import { PostCard } from "./post/PostCard";
@@ -9,7 +9,7 @@ import { TextBox } from "./TextBox";
 interface Props {
 	currentUser: User;
 	users: User[];
-	posts: IPost[];
+	posts: Post[];
 	textbox?: boolean;
 	linkedTo?: string | null;
 }
