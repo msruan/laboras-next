@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
 			fullUrl: true,
 		},
 	},
+	experimental: {
+		turbopackFileSystemCacheForDev: true,
+	},
 };
 
 export default nextConfig;

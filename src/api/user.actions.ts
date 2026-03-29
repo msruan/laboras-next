@@ -22,7 +22,7 @@ export async function updateUser(payload: UserUpdate): Promise<void> {
 			throw new Error("User not found");
 		}
 
-		logger.info("User atualizado!");
+		logger.info("User was updated!");
 		logoutAction();
 		redirect("/login");
 	} catch (err) {
