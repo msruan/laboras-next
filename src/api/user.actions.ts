@@ -3,10 +3,10 @@
 import { redirect } from "next/navigation";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
-import { UserDB, type UserUpdateDTO } from "@/models/user.model";
+import { UserDB, type UserUpdate } from "@/models/user.model";
 import { logoutAction } from "./auth.actions";
 
-export async function updateUser(payload: UserUpdateDTO): Promise<void> {
+export async function updateUser(payload: UserUpdate): Promise<void> {
 	try {
 		await connectToDb();
 
@@ -16,7 +16,7 @@ export async function updateUser(payload: UserUpdateDTO): Promise<void> {
 			...(payload.username ? { username: payload.username } : {}),
 			...(payload.avatarUrl ? { profile_image_link: payload.avatarUrl } : {}),
 		};
-		const user = await UserDB.findByIdAndUpdate(payload._id, updatedData);
+		const user = await UserDB.findByIdAndUpdate(payload.id, updatedData);
 
 		if (!user) {
 			throw new Error("User not found");

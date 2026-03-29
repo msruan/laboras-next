@@ -23,7 +23,7 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 		}
 
 		const newPost: CreatePostDTO = {
-			user_id: profile._id,
+			user_id: profile.id,
 			content: input.current.value,
 			linked_to: linkedTo,
 		};
@@ -36,9 +36,7 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 		<div className="flex w-full flex-col border-rebeccapurple2 border-b-2 pr-3 pb-10 pl-3 align-middle">
 			<div className="flex w-full flex-row items-center gap-8">
 				<Avatar className="h-12 w-12 rounded-full">
-					<AvatarImage
-						src={profile?.profile_image_link ?? Assets.images.shyDog}
-					/>
+					<AvatarImage src={profile?.avatarUrl ?? Assets.images.shyDog} />
 					<AvatarFallback>CN</AvatarFallback>
 				</Avatar>
 
@@ -55,7 +53,7 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 					maxLength={400}
 					placeholder={`${
 						linkedTo ? "O que acha disso" : "No que voce está pensando"
-					} ${profile.first_name}?`}
+					} ${profile.name}?`}
 				></textarea>
 			</div>
 			<div className="h-fit w-fit self-end justify-self-end">

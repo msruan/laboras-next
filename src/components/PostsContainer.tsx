@@ -29,12 +29,12 @@ export function PostsContainer({
 
 			{posts.map((post) => (
 				<PostCard
-					userId={currentUser._id}
+					userId={currentUser.id}
 					key={post._id}
 					postContent={post}
 					fullPage={false}
 					fullBorder={true}
-					owner={users.find((profile) => profile._id === post.user_id)!}
+					owner={users.find((profile) => profile.id === post.user_id)!}
 				/>
 			))}
 		</div>

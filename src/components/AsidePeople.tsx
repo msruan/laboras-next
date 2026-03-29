@@ -1,10 +1,9 @@
 import { getUsers } from "@/api/user.queries";
-import type { User } from "@/models/user.model";
 
 import { UserProfileTag } from "./user/UserProfileTag";
 
 export const AsidePeople = async () => {
-	const users: User[] = await getUsers();
+	const users = await getUsers();
 
 	return (
 		<div className="fixed top-0 right-0 z-1 flex min-h-screen w-72 flex-col items-center gap-3 overflow-x-hidden p-6 max-xl:hidden">

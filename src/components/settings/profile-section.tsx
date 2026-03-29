@@ -14,15 +14,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useInput } from "@/hooks/use-input";
-import type { User } from "@/models/user.model";
+import type { User, UserUpdate } from "@/models/user.model";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
 export function UserProfileSection({ profile }: { profile: User }) {
-	const nameInput = useInput(profile.first_name);
+	const nameInput = useInput(profile.name);
 	const bioInput = useInput(profile.bio);
-	const avatarInput = useInput(profile.profile_image_link);
+	const avatarInput = useInput(profile.avatarUrl);
 
 	const avatarLinkDebounced = useDebounce(avatarInput.value, 500);
 
@@ -68,15 +68,13 @@ export function UserProfileSection({ profile }: { profile: User }) {
 			<CardFooter>
 				<Button
 					onClick={async () => {
-						const changeBody = {
+						const changeBody: UserUpdate = {
+							id: profile.id,
 							name: nameInput.value,
 							bio: bioInput.value,
 							avatarUrl: avatarInput.value,
 						};
-						await updateUser({
-							...changeBody,
-							_id: profile._id,
-						});
+						await updateUser(changeBody);
 						redirect(`/u/${profile?.username}`);
 					}}
 				>

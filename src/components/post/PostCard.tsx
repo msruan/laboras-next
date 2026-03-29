@@ -100,7 +100,7 @@ export const PostCard = ({
 						<Link href={`/u/${owner?.username}`}>
 							<Avatar className="h-12 w-12 rounded-full">
 								<AvatarImage
-									src={owner?.profile_image_link ?? Assets.images.soccerPlayer}
+									src={owner?.avatarUrl ?? Assets.images.soccerPlayer}
 								/>
 								<AvatarFallback>CN</AvatarFallback>
 							</Avatar>

@@ -2,15 +2,21 @@ import { EntityNotFoundException } from "@/exceptions";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
 import { type IPost, PostDB } from "@/models/post.model";
-import { type User, UserDB } from "@/models/user.model";
+import {
+	parseUser,
+	type User,
+	UserDB,
+	type UserDTO,
+} from "@/models/user.model";
 
 export async function getUsers(): Promise<User[]> {
 	try {
 		await connectToDb();
 
-		const users = await UserDB.find();
+		const rawUsers = await UserDB.find();
+		const users: UserDTO[] = JSON.parse(JSON.stringify(rawUsers));
 
-		return JSON.parse(JSON.stringify(users));
+		return users.map(parseUser);
 	} catch (err) {
 		logger.error(String(err));
 		throw err;
@@ -21,12 +27,14 @@ export async function getUserByEmail(email: string): Promise<User> {
 	try {
 		await connectToDb();
 
-		const user = await UserDB.findOne({ email: email });
-		if (!user) {
+		const rawUser = await UserDB.findOne({ email: email });
+		if (!rawUser) {
 			throw new EntityNotFoundException("User not found");
 		}
 
-		return JSON.parse(JSON.stringify(user));
+		const user: UserDTO = JSON.parse(JSON.stringify(rawUser));
+
+		return parseUser(user);
 	} catch (err) {
 		logger.error(String(err));
 		throw err;
@@ -40,17 +48,18 @@ export async function getProfileByUsername(
 		await connectToDb();
 		logger.trace(`The received username is ${username}`);
 
-		const user: User | null = await UserDB.findOne({ username: username });
-		if (!user) throw new EntityNotFoundException("User not found!");
+		const rawUser = await UserDB.findOne({ username: username });
+		if (!rawUser) throw new EntityNotFoundException("User not found!");
 
-		const posts: IPost[] = await PostDB.find({ user_id: user._id });
+		const user = JSON.parse(JSON.stringify(rawUser));
 
-		return JSON.parse(
-			JSON.stringify({
-				user,
-				posts: posts.filter((post) => post.linked_to === null).reverse(),
-			}),
-		);
+		const rawPosts = await PostDB.find({ user_id: rawUser._id });
+		const posts: IPost[] = JSON.parse(JSON.stringify(rawPosts));
+
+		return {
+			user: parseUser(user),
+			posts: posts.filter((post) => post.linked_to === null).reverse(),
+		};
 	} catch (err) {
 		logger.error(String(err));
 		throw err;

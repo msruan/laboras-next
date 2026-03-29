@@ -42,7 +42,7 @@ export function PostContent({
 						)}
 					>
 						<Link href={`/u/${owner?.username}`}>
-							<h3>{owner?.first_name}</h3>
+							<h3>{owner?.name}</h3>
 						</Link>
 						<Link href={`/u/${owner?.username}`}>
 							<h4 className="opacity-70">@{owner?.username}</h4>

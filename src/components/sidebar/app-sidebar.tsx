@@ -5,7 +5,6 @@ import { getUserByEmail } from "@/api/user.queries";
 import { Assets } from "@/assets";
 import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
-import type { User } from "@/models/user.model";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { LaborasLogo } from "./laboras-logo";
@@ -14,9 +13,7 @@ import { SidebarLinks } from "./sidebar-links";
 
 export const AppSidebar = async () => {
 	const session = await auth();
-	const currentUserProfile: User = await getUserByEmail(
-		session?.user?.email ?? "",
-	);
+	const currentUserProfile = await getUserByEmail(session?.user?.email ?? "");
 
 	return (
 		<div
@@ -32,9 +29,7 @@ export const AppSidebar = async () => {
 				</div>
 				<SidebarLinks
 					username={currentUserProfile.username}
-					avatarLink={
-						currentUserProfile.profile_image_link ?? Assets.images.shyDog
-					}
+					avatarLink={currentUserProfile.avatarUrl ?? Assets.images.shyDog}
 				/>
 			</div>
 			<div className="hidden w-full sm:block">

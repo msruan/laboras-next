@@ -19,9 +19,7 @@ export const UserProfile = ({ user, isTheLoggedUser, postsCount }: Props) => {
 		<Card className="flex flex-row items-center gap-7 rounded-none border-rebeccapurple2 border-r-0 border-l-0 bg-transparent p-9 px-20 max-sm:flex-row max-sm:p-5 max-sm:pb-10 sm:gap-16">
 			<div className="flex h-full flex-col items-center justify-center gap-5">
 				<Avatar className="h-56 w-56 max-sm:h-20 max-sm:w-20 max-xl:h-40 max-xl:w-40">
-					<AvatarImage
-						src={user.profile_image_link ?? Assets.images.cookingDog}
-					/>
+					<AvatarImage src={user.avatarUrl ?? Assets.images.cookingDog} />
 					<AvatarFallback>CN</AvatarFallback>
 				</Avatar>
 				{isTheLoggedUser && (
@@ -35,7 +33,7 @@ export const UserProfile = ({ user, isTheLoggedUser, postsCount }: Props) => {
 
 			<div className="flex w-full flex-col items-start gap-3">
 				<CardTitle className="text-start font-bold text-2xl tracking-tighter">
-					{user.first_name}
+					{user.name}
 				</CardTitle>
 
 				<CardContent className="space-y-6 p-0">

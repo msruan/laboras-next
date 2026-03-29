@@ -2,10 +2,9 @@ import mongoose, { type Model } from "mongoose";
 
 import type { IPost } from "./post.model";
 
-export interface User {
+export interface UserDTO {
 	_id: string;
 	first_name: string;
-	last_name: string;
 	username: string;
 	email: string;
 	password: string;
@@ -14,7 +13,7 @@ export interface User {
 	bio?: string;
 }
 
-const UserSchema = new mongoose.Schema<User>(
+const UserSchema = new mongoose.Schema<UserDTO>(
 	{
 		username: {
 			type: String,
@@ -25,9 +24,6 @@ const UserSchema = new mongoose.Schema<User>(
 		first_name: {
 			type: String,
 			required: true,
-		},
-		last_name: {
-			type: String,
 		},
 		email: {
 			type: String,
@@ -50,13 +46,27 @@ const UserSchema = new mongoose.Schema<User>(
 );
 
 export const UserDB =
-	(mongoose.models?.Profile as Model<User>) ||
+	(mongoose.models?.Profile as Model<UserDTO>) ||
 	mongoose.model("Profile", UserSchema);
 
-export interface UserUpdateDTO {
-	_id: string;
-	name?: string;
-	username?: string;
-	avatarUrl?: string;
-	bio?: string;
+export interface User {
+	id: string;
+	username: string;
+	name: string;
+	email: string;
+	avatarUrl: string | null;
+	bio: string | null;
 }
+
+export function parseUser(dto: UserDTO): User {
+	return {
+		id: dto._id,
+		username: dto.username,
+		name: dto.first_name,
+		email: dto.email,
+		bio: dto.bio ?? null,
+		avatarUrl: dto.profile_image_link ?? null,
+	};
+}
+
+export type UserUpdate = Partial<Omit<User, "email">> & Pick<User, "id">;

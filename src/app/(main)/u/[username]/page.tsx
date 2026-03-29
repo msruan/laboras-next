@@ -6,7 +6,6 @@ import { EntityNotFoundException } from "@/exceptions";
 import { auth } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 import type { IPost } from "@/models/post.model";
-import type { User } from "@/models/user.model";
 
 type Props = {
 	params: Promise<{
@@ -38,11 +37,11 @@ const UserDetail = async ({ params }: Props) => {
 		throw err;
 	}
 
-	const userProfile: User = data.user;
+	const userProfile = data.user;
 	const userPosts: IPost[] = data.posts;
 
 	const session = await auth();
-	const user: User = await getUserByEmail(session?.user?.email ?? "");
+	const user = await getUserByEmail(session?.user?.email ?? "");
 
 	return (
 		<UserDetailPage
