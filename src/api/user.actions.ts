@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
 import { UserDB, type UserUpdate } from "@/models/user.model";
@@ -23,8 +22,7 @@ export async function updateUser(payload: UserUpdate): Promise<void> {
 		}
 
 		logger.info("User was updated!");
-		logoutAction();
-		redirect("/login");
+		await logoutAction();
 	} catch (err) {
 		logger.error(String(err));
 		throw err;

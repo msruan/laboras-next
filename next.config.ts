@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
 	typedRoutes: true,
 	logging: {
 		fetches: {
-			fullUrl: true,
+			fullUrl: process.env.NODE_ENV !== "production",
 		},
 	},
 	experimental: {

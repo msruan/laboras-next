@@ -32,19 +32,16 @@ export function PostContent({
 		>
 			<div className="flex flex-col gap-4">
 				<div className="flex items-center justify-between max-sm:flex-col max-sm:items-start">
-					<div
+					<Link
+						href={post.owner ? `/u/${post.owner?.username}` : "#"}
 						className={cn(
 							"flex items-start gap-2 text-aliceblue text-sm",
 							fullPage && "flex-col gap-0",
 						)}
 					>
-						<Link href={`/u/${post.owner?.username}`}>
-							<h3>{post.owner?.name}</h3>
-						</Link>
-						<Link href={`/u/${post.owner?.username}`}>
-							<h4 className="opacity-70">@{post.owner?.username}</h4>
-						</Link>
-					</div>
+						<h3>{post.owner?.name}</h3>
+						<h4 className="opacity-70">@{post.owner?.username}</h4>
+					</Link>
 					{!fullPage && (
 						<span className={"text-xs opacity-50"}>
 							há{" "}
@@ -64,7 +61,7 @@ export function PostContent({
 					</p>
 					<div className="flex h-fit w-1/4 flex-row justify-between pr-7 pb-1">
 						<Icons userId={userId} post={post} />
-						{userId === post.owner?.id && (
+						{post.owner && userId && userId === post.owner.id && (
 							<PostMenu handleEdit={handleEdit} postId={post.id} />
 						)}
 					</div>

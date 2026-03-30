@@ -20,7 +20,7 @@ function NotFoundPage() {
 				</div>
 				<p className="box-border text-3xl">
 					are you <strong>lost</strong> baby bunny?...but do not worry! <br />{" "}
-					they are are here to guide you
+					they are here to guide you
 				</p>
 				<Link href="/">
 					<Button className="cursor-pointer rounded-full font-bold text-white">

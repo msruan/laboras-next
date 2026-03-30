@@ -17,7 +17,6 @@ interface Props {
 const PostDetail = async ({ params }: Props) => {
 	const session = await auth();
 	const user = await getUserByEmail(session?.user?.email ?? "");
-	const userId = session?.user?.id;
 
 	const { id } = await params;
 
@@ -47,7 +46,7 @@ const PostDetail = async ({ params }: Props) => {
 			currentUser={user}
 			post={data.post}
 			replies={data.replies}
-			userId={userId ?? ""}
+			userId={user.id}
 		/>
 	);
 };

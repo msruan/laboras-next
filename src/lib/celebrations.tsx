@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import Snowfall from "react-snowfall";
 import { Assets } from "@/assets";
+import { logger } from "./logger";
 
 interface Celebration {
 	isTimeToCelebrate(): boolean;
@@ -13,7 +14,7 @@ interface Celebration {
 class Christmas implements Celebration {
 	isTimeToCelebrate() {
 		const isDecember = new Date().getMonth() === 11;
-		const today = new Date().getDay();
+		const today = new Date().getDate();
 		return isDecember && today < 31;
 	}
 
@@ -67,15 +68,15 @@ class Celebrant {
 	public actualCelebration: Celebration | null = null;
 
 	constructor(celebrations: Celebration[]) {
-		for (const celebration of celebrations) {
-			if (!celebration.isTimeToCelebrate()) {
-				continue;
-			}
-			if (this.actualCelebration !== null) {
-				throw new Error("Two celebrations cannot happen in the same time!"); //Todo: add a priority prop on celebrations to avoid this
-			}
-			this.actualCelebration = celebration;
+		const activeCelebrations = celebrations.filter((c) =>
+			c.isTimeToCelebrate(),
+		);
+		
+		if (activeCelebrations.length > 1) {
+			//Todo: add a priority prop on celebrations to avoid this
+			logger.warn("Multiple celebrations active, selecting first by priority");
 		}
+		this.actualCelebration = activeCelebrations[0] ?? null;
 	}
 }
 

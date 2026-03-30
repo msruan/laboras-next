@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema<UserDTO>(
 			type: String,
 			required: true,
 			unique: true,
-			min: 4,
+			minLength: 3,
 		},
 		name: {
 			type: String,

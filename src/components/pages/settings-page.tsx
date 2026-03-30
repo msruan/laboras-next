@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 export function SettingsPage({ currentUser }: { currentUser: User }) {
 	return (
 		<div className="flex items-center justify-center pt-6">
-			<Card className="w-full max-w-lg text-wrap bg-transparant">
+			<Card className="w-full max-w-lg text-wrap bg-transparent">
 				<CardHeader>
 					<CardTitle
 						id="beggin"

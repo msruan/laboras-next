@@ -23,12 +23,11 @@ export function PostMenu({ postId, handleEdit }: PostMenuProps) {
 	const router = useRouter();
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
+			<DropdownMenuTrigger>
 				<EllipsisHorizontalIcon
 					className="h-4 w-4 text-gray-500 hover:text-gray-100"
 					cursor="pointer"
-				></EllipsisHorizontalIcon>
-				{/* <Button variant="outline">Open</Button> */}
+				/>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-28">
 				<DropdownMenuGroup className="*:cursor-pointer">

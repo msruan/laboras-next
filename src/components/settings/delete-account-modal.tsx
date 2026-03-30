@@ -1,5 +1,4 @@
 import { ArchiveBoxXMarkIcon } from "@heroicons/react/16/solid";
-import { logoutAction } from "@/api/auth.actions";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -37,7 +36,7 @@ export function DeleteAccountModal() {
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancelar</AlertDialogCancel>
-					<AlertDialogAction onClick={logoutAction} className="bg-red-600">
+					<AlertDialogAction disabled className="bg-red-600">
 						Deletar
 					</AlertDialogAction>
 				</AlertDialogFooter>

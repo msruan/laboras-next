@@ -54,7 +54,7 @@ export function LoginPage() {
 					</CardContent>
 
 					<CardFooter>
-						<p className="text-center text-muted-foreground text-sm text-wrapp">
+						<p className="text-wrap text-center text-muted-foreground text-sm">
 							Ao entrar em nossa plataforma, você concorda que roubemos todos os
 							seus dados.
 						</p>

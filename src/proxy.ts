@@ -5,7 +5,7 @@ export default auth((req) => {
 	const loginUrl = URL.parse("/login", env.SERVER_URL);
 	const homeUrl = URL.parse("/", env.SERVER_URL);
 
-	if (!loginUrl || !homeUrl) throw new Error();
+	if (!loginUrl || !homeUrl) throw new Error("Error on proxy.ts");
 
 	if (!req.auth && req.nextUrl.pathname !== "/login") {
 		return Response.redirect(loginUrl);

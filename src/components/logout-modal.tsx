@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { logoutAction } from "@/api/auth.actions";
 import {

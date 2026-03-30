@@ -1,5 +1,3 @@
-"use server";
-
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { getUserByEmail } from "@/api/user.queries";
 import { Assets } from "@/assets";

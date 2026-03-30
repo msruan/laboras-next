@@ -22,7 +22,7 @@ export const Icons = ({ post, userId }: IconsProps) => {
 		post.dislikedBy.includes(userId),
 	);
 
-	async function handleLike() {
+	function handleLike() {
 		if (isLiked) {
 			post.likes--;
 			post.likedBy = post.likedBy.filter((id) => id !== userId);
@@ -36,7 +36,7 @@ export const Icons = ({ post, userId }: IconsProps) => {
 			}
 		}
 		setIsLiked(!isLiked);
-		await handleUpdate({
+		handleUpdate({
 			_id: post.id,
 			likes: post.likes,
 			dislikes: post.dislikes,
@@ -45,7 +45,7 @@ export const Icons = ({ post, userId }: IconsProps) => {
 		});
 	}
 
-	function handleDeslike() {
+	function handleDislike() {
 		if (isDesliked) {
 			post.dislikes--;
 			post.dislikedBy = post.dislikedBy.filter((id) => id !== userId);
@@ -70,28 +70,32 @@ export const Icons = ({ post, userId }: IconsProps) => {
 
 	return (
 		<>
-			<div className="flex items-center justify-between text-sm">
+			<div className="flex h-5 items-center justify-between text-sm">
 				<span>{post.likes > 0 && post.likes}</span>
-				<StarIcon
-					className={cn(
-						"h-4 w-4",
-						isLiked ? "text-yellow-500" : "text-gray-500",
-					)}
-					onClick={handleLike}
-					cursor="pointer"
-				/>
+				<button type="button" className="cursor-pointer" onClick={handleLike}>
+					<StarIcon
+						className={cn(
+							"h-4 w-4",
+							isLiked ? "text-yellow-500" : "text-gray-500",
+						)}
+					/>
+				</button>
 			</div>
 
-			<div className="flex items-center justify-between text-sm">
+			<div className="flex h-5 items-center justify-between text-sm">
 				<span>{post.dislikes > 0 && post.dislikes}</span>
-				<FaceFrownIcon
-					className={cn(
-						"h-4 w-4",
-						isDesliked ? "text-red-500" : "text-gray-500",
-					)}
-					onClick={handleDeslike}
-					cursor="pointer"
-				/>
+				<button
+					type="button"
+					className="cursor-pointer"
+					onClick={handleDislike}
+				>
+					<FaceFrownIcon
+						className={cn(
+							"h-4 w-4",
+							isDesliked ? "text-red-500" : "text-gray-500",
+						)}
+					/>
+				</button>
 			</div>
 		</>
 	);

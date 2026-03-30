@@ -39,7 +39,9 @@ export async function updatePost(payload: UpdatePostDTO): Promise<void> {
 		const id = payload._id;
 		delete payload._id;
 
-		const post = await PostDB.findByIdAndUpdate(id, payload);
+		const post = await PostDB.findByIdAndUpdate(id, payload, {
+			runValidators: true,
+		});
 		if (!post) {
 			throw new Error("Post not found");
 		}

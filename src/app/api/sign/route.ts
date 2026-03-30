@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { Profile } from "next-auth";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
-import { UserDB } from "@/models/user.model";
+import { type User, UserDB } from "@/models/user.model";
 
 export const POST = async (request: Request) => {
 	try {
@@ -13,13 +13,12 @@ export const POST = async (request: Request) => {
 
 		if (oldAccount) return NextResponse.json(null, { status: 201 });
 
-		const profileSchema = {
-			first_name: profile.name,
-			last_name: "",
-			username: profile?.login,
-			email: profile?.email,
-			profile_image_link: profile?.avatar_url,
-			bio: profile?.bio,
+		const profileSchema: Omit<User, "id"> = {
+			name: profile.name ?? "",
+			username: String(profile?.login),
+			email: profile?.email ?? "",
+			avatarUrl: String(profile?.avatar_url),
+			bio: String(profile?.bio),
 		};
 
 		const newProfile = new UserDB(profileSchema);

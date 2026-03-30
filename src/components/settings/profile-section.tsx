@@ -52,8 +52,8 @@ export function UserProfileSection({ profile }: { profile: User }) {
 
 				<div className="flex h-full w-full items-center justify-between">
 					<div className="w-full space-y-1">
-						<Label htmlFor="name">Foto de perfil</Label>
-						<Input id="name" placeholder="Seu avatar" {...avatarInput} />
+						<Label htmlFor="avatar">Foto de perfil</Label>
+						<Input id="avatar" placeholder="Seu avatar" {...avatarInput} />
 					</div>
 
 					<figure className="flex h-full items-center justify-center pl-4">

@@ -86,14 +86,17 @@ export const PostCard = ({
 						className="w-noavatar bg-rebeccapurple"
 						placeholder="Edit your message here."
 					/>
-					<Button onClick={handleSaveEdit} variant="ghost">
-						Salvar
-					</Button>
+					<div className="space-x-2">
+						<Button onClick={() => setEditMode(false)} variant="secondary">
+							Cancelar
+						</Button>
+						<Button onClick={handleSaveEdit}>Salvar</Button>
+					</div>
 				</div>
 			) : (
 				<>
 					<div className="flex h-fit w-full pt-3 pr-3 pl-5">
-						<Link href={`/u/${post.owner?.username}`}>
+						<Link tabIndex={-1} href={`/u/${post.owner?.username}`}>
 							<Avatar className="h-12 w-12 rounded-full">
 								<AvatarImage
 									src={post.owner?.avatarUrl ?? Assets.images.soccerPlayer}

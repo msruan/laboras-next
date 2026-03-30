@@ -11,8 +11,8 @@ export const AsidePeople = async () => {
 				Pessoas logadas
 			</h2>
 			<div className="flex min-h-full flex-col gap-11">
-				{users.map((profile) => (
-					<UserProfileTag key={profile?.id} user={profile} />
+				{users.map((user) => (
+					<UserProfileTag key={user.id} user={user} />
 				))}
 			</div>
 		</div>
