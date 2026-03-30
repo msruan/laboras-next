@@ -1,36 +1,32 @@
-import { Profile } from "next-auth";
 import { NextResponse } from "next/server";
-
-import { connectToDb } from "@/lib/utils";
-import { ProfileDB as ProfileDB } from "@/models/profile.model";
+import type { Profile } from "next-auth";
 import { logger } from "@/lib/logger";
+import { connectToDb } from "@/lib/utils";
+import { type User, UserDB } from "@/models/user.model";
 
 export const POST = async (request: Request) => {
-  try {
-    await connectToDb();
-    const profile: Profile = await request.json();
+	try {
+		await connectToDb();
+		const profile: Profile = await request.json();
 
-    const oldAccount = await ProfileDB.findOne({ username: profile?.login });
-    const hasAccount = oldAccount !== undefined && oldAccount !== null;
+		const oldAccount = await UserDB.findOne({ username: profile?.login });
 
-    if (hasAccount) return NextResponse.json(null, {status: 201});
+		if (oldAccount) return NextResponse.json(null, { status: 201 });
 
-    const profileSchema = {
-      first_name: profile.name,
-      last_name: "",
-      username: profile?.login,
-      token: "",
-      email: profile?.email,
-      profile_image_link: profile?.avatar_url,
-      bio: profile?.bio,
-    };
+		const profileSchema: Omit<User, "id"> = {
+			name: profile.name ?? "",
+			username: String(profile?.login),
+			email: profile?.email ?? "",
+			avatarUrl: String(profile?.avatar_url),
+			bio: String(profile?.bio),
+		};
 
-    const newProfile = new ProfileDB(profileSchema);
-    await newProfile.save();
+		const newProfile = new UserDB(profileSchema);
+		await newProfile.save();
 
-    return NextResponse.json(null, {status: 201});
-  } catch (err) {
-    logger.error(String(err));
-    return NextResponse.json(null, {status: 500});
-  }
+		return NextResponse.json(null, { status: 201 });
+	} catch (err) {
+		logger.error(String(err));
+		return NextResponse.json(null, { status: 500 });
+	}
 };

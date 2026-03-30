@@ -1,20 +1,32 @@
 "use client";
 
+import { Cog8ToothIcon } from "@heroicons/react/16/solid";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
+export function Header({
+	title,
+	username,
+}: {
+	title: string;
+	username?: string;
+}) {
+	const router = useRouter();
 
-export function Header({ title }: { title: string }) {
-  const router = useRouter();
-
-  return (
-    <div className="fixed justify-center items-center z-10 top-0 flex p-2 w-full bg-black border-b-[1px] border-b-gray-500 sm:hidden ">
-      <ChevronLeftIcon
-        cursor={"pointer"}
-        onClick={() => router.back()}
-        className="fixed w-6 h-6 left-3 top-2"
-      />
-      <h1 className="font-bold">{title}</h1>
-    </div>
-  );
+	return (
+		<div className="fixed top-0 left-0 z-10 flex w-full items-center justify-between border-b-[1px] border-b-gray-500 bg-black p-4 py-2 sm:hidden">
+			<button type="button" onClick={() => router.back()} aria-label="Go back">
+				<ChevronLeftIcon className="h-6 w-6" />
+			</button>
+			<h1 className="font-bold">{title}</h1>
+			{username ? (
+				<Link href="/settings">
+					<Cog8ToothIcon className="h-6 w-6" />
+				</Link>
+			) : (
+				<div />
+			)}
+		</div>
+	);
 }

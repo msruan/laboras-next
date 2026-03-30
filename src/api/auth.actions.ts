@@ -1,22 +1,24 @@
-"use server"
+"use server";
 
-import { apiURL } from '@/constants';
-import { signIn, signOut } from '@/lib/auth';
-import { Profile } from 'next-auth';
+import { redirect } from "next/navigation";
+import type { Profile } from "next-auth";
+import { apiURL } from "@/constants";
+import { signIn, signOut } from "@/lib/auth";
 
 export const githubLoginAction = async () => {
-  await signIn("github", { redirectTo: "/" });
+	await signIn("github", { redirectTo: "/" });
 };
 
 export const logoutAction = async () => {
-  await signOut();
+	await signOut();
+	redirect("/login");
 };
 
 export async function apiSign(profile: Profile): Promise<boolean> {
-  const response = await fetch(`${apiURL}/sign`, {
-    method: "POST",
-    body: JSON.stringify(profile)
-  });
+	const response = await fetch(`${apiURL}/sign`, {
+		method: "POST",
+		body: JSON.stringify(profile),
+	});
 
-  return response.ok;
+	return response.ok;
 }

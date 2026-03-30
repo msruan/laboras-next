@@ -1,0 +1,36 @@
+.habbo {
+	animation: glow 2s ease-in-out infinite alternate;
+}
+
+.letter {
+	display: inline-block;
+	transition: transform 350ms ease;
+}
+
+.l:hover {
+	transform: translate(-20%, -20%) rotate(10deg);
+}
+
+.a:hover {
+	transform: translate(-25%, 20%) rotate(-15deg);
+}
+
+.b:hover {
+	transform: translate(0%, -10%) rotate(20deg);
+}
+
+.o:hover {
+	transform: translate(25%, 10%) rotate(-25deg);
+}
+
+.r:hover {
+	transform: translate(-10%, 50%) rotate(-49deg);
+}
+
+.a2:hover {
+	transform: translate(0%, -40%) rotate(-10deg);
+}
+
+.s:hover {
+	transform: translate(35%, 20%) rotate(-10deg);
+}

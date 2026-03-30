@@ -1,59 +1,70 @@
 "use server";
 
+import { revalidatePath, revalidateTag } from "next/cache";
 import { logger } from "@/lib/logger";
 import { connectToDb } from "@/lib/utils";
-import { CreatePostDTO, PostDB } from "@/models/post.model";
-import { revalidatePath, revalidateTag } from "next/cache";
+import {
+	type CreatePostDTO,
+	PostDB,
+	type UpdatePostDTO,
+} from "@/models/post.model";
 
-export async function addPost(payload: CreatePostDTO): Promise<void> {
-  try {
-    await connectToDb();
+export async function createPost(payload: CreatePostDTO): Promise<void> {
+	try {
+		await connectToDb();
+		const { ownerId, ...props } = payload;
 
-    const newPost = new PostDB(payload);
+		const newPost = new PostDB({
+			owner: ownerId,
+			...props,
+		});
 
-    await newPost.save();
-    logger.info("New post created!");
+		await newPost.save();
+		logger.info("New post created!");
 
-    revalidatePath("/");
-    revalidateTag("all-posts");
+		revalidatePath("/");
+		revalidateTag("all-posts", "max");
 
-    return;
-  } catch (err) {
-    logger.error(String(err));
-    throw err;
-  }
+		return;
+	} catch (err) {
+		logger.error(String(err));
+		throw err;
+	}
 }
 
-export async function updatePost(payload: { data: any; _id: string }): Promise<void> {
-  try {
-    await connectToDb();
-    const post = await PostDB.findByIdAndUpdate(payload._id, payload.data);
-    if (!post) {
-      throw new Error("Post not found")
-    }
-    logger.info("Post atualizado!");
-    revalidateTag("all-posts");
-    return;
-  } catch (err) {
-    logger.error(String(err));
-    throw err;
-  }
+export async function updatePost(payload: UpdatePostDTO): Promise<void> {
+	try {
+		await connectToDb();
+
+		const id = payload._id;
+		delete payload._id;
+
+		const post = await PostDB.findByIdAndUpdate(id, payload, {
+			runValidators: true,
+		});
+		if (!post) {
+			throw new Error("Post not found");
+		}
+		logger.info("Post was updated!");
+		revalidateTag("all-posts", "max");
+		return;
+	} catch (err) {
+		logger.error(String(err));
+		throw err;
+	}
 }
 
 export async function deletePost(postId: string): Promise<void> {
+	try {
+		await connectToDb();
 
-  try {
-    await connectToDb();
-
-    const post = await PostDB.findByIdAndDelete(postId);
-    if (!post) {
-      throw new Error("Post not found")
-    }
-    revalidateTag("all-posts");
-  } catch (err) {
-    logger.error(String(err));
-    throw err;
-  }
+		const post = await PostDB.findByIdAndDelete(postId);
+		if (!post) {
+			throw new Error("Post not found");
+		}
+		revalidateTag("all-posts", "max");
+	} catch (err) {
+		logger.error(String(err));
+		throw err;
+	}
 }
-
-

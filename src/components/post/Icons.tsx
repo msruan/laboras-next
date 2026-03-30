@@ -1,87 +1,102 @@
 "use client";
-import { useState } from "react";
 
-import { updatePost as handleUpdate } from "@/api/post.actions";
-import { IPost } from "@/models/post.model";
 import { FaceFrownIcon, StarIcon } from "@heroicons/react/16/solid";
+import { useState } from "react";
+import { updatePost as handleUpdate } from "@/api/post.actions";
 import { logger } from "@/lib/logger";
+import { cn } from "@/lib/utils";
+import type { Post } from "@/models/post.model";
 
 type IconsProps = {
-  post: IPost;
-  fullPage: boolean;
-  userId: string;
+	post: Post;
+	userId: string;
 };
 
-export const Icons = ({ post, fullPage: _, userId }: IconsProps) => {
-  logger.trace(`The user id received was ${userId}`);
+export const Icons = ({ post, userId }: IconsProps) => {
+	logger.trace(`The user id received was ${userId}`);
 
-  const [isLiked, setIsLiked] = useState<boolean>(post.liked_by.includes(userId));
-  const [isDesliked, setIsDesliked] = useState<boolean>(post.desliked_by.includes(userId));
+	const [isLiked, setIsLiked] = useState<boolean>(
+		post.likedBy.includes(userId),
+	);
+	const [isDesliked, setIsDesliked] = useState<boolean>(
+		post.dislikedBy.includes(userId),
+	);
 
-  async function handleLike() {
-    if (isLiked) {
-      post.likes--
-      post.liked_by = post.liked_by.filter((id) => id !== userId);
-    } else {
-      post.liked_by.push(userId);
-      post.likes++;
-      if (isDesliked) {
-        post.deslikes--;
-        post.desliked_by = post.desliked_by.filter((id) => id !== userId);
-        setIsDesliked(false);
-      }
-    }
-    setIsLiked(!isLiked);
-    await handleUpdate({
-      _id: post._id!,
-      data: { likes: post.likes, deslikes: post.deslikes, liked_by: post.liked_by, desliked_by: post.desliked_by },
-    });
-  }
+	function handleLike() {
+		if (isLiked) {
+			post.likes--;
+			post.likedBy = post.likedBy.filter((id) => id !== userId);
+		} else {
+			post.likedBy.push(userId);
+			post.likes++;
+			if (isDesliked) {
+				post.dislikes--;
+				post.dislikedBy = post.dislikedBy.filter((id) => id !== userId);
+				setIsDesliked(false);
+			}
+		}
+		setIsLiked(!isLiked);
+		handleUpdate({
+			_id: post.id,
+			likes: post.likes,
+			dislikes: post.dislikes,
+			likedBy: post.likedBy,
+			dislikedBy: post.dislikedBy,
+		});
+	}
 
-  function handleDeslike() {
-    if (isDesliked) {
-      post.deslikes--;
-      post.desliked_by = post.desliked_by.filter((id) => id !== userId);
-    }
-    else {
-      post.deslikes++;
-      post.desliked_by.push(userId);
-      if (isLiked) {
-        post.likes--;
-        post.liked_by = post.liked_by.filter((id) => id !== userId);
-        setIsLiked(false);
-      }
-    }
-    setIsDesliked(!isDesliked);
-    handleUpdate({
-      _id: post._id!,
-      data: { likes: post.likes, deslikes: post.deslikes, liked_by: post.liked_by, desliked_by: post.desliked_by },
-    });
-  }
+	function handleDislike() {
+		if (isDesliked) {
+			post.dislikes--;
+			post.dislikedBy = post.dislikedBy.filter((id) => id !== userId);
+		} else {
+			post.dislikes++;
+			post.dislikedBy.push(userId);
+			if (isLiked) {
+				post.likes--;
+				post.likedBy = post.likedBy.filter((id) => id !== userId);
+				setIsLiked(false);
+			}
+		}
+		setIsDesliked(!isDesliked);
+		handleUpdate({
+			_id: post.id,
+			likes: post.likes,
+			dislikes: post.dislikes,
+			likedBy: post.likedBy,
+			dislikedBy: post.dislikedBy,
+		});
+	}
 
-  return (
-    <>
-      <div className="flex justify-between items-center text-sm">
-        <span>{post.likes > 0 && post.likes}</span>
-        <StarIcon
-          className={
-            `h-4 w-4 ` + (isLiked ? " text-yellow-500" : "text-gray-500")
-          }
-          onClick={handleLike}
-          cursor="pointer"
-        />
-      </div>
+	return (
+		<>
+			<div className="flex h-5 items-center justify-between text-sm">
+				<span>{post.likes > 0 && post.likes}</span>
+				<button type="button" className="cursor-pointer" onClick={handleLike}>
+					<StarIcon
+						className={cn(
+							"h-4 w-4",
+							isLiked ? "text-yellow-500" : "text-gray-500",
+						)}
+					/>
+				</button>
+			</div>
 
-      <div className="flex justify-between items-center text-sm">
-        <span>{post.deslikes > 0 && post.deslikes}</span>
-        <FaceFrownIcon
-          className={
-            `h-4 w-4 ` + (isDesliked ? "text-red-500" : " text-gray-500")
-          }
-          onClick={handleDeslike}
-          cursor="pointer"
-        />
-      </div>
-    </>
-  );
+			<div className="flex h-5 items-center justify-between text-sm">
+				<span>{post.dislikes > 0 && post.dislikes}</span>
+				<button
+					type="button"
+					className="cursor-pointer"
+					onClick={handleDislike}
+				>
+					<FaceFrownIcon
+						className={cn(
+							"h-4 w-4",
+							isDesliked ? "text-red-500" : "text-gray-500",
+						)}
+					/>
+				</button>
+			</div>
+		</>
+	);
 };
