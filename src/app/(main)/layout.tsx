@@ -1,22 +1,13 @@
-import { AsideMyProfile } from '@/components/sidebar/AsideMyProfile';
-import { AsidePeople } from '@/components/AsidePeople';
+import type { ReactNode } from "react";
+import { AsidePeople } from "@/components/AsidePeople";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
 
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-  params: {
-    tag: string;
-    item: string;
-  };
-}) {
-  return (
-    <div>
-      <AsidePeople />
-      <main className="ml-72 max-xl:ml-24 xl:mr-72 max-md:m-0 max-sm:mb-1">
-        {children}
-      </main>
-      <AsideMyProfile />
-    </div>
-  );
+export default function MainLayout({ children }: { children: ReactNode }) {
+	return (
+		<div>
+			<AsidePeople />
+			<main className="sm:ml-28 xl:mx-72">{children}</main>
+			<AppSidebar />
+		</div>
+	);
 }

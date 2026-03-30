@@ -1,29 +1,20 @@
-import { getUsers } from '@/api/user.queries';
-import { IProfile } from '@/models/profile.model';
+import { getAllUsers } from "@/api/user.queries";
 
-import { ProfileTag } from './profile/ProfileTag';
-
+import { UserProfileTag } from "./user/UserProfileTag";
 
 export const AsidePeople = async () => {
-  const users: IProfile[] = await getUsers();
+	const users = await getAllUsers();
 
-  return (
-    <div
-      className={`flex flex-col items-center p-6 gap-3 fixed top-0 right-0 min-h-screen overflow-x-hidden max-xl:hidden w-72 z-1`}
-    >
-      {/*<Suspense fallback={<h2>Pending...</h2>}>*/}
-      <h2 className="text-white font-sans text-2xl font-bold">
-        Pessoas logadas
-      </h2>
-      {/*<ScrollArea className="flex flex-row h-lvh w-60">*/}
-      <div className="min-h-full flex flex-col gap-11">
-        {users.length > 0 &&
-          users.map((profile) => (
-            <ProfileTag key={profile?.username} profile={profile} />
-          ))}
-      </div>
-      {/*</ScrollArea>*/}
-      {/*</Suspense>*/}
-    </div>
-  );
+	return (
+		<div className="fixed top-0 right-0 z-1 flex min-h-screen w-72 flex-col items-center gap-3 overflow-x-hidden p-6 max-xl:hidden">
+			<h2 className="font-bold font-sans text-2xl text-white">
+				Pessoas logadas
+			</h2>
+			<div className="flex min-h-full flex-col gap-11">
+				{users.map((profile) => (
+					<UserProfileTag key={profile?.id} user={profile} />
+				))}
+			</div>
+		</div>
+	);
 };

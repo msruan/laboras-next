@@ -1,45 +1,56 @@
-import { FC } from 'react';
-
-import { auth } from '@/lib/auth';
-import { IPost } from '@/models/post.model';
-import { IProfile } from '@/models/profile.model';
-import UserPage from '@/components/pages/user-page';
-import { getProfileByUsername, getUserByEmail } from '@/api/user.queries';
-import { EntityNotFoundException } from '@/exceptions';
-import { notFound } from 'next/navigation';
-import { logger } from '@/lib/logger';
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getUserByEmail, getUserByUsername } from "@/api/user.queries";
+import { UserDetailPage } from "@/components/pages/user-page";
+import { EntityNotFoundException } from "@/exceptions";
+import { auth } from "@/lib/auth";
+import { logger } from "@/lib/logger";
+import type { Post } from "@/models/post.model";
+import type { User } from "@/models/user.model";
 
 type Props = {
-  params: {
-    username: string;
-  };
+	params: Promise<{
+		username: string;
+	}>;
 };
 
-const User: FC<Props> = async ({ params }) => {
-  const { username } = params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+	const { username } = await params;
 
-  let data;
+	return {
+		title: username,
+	};
+}
 
-  try {
-    data = await getProfileByUsername(username)
-  } catch (err) {
-    logger.error(String(err));
+const UserDetail = async ({ params }: Props) => {
+	const session = await auth();
+	const currentUser = await getUserByEmail(session?.user?.email ?? "");
 
-    if (err instanceof EntityNotFoundException) {
-      notFound();
-    }
-    throw err;
-  }
+	const { username } = await params;
 
-  const userProfile: IProfile = data.user;
-  const userPosts: IPost[] = data.posts;
+	let data: {
+		user: User;
+		userPosts: Post[];
+	};
 
-  const session = await auth();
-  const user: IProfile = await getUserByEmail(session?.user?.email ?? "")
+	try {
+		data = await getUserByUsername(username);
+	} catch (err) {
+		logger.error(String(err));
 
-  return (
-    <UserPage currentUser={user} profile={userProfile} profilePosts={userPosts} isProfileOfLoggerUser={session?.user?.email === userProfile.email} />
-  );
+		if (err instanceof EntityNotFoundException) {
+			notFound();
+		}
+		throw err;
+	}
+
+	return (
+		<UserDetailPage
+			currentUser={currentUser}
+			user={data.user}
+			userPosts={data.userPosts}
+		/>
+	);
 };
 
-export default User;
+export default UserDetail;

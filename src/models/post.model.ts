@@ -1,51 +1,74 @@
-import mongoose, { Model } from "mongoose";
+import mongoose, { type Model } from "mongoose";
+import { parseUser, type User, type UserDTO } from "./user.model";
 
-export interface IPost {
-  _id: string;
-  user_id: string;
-  content: string;
-  createdAt: Date;
-  likes: number;
-  deslikes: number;
-  linked_to: string | null;
-  liked_by: string[];
-  desliked_by: string[];
-}
-
-export interface CreatePostDTO {
-  user_id: string;
-  content: string;
-  linked_to: string | null;
+export type PostDTO = Omit<Post, "id"> & {
+	_id: string;
+	owner: UserDTO | null;
 };
 
-const PostSchema = new mongoose.Schema<IPost>(
-  {
-    user_id: { type: String, required: true },
-    content: {
-      type: String,
-      required: true,
-    },
-    likes: {
-      type: Number,
-      default: 0,
-    },
-    deslikes: {
-      type: Number,
-      default: 0,
-    },
-    linked_to: {
-      type: String,
-      default: null,
-    },
-    liked_by: {
-      type: [String],
-    },
-    desliked_by: {
-      type: [String],
-    },
-  },
-  { timestamps: true }
+const PostSchema = new mongoose.Schema<PostDTO>(
+	{
+		owner: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Profile",
+			required: true,
+		},
+		linkedTo: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Post",
+			default: null,
+		},
+		content: {
+			type: String,
+			required: true,
+		},
+		likes: {
+			type: Number,
+			default: 0,
+		},
+		likedBy: {
+			type: [String],
+		},
+		dislikes: {
+			type: Number,
+			default: 0,
+		},
+		dislikedBy: {
+			type: [String],
+		},
+	},
+	{ timestamps: true },
 );
 
 export const PostDB =
-  (mongoose.models?.Post as Model<IPost>) || mongoose.model("Post", PostSchema);
+	(mongoose.models?.Post as Model<PostDTO>) ||
+	mongoose.model("Post", PostSchema);
+
+export interface Post {
+	id: string;
+	owner: User | null;
+	linkedTo: string | null;
+	content: string;
+	likes: number;
+	likedBy: string[];
+	dislikes: number;
+	dislikedBy: string[];
+	createdAt: Date;
+}
+
+export function parsePost(dto: PostDTO): Post {
+	const { _id, owner, ...props } = dto;
+	return {
+		id: _id,
+		owner: owner ? parseUser(owner) : null,
+		...props,
+	};
+}
+
+export interface CreatePostDTO {
+	ownerId: string;
+	content: string;
+	linkedTo: string | null;
+}
+
+export type UpdatePostDTO = Omit<Partial<PostDTO>, "createdAt" | "linkedTo">;
