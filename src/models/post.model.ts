@@ -1,26 +1,23 @@
 import mongoose, { type Model } from "mongoose";
 import { parseUser, type User, type UserDTO } from "./user.model";
 
-export interface PostDTO {
+export type PostDTO = Omit<Post, "id"> & {
 	_id: string;
 	owner: UserDTO | null;
-	user_id?: string | null;
-	content: string;
-	createdAt: Date;
-	likes: number;
-	deslikes: number;
-	linked_to: string | null;
-	liked_by: string[];
-	desliked_by: string[];
-}
+};
 
 const PostSchema = new mongoose.Schema<PostDTO>(
 	{
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Profile",
+			required: true,
 		},
-		user_id: { type: String, required: false },
+		linkedTo: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Post",
+			default: null,
+		},
 		content: {
 			type: String,
 			required: true,
@@ -29,18 +26,14 @@ const PostSchema = new mongoose.Schema<PostDTO>(
 			type: Number,
 			default: 0,
 		},
-		deslikes: {
+		likedBy: {
+			type: [String],
+		},
+		dislikes: {
 			type: Number,
 			default: 0,
 		},
-		linked_to: {
-			type: String,
-			default: null,
-		},
-		liked_by: {
-			type: [String],
-		},
-		desliked_by: {
+		dislikedBy: {
 			type: [String],
 		},
 	},
@@ -58,29 +51,24 @@ export interface Post {
 	content: string;
 	likes: number;
 	likedBy: string[];
-	deslikes: number;
-	deslikedBy: string[];
+	dislikes: number;
+	dislikedBy: string[];
 	createdAt: Date;
 }
 
 export function parsePost(dto: PostDTO): Post {
+	const { _id, owner, ...props } = dto;
 	return {
-		id: dto._id,
-		owner: dto.owner ? parseUser(dto.owner) : null,
-		linkedTo: dto.linked_to,
-		content: dto.content,
-		likes: dto.likes,
-		likedBy: dto.liked_by,
-		deslikes: dto.deslikes,
-		deslikedBy: dto.desliked_by,
-		createdAt: dto.createdAt,
+		id: _id,
+		owner: owner ? parseUser(owner) : null,
+		...props,
 	};
 }
 
 export interface CreatePostDTO {
-	user_id: string;
+	ownerId: string;
 	content: string;
-	linked_to: string | null;
+	linkedTo: string | null;
 }
 
-export type UpdatePostDTO = Omit<Partial<PostDTO>, "createdAt" | "linked_to">;
+export type UpdatePostDTO = Omit<Partial<PostDTO>, "createdAt" | "linkedTo">;

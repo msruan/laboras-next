@@ -12,7 +12,7 @@ export const AsidePeople = async () => {
 			</h2>
 			<div className="flex min-h-full flex-col gap-11">
 				{users.map((profile) => (
-					<UserProfileTag key={profile?.username} user={profile} />
+					<UserProfileTag key={profile?.id} user={profile} />
 				))}
 			</div>
 		</div>

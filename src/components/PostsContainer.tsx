@@ -23,7 +23,7 @@ export function PostsContainer({
 		<div className="flex h-full flex-col gap-2 border-rebeccapurple2 border-r-2 border-l-2 pr-3 pl-3 max-xl:border-0">
 			<Toaster richColors />
 
-			{textbox && <TextBox profile={currentUser} linkedTo={linkedTo} />}
+			{textbox && <TextBox currentUser={currentUser} linkedTo={linkedTo} />}
 
 			{posts.map((post) => (
 				<PostCard

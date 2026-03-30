@@ -56,9 +56,13 @@ export async function getUserByUsername(
 		if (!rawUser) throw new EntityNotFoundException("User not found!");
 		const user = parseObjToJson<UserDTO>(rawUser);
 
-		const rawPosts = await PostDB.find({ linked_to: null }, null, {
-			sort: "-createdAt",
-		}).populate("owner");
+		const rawPosts = await PostDB.find(
+			{ owner: rawUser._id, linkedTo: null },
+			null,
+			{
+				sort: "-createdAt",
+			},
+		).populate("owner");
 		const posts = parseObjToJson<PostDTO[]>(rawPosts);
 
 		return {

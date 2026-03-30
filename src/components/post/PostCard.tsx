@@ -113,7 +113,7 @@ export const PostCard = ({
 					{!fullPage && (
 						<CardFooter className="flex h-fit items-center justify-end">
 							<div className="flex h-fit w-1/4 flex-row justify-between pr-7 pb-1 max-md:w-full">
-								<Icons userId={currentUserId} post={post} fullPage={fullPage} />
+								<Icons userId={currentUserId} post={post} />
 								{currentUserId === post.owner?.id && (
 									<PostMenu handleEdit={setEditMode} postId={post.id} />
 								)}

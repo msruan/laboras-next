@@ -12,10 +12,11 @@ import {
 export async function createPost(payload: CreatePostDTO): Promise<void> {
 	try {
 		await connectToDb();
+		const { ownerId, ...props } = payload;
 
 		const newPost = new PostDB({
-			owner: payload.user_id,
-			...payload,
+			owner: ownerId,
+			...props,
 		});
 
 		await newPost.save();

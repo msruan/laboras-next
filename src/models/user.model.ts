@@ -1,14 +1,8 @@
 import mongoose, { type Model } from "mongoose";
 
-export interface UserDTO {
+export type UserDTO = Omit<User, "id"> & {
 	_id: string;
-	first_name: string;
-	username: string;
-	email: string;
-	password: string;
-	profile_image_link?: string;
-	bio?: string;
-}
+};
 
 const UserSchema = new mongoose.Schema<UserDTO>(
 	{
@@ -18,7 +12,7 @@ const UserSchema = new mongoose.Schema<UserDTO>(
 			unique: true,
 			min: 4,
 		},
-		first_name: {
+		name: {
 			type: String,
 			required: true,
 		},
@@ -29,14 +23,11 @@ const UserSchema = new mongoose.Schema<UserDTO>(
 			minlength: 5,
 			lowercase: true,
 		},
-		password: {
-			type: String,
-		},
-		bio: {
+		avatarUrl: {
 			type: String,
 			required: false,
 		},
-		profile_image_link: {
+		bio: {
 			type: String,
 			required: false,
 		},
@@ -58,14 +49,9 @@ export interface User {
 }
 
 export function parseUser(dto: UserDTO): User {
-	return {
-		id: dto._id,
-		username: dto.username,
-		name: dto.first_name,
-		email: dto.email,
-		bio: dto.bio ?? null,
-		avatarUrl: dto.profile_image_link ?? null,
-	};
+	const { _id, ...props } = dto;
+
+	return { id: _id, ...props };
 }
 
 export type UserUpdate = Partial<Omit<User, "email">> & Pick<User, "id">;

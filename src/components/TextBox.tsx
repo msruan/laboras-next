@@ -10,10 +10,10 @@ import { Button } from "./ui/button";
 
 interface Props {
 	linkedTo: string | null;
-	profile: User;
+	currentUser: User;
 }
 
-export const TextBox = ({ linkedTo = null, profile }: Props) => {
+export const TextBox = ({ linkedTo = null, currentUser }: Props) => {
 	const router = useRouter();
 	const input = useRef<HTMLTextAreaElement>(null);
 
@@ -23,9 +23,9 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 		}
 
 		const newPost: CreatePostDTO = {
-			user_id: profile.id,
+			ownerId: currentUser.id,
 			content: input.current.value,
-			linked_to: linkedTo,
+			linkedTo: linkedTo,
 		};
 		input.current.value = "";
 		await createPost(newPost);
@@ -36,7 +36,7 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 		<div className="flex w-full flex-col border-rebeccapurple2 border-b-2 pr-3 pb-10 pl-3 align-middle">
 			<div className="flex w-full flex-row items-center gap-8">
 				<Avatar className="h-12 w-12 rounded-full">
-					<AvatarImage src={profile?.avatarUrl ?? Assets.images.shyDog} />
+					<AvatarImage src={currentUser?.avatarUrl ?? Assets.images.shyDog} />
 					<AvatarFallback>CN</AvatarFallback>
 				</Avatar>
 
@@ -53,7 +53,7 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 					maxLength={400}
 					placeholder={`${
 						linkedTo ? "O que acha disso" : "No que voce está pensando"
-					} ${profile.name}?`}
+					} ${currentUser.name}?`}
 				></textarea>
 			</div>
 			<div className="h-fit w-fit self-end justify-self-end">
@@ -61,7 +61,7 @@ export const TextBox = ({ linkedTo = null, profile }: Props) => {
 					onClick={handleClick}
 					className="h-full w-full rounded-full bg-rebeccapurple2 font-bold hover:bg-rebeccapurple"
 				>
-					POST
+					POSTAR
 				</Button>
 			</div>
 		</div>

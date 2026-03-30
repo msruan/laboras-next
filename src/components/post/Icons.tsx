@@ -9,19 +9,17 @@ import type { Post } from "@/models/post.model";
 
 type IconsProps = {
 	post: Post;
-	fullPage: boolean;
 	userId: string;
 };
 
-export const Icons = ({ post: postParam, fullPage: _, userId }: IconsProps) => {
+export const Icons = ({ post, userId }: IconsProps) => {
 	logger.trace(`The user id received was ${userId}`);
-	const post = { ...postParam };
 
 	const [isLiked, setIsLiked] = useState<boolean>(
 		post.likedBy.includes(userId),
 	);
 	const [isDesliked, setIsDesliked] = useState<boolean>(
-		post.deslikedBy.includes(userId),
+		post.dislikedBy.includes(userId),
 	);
 
 	async function handleLike() {
@@ -32,8 +30,8 @@ export const Icons = ({ post: postParam, fullPage: _, userId }: IconsProps) => {
 			post.likedBy.push(userId);
 			post.likes++;
 			if (isDesliked) {
-				post.deslikes--;
-				post.deslikedBy = post.deslikedBy.filter((id) => id !== userId);
+				post.dislikes--;
+				post.dislikedBy = post.dislikedBy.filter((id) => id !== userId);
 				setIsDesliked(false);
 			}
 		}
@@ -41,19 +39,19 @@ export const Icons = ({ post: postParam, fullPage: _, userId }: IconsProps) => {
 		await handleUpdate({
 			_id: post.id,
 			likes: post.likes,
-			deslikes: post.deslikes,
-			liked_by: post.likedBy,
-			desliked_by: post.deslikedBy,
+			dislikes: post.dislikes,
+			likedBy: post.likedBy,
+			dislikedBy: post.dislikedBy,
 		});
 	}
 
 	function handleDeslike() {
 		if (isDesliked) {
-			post.deslikes--;
-			post.deslikedBy = post.deslikedBy.filter((id) => id !== userId);
+			post.dislikes--;
+			post.dislikedBy = post.dislikedBy.filter((id) => id !== userId);
 		} else {
-			post.deslikes++;
-			post.deslikedBy.push(userId);
+			post.dislikes++;
+			post.dislikedBy.push(userId);
 			if (isLiked) {
 				post.likes--;
 				post.likedBy = post.likedBy.filter((id) => id !== userId);
@@ -64,9 +62,9 @@ export const Icons = ({ post: postParam, fullPage: _, userId }: IconsProps) => {
 		handleUpdate({
 			_id: post.id,
 			likes: post.likes,
-			deslikes: post.deslikes,
-			liked_by: post.likedBy,
-			desliked_by: post.deslikedBy,
+			dislikes: post.dislikes,
+			likedBy: post.likedBy,
+			dislikedBy: post.dislikedBy,
 		});
 	}
 
@@ -85,7 +83,7 @@ export const Icons = ({ post: postParam, fullPage: _, userId }: IconsProps) => {
 			</div>
 
 			<div className="flex items-center justify-between text-sm">
-				<span>{post.deslikes > 0 && post.deslikes}</span>
+				<span>{post.dislikes > 0 && post.dislikes}</span>
 				<FaceFrownIcon
 					className={cn(
 						"h-4 w-4",

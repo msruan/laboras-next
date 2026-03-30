@@ -31,7 +31,7 @@ export async function getPostById(
 		}
 		const post = parseObjToJson<PostDTO>(rawPost);
 
-		const rawReplies = await PostDB.find({ linked_to: postId }).populate(
+		const rawReplies = await PostDB.find({ linkedTo: postId }).populate(
 			"owner",
 		);
 		const replies = parseObjToJson<PostDTO[]>(rawReplies);

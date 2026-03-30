@@ -63,7 +63,7 @@ export function PostContent({
 						Data de publicação: {new Date(post.createdAt).toLocaleString()}
 					</p>
 					<div className="flex h-fit w-1/4 flex-row justify-between pr-7 pb-1">
-						<Icons userId={userId} post={post} fullPage={fullPage} />
+						<Icons userId={userId} post={post} />
 						{userId === post.owner?.id && (
 							<PostMenu handleEdit={handleEdit} postId={post.id} />
 						)}
