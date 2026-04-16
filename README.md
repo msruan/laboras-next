@@ -1,6 +1,6 @@
 # Laboras (Next)
 
-A Laboras fullstack clone made in Next.js
+A fullstack project of social network made in Next.js
 
 ## Related
 
@@ -9,7 +9,7 @@ Reach the main repository of [Laboras](https://github.com/bianca-bezerra/Laboras
 ## Features
 
 - Posts CRUD
-- Profiles, follow users
+- Profiles, celebrations
 
 ## Environment Variables
 
@@ -32,7 +32,7 @@ To run this project, you will need to add the following environment variables to
 Clone the project
 
 ```bash
-git clone https://msruan/laboras-next
+git clone https://github.com/msruan/laboras-nextjs
 ```
 
 Go to the project directory
@@ -57,12 +57,12 @@ pnpm dev
 
 ## Todo
 
-- [OK] Add guest mode or create a public deploy instance
+- [OK] Create a public deploy instance
 - [OK] Add MongoDB docker compose to use locally
 - [OK] Improve login page
 - [OK] Add Loggertape
+- [OK] Settings section
 - [+/-] Change ServerComponents calling API Routes (antipattern) to pure db calls 
   - Need to think how to use cache feature without it
-- Use social ID insted of email to identify OAuth users on the database
-- Settings section
+- Separate User and OauthProfiles on database
 - Add musics and chat resources
