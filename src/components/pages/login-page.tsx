@@ -23,7 +23,7 @@ export function LoginPage() {
 					<span className={`${styles.letter} ${styles.a2}`}>A</span>
 					<span className={`${styles.letter} ${styles.s}`}>S</span>
 				</h1>
-				<div className="h-[calc(theme(fontSize.xl)*theme(lineHeight.tight))] overflow-hidden text-xl">
+				<div className="h-[calc(var(--text-xl)*(var(--leading-tight)))] overflow-hidden text-xl">
 					Feito por{" "}
 					<span className="inline-flex flex-col">
 						<ul className="block animate-text-slide *:block *:text-[#956afa]">

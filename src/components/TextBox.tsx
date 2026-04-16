@@ -48,7 +48,7 @@ export const TextBox = ({ linkedTo = null, currentUser }: Props) => {
 						}
 					}}
 					ref={input}
-					className="w-full resize-none content-center border-none bg-transparent py-5 text-white outline-none"
+					className="w-full resize-none content-center border-none bg-transparent py-5 text-white outline-hidden"
 					name="text"
 					maxLength={400}
 					placeholder={`${

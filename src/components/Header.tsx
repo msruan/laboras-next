@@ -15,7 +15,7 @@ export function Header({
 	const router = useRouter();
 
 	return (
-		<div className="fixed top-0 left-0 z-10 flex w-full items-center justify-between border-b-[1px] border-b-gray-500 bg-black p-4 py-2 sm:hidden">
+		<div className="fixed top-0 left-0 z-10 flex w-full items-center justify-between border-b border-b-gray-500 bg-black p-4 py-2 sm:hidden">
 			<button type="button" onClick={() => router.back()} aria-label="Go back">
 				<ChevronLeftIcon className="h-6 w-6" />
 			</button>

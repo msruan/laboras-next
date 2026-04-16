@@ -16,7 +16,7 @@ export const AppSidebar = async () => {
 	return (
 		<div
 			className={cn(
-				"fixed bottom-0 flex w-full items-center justify-between border-rebeccapurple2 border-r-[1px] bg-black px-10 py-5",
+				"fixed bottom-0 flex w-full items-center justify-between border-rebeccapurple2 border-r bg-black px-10 py-5",
 				"sm:top-0 sm:left-0 sm:z-1 sm:min-h-screen sm:w-28 sm:flex-col sm:bg-transparent xl:w-72",
 			)}
 		>
