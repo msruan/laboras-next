@@ -1,6 +1,137 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is(.dark *));
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@theme {
+  --spacing-noavatar: calc(100% - 1rem);
+  --spacing-custom: 80%;
+  --spacing-half-vh: 50vh;
+  --spacing-icon: 1rem;
+
+  --grid-template-columns-custom: auto 1fr;
+
+  --color-rebeccapurple: rgba(123, 26, 242, 0.1);
+  --color-biancapurple: rgb(110, 82, 162);
+  --color-rebeccapurple2: rgba(123, 26, 242, 0.2);
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-text-slide: text-slide 12.5s cubic-bezier(0.83, 0, 0.17, 1) infinite;
+
+  --font-habbo: var(--font-habbo);
+  --font-sans: Helvetica, Arial, sans-serif;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes text-slide {
+    0%,
+    11% {
+      transform: translateY(0%);
+    }
+    14%,
+    25% {
+      transform: translateY(-12.5%);
+    }
+    28%,
+    39% {
+      transform: translateY(-25%);
+    }
+    42%,
+    53% {
+      transform: translateY(-37.5%);
+    }
+    56%,
+    67% {
+      transform: translateY(-50%);
+    }
+    70%,
+    81% {
+      transform: translateY(-62.5%);
+    }
+    84%,
+    95% {
+      transform: translateY(-75%);
+    }
+    100% {
+      transform: translateY(-87.5%);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-gray-200, currentcolor);
+	}
+}
 
 @layer base {
 	:root {
