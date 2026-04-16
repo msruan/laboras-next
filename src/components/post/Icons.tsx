@@ -7,12 +7,7 @@ import { logger } from "@/lib/logger";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/models/post.model";
 
-type IconsProps = {
-	post: Post;
-	userId: string;
-};
-
-export const Icons = ({ post, userId }: IconsProps) => {
+export const Icons = ({ post, userId }: { post: Post; userId: string }) => {
 	logger.trace(`The user id received was ${userId}`);
 
 	const [isLiked, setIsLiked] = useState<boolean>(

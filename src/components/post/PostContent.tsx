@@ -49,10 +49,10 @@ export function PostContent({ userId, post, fullPage, onClick }: Props) {
 			</div>
 			{fullPage && (
 				<footer className="mt-10 flex items-center border-t-purple-50 text-white text-xs opacity-70">
-					<p className="w-3/4">
+					<p className="w-full">
 						Data de publicação: {new Date(post.createdAt).toLocaleString()}
 					</p>
-					<div className="flex h-fit w-1/4 flex-row justify-between pr-7 pb-1">
+					<div className="flex h-fit w-1/6 flex-row justify-between pr-7 pb-1">
 						<Icons userId={userId} post={post} />
 						{post.owner && userId && userId === post.owner.id && (
 							<PostMenu postId={post.id} />
