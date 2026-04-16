@@ -14,16 +14,9 @@ interface Props {
 	post: Post;
 	fullPage: boolean;
 	onClick: () => void;
-	handleEdit: (value: boolean) => void;
 }
 
-export function PostContent({
-	userId,
-	post,
-	fullPage,
-	handleEdit,
-	onClick,
-}: Props) {
+export function PostContent({ userId, post, fullPage, onClick }: Props) {
 	const isClient = useClient();
 	return (
 		<CardContent
@@ -62,7 +55,7 @@ export function PostContent({
 					<div className="flex h-fit w-1/4 flex-row justify-between pr-7 pb-1">
 						<Icons userId={userId} post={post} />
 						{post.owner && userId && userId === post.owner.id && (
-							<PostMenu handleEdit={handleEdit} postId={post.id} />
+							<PostMenu postId={post.id} />
 						)}
 					</div>
 				</footer>

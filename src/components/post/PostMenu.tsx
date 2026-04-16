@@ -1,8 +1,4 @@
-import {
-	EllipsisHorizontalIcon,
-	PencilIcon,
-	TrashIcon,
-} from "@heroicons/react/16/solid";
+import { EllipsisHorizontalIcon, TrashIcon } from "@heroicons/react/16/solid";
 import { useRouter } from "next/navigation";
 import { deletePost } from "@/api/post.actions";
 import {
@@ -16,10 +12,9 @@ import {
 
 type PostMenuProps = {
 	postId: string;
-	handleEdit: (value: boolean) => void;
 };
 
-export function PostMenu({ postId, handleEdit }: PostMenuProps) {
+export function PostMenu({ postId }: PostMenuProps) {
 	const router = useRouter();
 	return (
 		<DropdownMenu>
@@ -31,17 +26,6 @@ export function PostMenu({ postId, handleEdit }: PostMenuProps) {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-28">
 				<DropdownMenuGroup className="*:cursor-pointer">
-					<DropdownMenuItem
-						onClick={() => {
-							handleEdit(true);
-						}}
-					>
-						Editar
-						<DropdownMenuShortcut>
-							<PencilIcon className="h-4 w-4" />
-						</DropdownMenuShortcut>
-					</DropdownMenuItem>
-
 					<DropdownMenuItem
 						className="text-red-700"
 						onClick={async () => {

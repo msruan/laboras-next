@@ -71,4 +71,7 @@ export interface CreatePostDTO {
 	linkedTo: string | null;
 }
 
-export type UpdatePostDTO = Omit<Partial<PostDTO>, "createdAt" | "linkedTo">;
+export type UpdatePostDTO = Omit<
+	Partial<PostDTO>,
+	"createdAt" | "linkedTo" | "content"
+>;

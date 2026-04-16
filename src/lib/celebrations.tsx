@@ -71,7 +71,7 @@ class Celebrant {
 		const activeCelebrations = celebrations.filter((c) =>
 			c.isTimeToCelebrate(),
 		);
-		
+
 		if (activeCelebrations.length > 1) {
 			//Todo: add a priority prop on celebrations to avoid this
 			logger.warn("Multiple celebrations active, selecting first by priority");
